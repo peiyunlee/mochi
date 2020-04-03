@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Test : MonoBehaviour {
+	//黏住沒有甩力
 	public GameObject gParent;
 	public GameObject earGroup;
 	public GameObject grabOBJ;
