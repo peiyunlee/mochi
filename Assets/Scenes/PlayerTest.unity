@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 303630766}
   - component: {fileID: 303630768}
   - component: {fileID: 303630767}
+  - component: {fileID: 303630771}
   m_Layer: 0
   m_Name: ear1
   m_TagString: Untagged
@@ -337,7 +338,7 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 303630765}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -359,8 +360,8 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0.004335534, y: -1.4741901}
-  m_ConnectedAnchor: {x: 0.024335397, y: -0.084190145}
+  m_Anchor: {x: 0.06567621, y: -1.4741907}
+  m_ConnectedAnchor: {x: 0.08567607, y: -0.15419081}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -422,12 +423,27 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 303630765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 1.39, z: 0.029296875}
+  m_LocalPosition: {x: 0.02, y: 1.32, z: 0.029296875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 61706192}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &303630771
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 303630765}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.023308905, y: 0.4439999}
+  m_Size: {x: 1.8725092, y: 0.5618999}
+  m_Direction: 1
 --- !u!1 &348652875
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,6 +836,7 @@ GameObject:
   - component: {fileID: 611932739}
   - component: {fileID: 611932738}
   - component: {fileID: 611932742}
+  - component: {fileID: 611932743}
   m_Layer: 0
   m_Name: ear2
   m_TagString: Untagged
@@ -853,7 +870,7 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 611932736}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -920,7 +937,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2960c367d6e5371428d1bddcbade739b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1d005862aa23db41ab150a325b7bb39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -938,7 +955,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 611932736}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.73, z: 0.029296875}
+  m_LocalPosition: {x: -0.02, y: 1.2, z: 0.029296875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1207204310}
@@ -957,16 +974,31 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -0.5099997, y: -0.43999985}
-  m_ConnectedAnchor: {x: 0.5683798, y: 0.32836542}
+  m_Anchor: {x: 0.005464, y: 0.6102}
+  m_ConnectedAnchor: {x: -0.012813573, y: 0.665092}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 77.14875
-    m_UpperAngle: 77.14875
+    m_LowerAngle: -25.631271
+    m_UpperAngle: 26.451963
+--- !u!70 &611932743
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 611932736}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.05, y: 0.26}
+  m_Size: {x: 1.8500005, y: 0.4724722}
+  m_Direction: 1
 --- !u!1 &616846942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1371,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.0026726425}
   serializedVersion: 2
-  m_Radius: 0.33905795
+  m_Radius: 0.88515
 --- !u!233 &1207204307
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -1353,16 +1385,16 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -0.02, y: -0.37843752}
-  m_ConnectedAnchor: {x: 0.00000003073457, y: 0.3515625}
+  m_Anchor: {x: -0.019997746, y: 0.635}
+  m_ConnectedAnchor: {x: 0.0000021534338, y: -0.56499976}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 86.24568
-    m_UpperAngle: 102.95398
+    m_LowerAngle: -17.223179
+    m_UpperAngle: 16.362518
 --- !u!50 &1207204308
 Rigidbody2D:
   serializedVersion: 4
@@ -1418,7 +1450,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2960c367d6e5371428d1bddcbade739b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28d7ab05e4f22674c8ba19260a60d8ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1435,15 +1467,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1207204305}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 2.42, y: -1.24, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 1.98, y: -0.313, z: 0}
+  m_LocalScale: {x: 0.476, y: 0.476, z: 0.476}
   m_Children:
   - {fileID: 611932741}
   - {fileID: 1147242413}
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1715242287
 GameObject:
   m_ObjectHideFlags: 0
