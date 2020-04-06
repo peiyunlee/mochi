@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float posX;
     private float posY;
     public float earMoveSpeed;
+
+    public float force=0;
     //Use this for initialization
     bool isTouch;
     void Start()
@@ -35,19 +37,29 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X)) isTouch = !isTouch;
+        //if (Input.GetKeyDown(KeyCode.X)) isTouch = !isTouch;
     }
 
     void FixedUpdate()
     {
-        if (!isTouch)
-        {
-            Move();
+        // if (!isTouch)
+        // {
+        //     Move();
 
-            Jump();
-        }
+        //     Jump();
+        // }
 
-        Turn();
+        // Turn();
+        if (Input.GetKeyDown (KeyCode.RightArrow)){
+            //earRb.AddForce (Vector2.right * 200,0);
+            earRb.velocity=new Vector3(Vector2.right.x * force,Vector2.right.y * force,0);
+		}
+        if (Input.GetKeyDown (KeyCode.LeftArrow)){
+            earRb.velocity = new Vector3 (Vector2.left.x * force,Vector2.left.y * force,0);
+		}
+        if (Input.GetKeyDown (KeyCode.UpArrow)){
+            earRb.velocity = new Vector3 (Vector2.up.x * force,Vector2.up.y * force,0);
+		}
     }
 
     void Move()
@@ -109,35 +121,35 @@ public class PlayerMovement : MonoBehaviour
 
             //earRb.AddForce (new Vector2(Input.GetAxisRaw("Horizontal") * 10, Input.GetAxisRaw("Horizontal") * 10));
 
-		// 	if (Input.GetAxisRaw("Horizontal") == 0)
-        //     {
-        //         posX = 0;
-        //         posY = 0;
-        //     }
-        //     else if (Input.GetAxisRaw("Horizontal") == 1)
-        //     {
-        //         angled -= 1;//累加已经转过的角度
-        //         if (angled < 90) angled = 90;
-        //         Debug.Log(angled);
-        //         posY = aroundRadius * Mathf.Sin(angled * Mathf.Deg2Rad)+rb.position.y;//计算x位置
-        //         posX = aroundRadius * Mathf.Cos(angled * Mathf.Deg2Rad)+rb.position.x;//计算y位置
-        //                                                                 //Debug.Log(posY);
-        //         earRb.velocity = new Vector2(posX,posY)* Input.GetAxisRaw("Horizontal");//更新位置
-        //                                                                 //Debug.Log(new Vector2(posX,posY));
-        //                                                                 //earRb.velocity = new Vector2(posX,posY);//更新位置
-        //     }
-        //     else if (Input.GetAxisRaw("Horizontal") == -1)
-        //     {
-        //         angled += 1;//累加已经转过的角度
+			// if (Input.GetAxisRaw("Horizontal") == 0)
+            // {
+            //     posX = 0;
+            //     posY = 0;
+            // }
+            // else if (Input.GetAxisRaw("Horizontal") == 1)
+            // {
+            //     angled -= 1;//累加已经转过的角度
+            //     if (angled < 90) angled = 90;
+            //     Debug.Log(angled);
+            //     posY = aroundRadius * Mathf.Sin(angled * Mathf.Deg2Rad)+rb.position.y;//计算x位置
+            //     posX = aroundRadius * Mathf.Cos(angled * Mathf.Deg2Rad)+rb.position.x;//计算y位置
+            //                                                             //Debug.Log(posY);
+            //     earRb.velocity = new Vector2(posX,posY)* Input.GetAxisRaw("Horizontal");//更新位置
+            //                                                             //Debug.Log(new Vector2(posX,posY));
+            //                                                             //earRb.velocity = new Vector2(posX,posY);//更新位置
+            // }
+            // else if (Input.GetAxisRaw("Horizontal") == -1)
+            // {
+            //     angled += 1;//累加已经转过的角度
                 
-		// 		if (angled > 270) angled = 270;
-        //         Debug.Log(angled);
-        //         posY = aroundRadius * Mathf.Sin(angled * Mathf.Deg2Rad)+rb.position.y;//计算x位置
-        //         posX = aroundRadius * Mathf.Cos(angled * Mathf.Deg2Rad)+rb.position.x;//计算y位置
-        //                                                                 //Debug.Log(new Vector2(posX,posY));
-        //                                                                 //earRb.velocity = new Vector2(posX,posY);//更新位置
-		// 		earRb.velocity = new Vector2(posX,posY)* Input.GetAxisRaw("Horizontal");//更新位置
-        //     }
+			// 	if (angled > 270) angled = 270;
+            //     Debug.Log(angled);
+            //     posY = aroundRadius * Mathf.Sin(angled * Mathf.Deg2Rad)+rb.position.y;//计算x位置
+            //     posX = aroundRadius * Mathf.Cos(angled * Mathf.Deg2Rad)+rb.position.x;//计算y位置
+            //                                                             //Debug.Log(new Vector2(posX,posY));
+            //                                                             //earRb.velocity = new Vector2(posX,posY);//更新位置
+			// 	earRb.velocity = new Vector2(posX,posY)* Input.GetAxisRaw("Horizontal");//更新位置
+            // }
 
         }
     }

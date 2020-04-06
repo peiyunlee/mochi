@@ -14,13 +14,13 @@ public class Test3 : MonoBehaviour {
 	void Update () {
 		
         if (Input.GetKeyDown (KeyCode.RightArrow)){
-            rb.AddForce (Vector3.right * 200);
+            rb.AddForce (Vector2.right * 200,0);
 		}
         if (Input.GetKeyDown (KeyCode.LeftArrow)){
-            rb.AddForce (Vector3.left * 200);
+            rb.AddForce (Vector2.left * 200,0);
 		}
         if (Input.GetKeyDown (KeyCode.UpArrow)){
-            rb.AddForce (Vector3.up * 200);
+            rb.AddForce (Vector2.up * 200,0);
 		}
 	}
 }
