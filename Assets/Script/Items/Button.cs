@@ -36,10 +36,14 @@ public class Button : Item
             isTrigger = true;
         else
         {
-            if (other.gameObject.tag == "Player"+color)
-            {
-				isTrigger = true;
-            }
+            // if (other.gameObject.tag == "Player"+color)
+            // {
+			// 	isTrigger = true;
+            // }
+             if((this.gameObject.layer >> other.gameObject.layer & 1) == 1){
+                 isTrigger = true;
+             }
+    }
         }
 	}
 
