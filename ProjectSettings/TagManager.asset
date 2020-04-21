@@ -4,10 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Player1
-  - Player2
+  - ground
+  - wall
+  - player1
+  - player2
+  - player3
+  - player4
   - Player3
-  - Player4
   layers:
   - Default
   - TransparentFX
@@ -17,8 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - red
+  - yellow
   - 
   - 
   - 
@@ -53,4 +56,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3377062863
+    locked: 0
+  - name: yellow
+    uniqueID: 4227026241
+    locked: 0
+  - name: red
+    uniqueID: 552751973
     locked: 0
