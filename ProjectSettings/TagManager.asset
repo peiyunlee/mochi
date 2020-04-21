@@ -8,6 +8,10 @@ TagManager:
   - Player2
   - Player3
   - Player4
+  - RED
+  - YELLOW
+  - BLUE
+  - GREEN
   layers:
   - Default
   - TransparentFX
