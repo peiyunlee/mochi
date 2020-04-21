@@ -31,21 +31,21 @@ public class Button : Item
 
     override protected void OnTriggerEnter2D(Collider2D other)
     {
-		
+
         if (color == (int)EColor.NONE)
             isTrigger = true;
         else
         {
             // if (other.gameObject.tag == "Player"+color)
             // {
-			// 	isTrigger = true;
+            // 	isTrigger = true;
             // }
-             if((this.gameObject.layer >> other.gameObject.layer & 1) == 1){
-                 isTrigger = true;
-             }
-    }
+            if ((this.gameObject.layer >> other.gameObject.layer & 1) == 1)
+            {
+                isTrigger = true;
+            }
         }
-	}
+    }
 
     override protected void Action()
     {
