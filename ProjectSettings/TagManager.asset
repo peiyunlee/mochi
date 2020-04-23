@@ -10,7 +10,6 @@ TagManager:
   - player2
   - player3
   - player4
-  - Player3
   layers:
   - Default
   - TransparentFX
