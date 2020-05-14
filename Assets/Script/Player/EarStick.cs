@@ -20,13 +20,13 @@ public class EarStick : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ground")
-        {
-            if (other.gameObject.GetComponent<Rigidbody2D>() != null)
-            {
-                otherRb = other.gameObject.GetComponent<Rigidbody2D>();
-            }
-        }
+        // if (other.gameObject.tag == "ground")
+        // {
+        //     if (other.gameObject.GetComponent<Rigidbody2D>() != null)
+        //     {
+        //         otherRb = other.gameObject.GetComponent<Rigidbody2D>();
+        //     }
+        // }
         earCanTouch = true;
     }
 }

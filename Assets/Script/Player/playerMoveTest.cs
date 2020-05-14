@@ -12,22 +12,28 @@ public class playerMoveTest : MonoBehaviour
     private Collider2D earCollider;
     private HingeJoint2D earJoint;
     private EarStick earStick;
+    //private Animator earAnim;
     //Body相關
     public GameObject body;
-    public Rigidbody2D bodyJo;
+    //public Rigidbody2D bodyJo;
     private Rigidbody2D bodyRb;
     private HingeJoint2D bodyJoint;
     private bodyStick bodyStick;
-
+    private Collider2D bodyCollider;
+    //private Animator bodyAnim;
+    private bool earTouch = true;
+    private bool bodyTouch = true;
     //Player
     private Rigidbody2D rb;
+    private CircleCollider2D playerCollider;
     public float moveSpeed;
     public float jumpSpeed;
+    private bool touchWall = false;
     //耳朵轉的力
     public float force = 0;
     private bool canJump = true;
     private int jumpCount = 0;
-
+    private Vector3 f = new Vector3(0, 0, 0);
     //黏
     private bool bodyIsTouch = false;
     private bool earIsTouch = false;
@@ -37,6 +43,7 @@ public class playerMoveTest : MonoBehaviour
     //判斷按著黏按鍵
     private bool bodyIsStick = false;
     private bool earIsStick = false;
+    private bool isThrow = true;
 
     void Start()
     {
@@ -50,6 +57,10 @@ public class playerMoveTest : MonoBehaviour
         earStick = ear.GetComponent<EarStick>();
         bodyStick = body.GetComponent<bodyStick>();
         bodyRb = body.GetComponent<Rigidbody2D>();
+        bodyCollider = body.GetComponent<Collider2D>();
+        playerCollider = GetComponent<CircleCollider2D>();
+        //earAnim = ear.GetComponent<Animator>();
+        //bodyAnim = body.GetComponent<Animator>();
 
         Check();
     }
@@ -136,7 +147,7 @@ public class playerMoveTest : MonoBehaviour
 
         if (earCanTouch && earIsStick)
         {
-            Debug.Log("earIsTouch");
+
             earIsTouch = true;
         }
         else if (!earIsStick)
@@ -151,38 +162,76 @@ public class playerMoveTest : MonoBehaviour
             rb.isKinematic = true;
             earRb.isKinematic = false;
             earJoint.enabled = true;
+            //playerCollider.radius = 0.7f;
             earCollider.isTrigger = false;
+            bodyCollider.isTrigger = false;
+            playerCollider.isTrigger = true;
+            // if (bodyTouch)
+            // {
+            //     bodyAnim.SetBool("isBodyStick", true);
+            //     earAnim.SetBool("isBodyStick", true);
+            //     bodyTouch = false;
+            // }
         }
         else
         {
+            //playerCollider.radius = 0.96f;
             earCollider.isTrigger = true;
+            bodyCollider.isTrigger = true;
+            playerCollider.isTrigger = false;
+            // if (!bodyTouch)
+            // {
+            //     bodyAnim.SetBool("isBodyStick", false);
+            //     earAnim.SetBool("isBodyStick", false);
+            //     bodyTouch = true;
+            // }
+
             //rb.isKinematic = false;
+
         }
 
         if (earIsTouch)
         {
+            if (earTouch)
+            {
+                earJoint.connectedBody = earStick.otherRb;
+                earJoint.anchor = new Vector2(0.0f, 0.975f);
+                earTouch = false;
+            }
             rb.velocity = new Vector2(0, 0);
             rb.isKinematic = true;
-            otherRb = earStick.otherRb;
-            earJoint.connectedBody = otherRb;
-            earJoint.anchor=new Vector2(0.0f,0.97f);
-            earJoint.useLimits = true;
+            //otherRb = earStick.otherRb;
+
+            //earJoint.useLimits = true;
+
+            playerCollider.isTrigger = true;
+            bodyCollider.isTrigger = false;
             earJoint.enabled = true;
+            bodyJoint.enabled = true;
             earRb.isKinematic = false;
             bodyRb.isKinematic = false;
-            bodyJoint.enabled = true;
             // bodyRb.freezeRotation=false;
             // earRb.freezeRotation=false;
         }
         else
         {
             earJoint.connectedBody = earJo;
-            earJoint.anchor=new Vector2(-0.02f,-1.9f);
+            earJoint.anchor = new Vector2(-0.02f, -1.9f);
             earJoint.useLimits = false;
             //earJoint.enabled = false;
             bodyJoint.enabled = false;
             bodyRb.isKinematic = true;
-            bodyJoint.enabled = false;
+            bodyCollider.isTrigger = true;
+            playerCollider.isTrigger = false;
+
+            if (!earTouch)
+            {
+                isThrow = true;
+                rb.isKinematic = false;
+                Debug.Log(f);
+                rb.AddForce(new Vector2(f.x, f.y));
+                earTouch = true;
+            }
             // bodyRb.freezeRotation=true;
             // earRb.freezeRotation=true;
             // bodyRb.rotation=0;
@@ -199,9 +248,13 @@ public class playerMoveTest : MonoBehaviour
 
     void Move()
     {
-        Vector2 trans;
-        trans = new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, rb.velocity.y);
-        rb.velocity = trans;
+        if (!isThrow)
+        {
+            Debug.Log("move");
+            Vector2 trans;
+            trans = new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, rb.velocity.y);
+            rb.velocity = trans;
+        }
     }
 
     void Jump()
@@ -224,29 +277,29 @@ public class playerMoveTest : MonoBehaviour
         {
             if (Input.GetAxisRaw("Vertical_" + this.tag) > 0)
             {
-                //earRb.AddForce (new Vector3(Vector3.up.x * force, Vector3.up.y * force, 0));
-                earRb.velocity = new Vector3(Vector2.up.x * force, Vector2.up.y * force, 0);
+
+                earRb.AddForce(new Vector3(Vector3.up.x * force, Vector3.up.y * force, 0));
+                //earRb.velocity = new Vector3(Vector2.up.x * force, Vector2.up.y * force, 0);
             }
             if (Input.GetAxisRaw("Vertical_" + this.tag) < 0)
             {
-                //earRb.AddForce (new Vector3(Vector3.down.x * force, Vector3.down.y * force, 0));
-                earRb.velocity = new Vector3(Vector2.down.x * force, Vector2.down.y * force, 0);
+                earRb.AddForce(new Vector3(Vector3.down.x * force, Vector3.down.y * force, 0));
+                //earRb.velocity = new Vector3(Vector2.down.x * force, Vector2.down.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) < 0)
             {
-                Debug.Log("Left");
-                //earRb.AddForce (new Vector3(Vector3.left.x * force, Vector3.left.y * force, 0));
-                earRb.velocity = new Vector3(Vector2.left.x * force, Vector2.left.y * force, 0);
+                earRb.AddForce(new Vector3(Vector3.left.x * force, Vector3.left.y * force, 0));
+                //earRb.velocity = new Vector3(Vector2.left.x * force, Vector2.left.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) > 0)
             {
-                //earRb.AddForce (new Vector3(Vector3.right.x * force, Vector3.right.y * force, 0));
-                earRb.velocity = new Vector3(Vector2.right.x * force, Vector2.right.y * force, 0);
+                earRb.AddForce(new Vector3(Vector3.right.x * force, Vector3.right.y * force, 0));
+                //earRb.velocity = new Vector3(Vector2.right.x * force, Vector2.right.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) == 0 && Input.GetAxisRaw("Vertical_" + this.tag) == 0)
             {
-                //earRb.AddForce (new Vector3(0, 0, 0));
-                earRb.velocity = new Vector3(0, 0, 0);
+                //earRb.AddForce(new Vector3(0, 0, 0));
+                //earRb.velocity = new Vector3(0, 0, 0);
             }
         }
         else
@@ -262,51 +315,60 @@ public class playerMoveTest : MonoBehaviour
         {
             if (Input.GetAxisRaw("Vertical_" + this.tag) > 0)
             {
-               // bodyRb.AddForce (new Vector3(Vector3.up.x * force, Vector3.up.y * force, 0));
-                bodyRb.velocity = new Vector3(Vector2.up.x * force, Vector2.up.y * force, 0);
+                f = new Vector3(Vector3.up.x * force * 10.0f, Vector3.up.y * force * 10.0f, 0);
+                bodyRb.AddForce(new Vector3(Vector3.up.x * force, Vector3.up.y * force, 0));
+                //bodyRb.velocity = new Vector3(Vector2.up.x * force, Vector2.up.y * force, 0);
+                //rb.velocity = new Vector3(Vector2.up.x * force, Vector2.up.y * force, 0);
             }
             if (Input.GetAxisRaw("Vertical_" + this.tag) < 0)
             {
-                //bodyRb.AddForce (new Vector3(Vector3.down.x * force, Vector3.down.y * force, 0));
-                bodyRb.velocity = new Vector3(Vector2.down.x * force, Vector2.down.y * force, 0);
+                f = new Vector3(Vector3.down.x * force * 10.0f, Vector3.down.y * force * 10.0f, 0);
+                bodyRb.AddForce(new Vector3(Vector3.down.x * force, Vector3.down.y * force, 0));
+                //bodyRb.velocity = new Vector3(Vector2.down.x * force, Vector2.down.y * force, 0);
+                //rb.velocity = new Vector3(Vector2.down.x * force, Vector2.down.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) < 0)
             {
-                //bodyRb.AddForce (new Vector3(Vector3.left.x * force, Vector3.left.y * force, 0));
-                bodyRb.velocity = new Vector3(Vector2.left.x * force, Vector2.left.y * force, 0);
+                f = new Vector3(Vector3.left.x * force * 10.0f, Vector3.left.y * force * 10.0f, 0);
+                bodyRb.AddForce(new Vector3(Vector3.left.x * force, Vector3.left.y * force, 0));
+                //bodyRb.velocity = new Vector3(Vector2.left.x * force, Vector2.left.y * force, 0);
+                //rb.velocity = new Vector3(Vector2.left.x * force, Vector2.left.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) > 0)
             {
-                //bodyRb.AddForce (new Vector3(Vector3.right.x * force, Vector3.right.y * force, 0));
-                bodyRb.velocity = new Vector3(Vector2.right.x * force, Vector2.right.y * force, 0);
+                f = new Vector3(Vector3.right.x * force * 10.0f, Vector3.right.y * force * 10.0f, 0);
+                bodyRb.AddForce(new Vector3(Vector3.right.x * force, Vector3.right.y * force, 0));
+                //bodyRb.velocity = new Vector3(Vector2.right.x * force, Vector2.right.y * force, 0);
+                //rb.velocity = new Vector3(Vector2.right.x * force, Vector2.right.y * force, 0);
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) == 0 && Input.GetAxisRaw("Vertical_" + this.tag) == 0)
             {
+                //f=new Vector3(0, 0, 0);
                 //bodyRb.AddForce (new Vector3(0, 0, 0));
-                bodyRb.velocity = new Vector3(0, 0, 0);
+                //bodyRb.velocity = new Vector3(0, 0, 0);
+                //rb.velocity = new Vector3(0, 0, 0);
             }
+            rb.position = bodyRb.position;
         }
         else
         {
             bodyRb.velocity = new Vector3(0, 0, 0);
+            bodyRb.angularVelocity = 0;
+            earRb.angularVelocity = 0;
         }
     }
 
-    // private void OnCollisionEnter2D(Collision2D other)
-    // {
-    //     if (other.gameObject.tag != "wall")
-    //     {
-    //         canJump = true;
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        isThrow = false;
+    }
 
-    //     }
-    //     canTouch = true;
-    // }
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        isThrow = false;
+    }
 
-    // private void OnCollisionStay2D(Collision2D other)
-    // {
-    // }
-
-    // private void OnCollisionExit2D(Collision2D other)
-    // {
-    // }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+    }
 }
