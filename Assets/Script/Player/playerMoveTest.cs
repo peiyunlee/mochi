@@ -12,7 +12,7 @@ public class playerMoveTest : MonoBehaviour
     private Collider2D earCollider;
     private HingeJoint2D earJoint;
     private EarStick earStick;
-    //private Animator earAnim;
+    private Animator earAnim;
     //Body相關
     public GameObject body;
     //public Rigidbody2D bodyJo;
@@ -20,7 +20,7 @@ public class playerMoveTest : MonoBehaviour
     private HingeJoint2D bodyJoint;
     private bodyStick bodyStick;
     private Collider2D bodyCollider;
-    //private Animator bodyAnim;
+    private Animator bodyAnim;
     private bool earTouch = true;
     private bool bodyTouch = true;
     //Player
@@ -59,8 +59,8 @@ public class playerMoveTest : MonoBehaviour
         bodyRb = body.GetComponent<Rigidbody2D>();
         bodyCollider = body.GetComponent<Collider2D>();
         playerCollider = GetComponent<CircleCollider2D>();
-        //earAnim = ear.GetComponent<Animator>();
-        //bodyAnim = body.GetComponent<Animator>();
+        earAnim = ear.GetComponent<Animator>();
+        bodyAnim = body.GetComponent<Animator>();
 
         Check();
     }
@@ -160,31 +160,44 @@ public class playerMoveTest : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
             rb.isKinematic = true;
-            earRb.isKinematic = false;
-            earJoint.enabled = true;
-            //playerCollider.radius = 0.7f;
+            playerCollider.isTrigger = true;
             earCollider.isTrigger = false;
             bodyCollider.isTrigger = false;
-            playerCollider.isTrigger = true;
-            // if (bodyTouch)
-            // {
-            //     bodyAnim.SetBool("isBodyStick", true);
-            //     earAnim.SetBool("isBodyStick", true);
-            //     bodyTouch = false;
-            // }
+            earRb.isKinematic = false;
+
+            earJoint.enabled = true;
+            playerCollider.radius = 0.7f;
+
+
+            if (bodyTouch)
+            {
+
+                bodyAnim.SetBool("isBodyStick", true);
+                earAnim.SetBool("isBodyStick", true);
+
+                //earRb.position=new Vector3(earRb.position.x,earRb.position.y-0.1f);
+                bodyTouch = false;
+            }
+            if (!earAnim.applyRootMotion)
+            {
+                Debug.Log("1");
+                earAnim.applyRootMotion = earStick.rootMotion;
+            }
+
         }
         else
         {
-            //playerCollider.radius = 0.96f;
+            playerCollider.radius = 0.96f;
             earCollider.isTrigger = true;
             bodyCollider.isTrigger = true;
-            playerCollider.isTrigger = false;
-            // if (!bodyTouch)
-            // {
-            //     bodyAnim.SetBool("isBodyStick", false);
-            //     earAnim.SetBool("isBodyStick", false);
-            //     bodyTouch = true;
-            // }
+            if (!bodyTouch)
+            {
+                bodyAnim.SetBool("isBodyStick", false);
+                earAnim.SetBool("isBodyStick", false);
+                earStick.rootMotion = false;
+                earAnim.applyRootMotion = earStick.rootMotion;
+                bodyTouch = true;
+            }
 
             //rb.isKinematic = false;
 
@@ -222,7 +235,7 @@ public class playerMoveTest : MonoBehaviour
             bodyJoint.enabled = false;
             bodyRb.isKinematic = true;
             bodyCollider.isTrigger = true;
-            playerCollider.isTrigger = false;
+            
 
             if (!earTouch)
             {
@@ -230,6 +243,7 @@ public class playerMoveTest : MonoBehaviour
                 rb.isKinematic = false;
                 Debug.Log(f);
                 rb.AddForce(new Vector2(f.x, f.y));
+                bodyRb.rotation = 0;
                 earTouch = true;
             }
             // bodyRb.freezeRotation=true;
@@ -243,6 +257,7 @@ public class playerMoveTest : MonoBehaviour
             rb.isKinematic = false;
             earJoint.enabled = false;
             earRb.isKinematic = true;
+            playerCollider.isTrigger = false;
         }
     }
 
@@ -343,7 +358,7 @@ public class playerMoveTest : MonoBehaviour
             }
             if (Input.GetAxisRaw("Horizontal_" + this.tag) == 0 && Input.GetAxisRaw("Vertical_" + this.tag) == 0)
             {
-                //f=new Vector3(0, 0, 0);
+                f = new Vector3(0, 0, 0);
                 //bodyRb.AddForce (new Vector3(0, 0, 0));
                 //bodyRb.velocity = new Vector3(0, 0, 0);
                 //rb.velocity = new Vector3(0, 0, 0);
@@ -355,6 +370,7 @@ public class playerMoveTest : MonoBehaviour
             bodyRb.velocity = new Vector3(0, 0, 0);
             bodyRb.angularVelocity = 0;
             earRb.angularVelocity = 0;
+
         }
     }
 

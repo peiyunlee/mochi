@@ -5,6 +5,7 @@ using UnityEngine;
 public class EarStick : MonoBehaviour
 {
     public bool earCanTouch = false;
+    public bool rootMotion=false;
     public Rigidbody2D otherRb;
     // Use this for initialization
     void Start()
