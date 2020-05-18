@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 114626250354013134}
   - component: {fileID: 58319077883555754}
   - component: {fileID: 233439113912786446}
+  - component: {fileID: 95047669623902938}
   m_Layer: 8
   m_Name: body
   m_TagString: Untagged
@@ -94,6 +95,7 @@ GameObject:
   - component: {fileID: 233173685324096172}
   - component: {fileID: 60196509852435006}
   - component: {fileID: 114993365178737540}
+  - component: {fileID: 95099188480164298}
   m_Layer: 8
   m_Name: ear3
   m_TagString: Untagged
@@ -108,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1175204665713370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.02, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4824921178412044}
@@ -321,7 +323,7 @@ PolygonCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   m_Points:
     m_Paths:
     - - {x: -0.11134133, y: -0.27802035}
@@ -363,6 +365,42 @@ PolygonCollider2D:
       - {x: 0.546593, y: -0.81386447}
       - {x: 0.58865863, y: -0.66802037}
       - {x: 0.63721967, y: -0.240641}
+--- !u!95 &95047669623902938
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647923627176570}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ddf00289952c0e6439c6d1fdd098e6b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95099188480164298
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1810554632075542}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 549c087d04b3a244fa2a41d43c987998, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114256723936757082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -379,7 +417,7 @@ MonoBehaviour:
   body: {fileID: 1647923627176570}
   moveSpeed: 3
   jumpSpeed: 250
-  force: 20
+  force: 30
   earCanTouch: 0
 --- !u!114 &114626250354013134
 MonoBehaviour:
@@ -406,7 +444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   earCanTouch: 0
+  rootMotion: 0
   otherRb: {fileID: 0}
+  moveY: 0
 --- !u!212 &212737241410248096
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -513,7 +553,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.02, y: -1.9}
-  m_ConnectedAnchor: {x: -0.02000014, y: -0.039999485}
+  m_ConnectedAnchor: {x: 0, y: -0.009999275}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

@@ -5,18 +5,29 @@ using UnityEngine;
 public class EarStick : MonoBehaviour
 {
     public bool earCanTouch = false;
-    public bool rootMotion=false;
+    public bool rootMotion = false;
     public Rigidbody2D otherRb;
+    private Rigidbody2D earRb;
+    public float moveY = 0;
     // Use this for initialization
     void Start()
     {
-
+        earRb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    void FixedUpdate() {
+        //idleAnim();
+    }
+
+    public void idleAnim()
+    {
+        earRb.velocity = new Vector2(earRb.velocity.x, earRb.velocity.y + moveY);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
