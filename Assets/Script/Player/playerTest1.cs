@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class playerTest1 : MonoBehaviour
 {
     //Ear相關
     public GameObject ear;
@@ -97,23 +97,21 @@ public class PlayerMovement : MonoBehaviour
         canJump = bodyStick.canJump;
         if (Input.GetButtonDown("BodyStick_" + this.tag))
         {
-            //bodyIsStick = true;
-            bodyIsStick = !bodyIsStick;
+            bodyIsStick = true;
         }
-        // else if (Input.GetButtonUp("BodyStick_" + this.tag))
-        // {
-        //     bodyIsStick = false;
-        // }
+        else if (Input.GetButtonUp("BodyStick_" + this.tag))
+        {
+            bodyIsStick = false;
+        }
 
         if (Input.GetButtonDown("EarStick_" + this.tag))
         {
-            //earIsStick = true;
-            earIsStick = !earIsStick;
+            earIsStick = true;
         }
-        // else if (Input.GetButtonUp("EarStick_" + this.tag))
-        // {
-        //     earIsStick = false;
-        // }
+        else if (Input.GetButtonUp("EarStick_" + this.tag))
+        {
+            earIsStick = false;
+        }
 
     }
 
@@ -182,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (!earAnim.applyRootMotion)
             {
+                Debug.Log("1");
                 earAnim.applyRootMotion = earStick.rootMotion;
             }
 
@@ -243,8 +242,8 @@ public class PlayerMovement : MonoBehaviour
                 isThrow = true;
                 rb.isKinematic = false;
                 Debug.Log(f);
-                //rb.AddForce(new Vector2(f.x, f.y));
-                //bodyRb.rotation = 0;
+                rb.AddForce(new Vector2(f.x, f.y));
+                bodyRb.rotation = 0;
                 earTouch = true;
             }
             // bodyRb.freezeRotation=true;
@@ -266,6 +265,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isThrow)
         {
+            Debug.Log("move");
             Vector2 trans;
             trans = new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, rb.velocity.y);
             rb.velocity = trans;

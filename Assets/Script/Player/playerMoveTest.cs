@@ -35,7 +35,7 @@ public class playerMoveTest : MonoBehaviour
     private int jumpCount = 0;
     private Vector3 f = new Vector3(0, 0, 0);
     //黏
-    private bool bodyIsTouch = false;
+    private bool bodyIsTouch = true;
     private bool earIsTouch = false;
     //判斷碰到物體可黏
     private bool canTouch = true;
@@ -92,68 +92,68 @@ public class playerMoveTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        earCanTouch = earStick.earCanTouch;
-        canTouch = bodyStick.canTouch;
-        canJump = bodyStick.canJump;
-        if (Input.GetButtonDown("BodyStick_" + this.tag))
-        {
-            bodyIsStick = true;
-        }
-        else if (Input.GetButtonUp("BodyStick_" + this.tag))
-        {
-            bodyIsStick = false;
-        }
+        // earCanTouch = earStick.earCanTouch;
+        // canTouch = bodyStick.canTouch;
+        // canJump = bodyStick.canJump;
+        // if (Input.GetButtonDown("BodyStick_" + this.tag))
+        // {
+        //     bodyIsStick = true;
+        // }
+        // else if (Input.GetButtonUp("BodyStick_" + this.tag))
+        // {
+        //     bodyIsStick = false;
+        // }
 
-        if (Input.GetButtonDown("EarStick_" + this.tag))
-        {
-            earIsStick = true;
-        }
-        else if (Input.GetButtonUp("EarStick_" + this.tag))
-        {
-            earIsStick = false;
-        }
+        // if (Input.GetButtonDown("EarStick_" + this.tag))
+        // {
+        //     earIsStick = true;
+        // }
+        // else if (Input.GetButtonUp("EarStick_" + this.tag))
+        // {
+        //     earIsStick = false;
+        // }
 
     }
 
     void FixedUpdate()
     {
-        if (!bodyIsTouch && !earIsTouch)
-        {
+        // if (!bodyIsTouch && !earIsTouch)
+        // {
 
-            Move();
+        //     Move();
 
-            Jump();
-        }
+        //     Jump();
+        // }
         Touch();
 
         EarTurn();
 
-        BodyTurn();
+        //BodyTurn();
 
     }
 
     void Touch()
     {
         //如果碰到物體and按著黏
-        if (canTouch && bodyIsStick)
-        {
-            bodyIsTouch = true;
+        // if (canTouch && bodyIsStick)
+        // {
+        //     bodyIsTouch = true;
 
-        }
-        else if (!bodyIsStick)
-        {
-            bodyIsTouch = false;
-        }
+        // }
+        // else if (!bodyIsStick)
+        // {
+        //     bodyIsTouch = false;
+        // }
 
-        if (earCanTouch && earIsStick)
-        {
+        // if (earCanTouch && earIsStick)
+        // {
 
-            earIsTouch = true;
-        }
-        else if (!earIsStick)
-        {
-            earIsTouch = false;
-        }
+        //     earIsTouch = true;
+        // }
+        // else if (!earIsStick)
+        // {
+        //     earIsTouch = false;
+        // }
 
         //身體黏住的功能調整
         if (bodyIsTouch)
@@ -203,62 +203,62 @@ public class playerMoveTest : MonoBehaviour
 
         }
 
-        if (earIsTouch)
-        {
-            if (earTouch)
-            {
-                earJoint.connectedBody = earStick.otherRb;
-                earJoint.anchor = new Vector2(0.0f, 0.975f);
-                earTouch = false;
-            }
-            rb.velocity = new Vector2(0, 0);
-            rb.isKinematic = true;
-            //otherRb = earStick.otherRb;
+        // if (earIsTouch)
+        // {
+        //     if (earTouch)
+        //     {
+        //         earJoint.connectedBody = earStick.otherRb;
+        //         earJoint.anchor = new Vector2(0.0f, 0.975f);
+        //         earTouch = false;
+        //     }
+        //     rb.velocity = new Vector2(0, 0);
+        //     rb.isKinematic = true;
+        //     //otherRb = earStick.otherRb;
 
-            //earJoint.useLimits = true;
+        //     //earJoint.useLimits = true;
 
-            playerCollider.isTrigger = true;
-            bodyCollider.isTrigger = false;
-            earJoint.enabled = true;
-            bodyJoint.enabled = true;
-            earRb.isKinematic = false;
-            bodyRb.isKinematic = false;
-            // bodyRb.freezeRotation=false;
-            // earRb.freezeRotation=false;
-        }
-        else
-        {
-            earJoint.connectedBody = earJo;
-            earJoint.anchor = new Vector2(-0.02f, -1.9f);
-            earJoint.useLimits = false;
-            //earJoint.enabled = false;
-            bodyJoint.enabled = false;
-            bodyRb.isKinematic = true;
-            bodyCollider.isTrigger = true;
+        //     playerCollider.isTrigger = true;
+        //     bodyCollider.isTrigger = false;
+        //     earJoint.enabled = true;
+        //     bodyJoint.enabled = true;
+        //     earRb.isKinematic = false;
+        //     bodyRb.isKinematic = false;
+        //     // bodyRb.freezeRotation=false;
+        //     // earRb.freezeRotation=false;
+        // }
+        // else
+        // {
+        //     earJoint.connectedBody = earJo;
+        //     earJoint.anchor = new Vector2(-0.02f, -1.9f);
+        //     earJoint.useLimits = false;
+        //     //earJoint.enabled = false;
+        //     bodyJoint.enabled = false;
+        //     bodyRb.isKinematic = true;
+        //     bodyCollider.isTrigger = true;
             
 
-            if (!earTouch)
-            {
-                isThrow = true;
-                rb.isKinematic = false;
-                Debug.Log(f);
-                rb.AddForce(new Vector2(f.x, f.y));
-                bodyRb.rotation = 0;
-                earTouch = true;
-            }
-            // bodyRb.freezeRotation=true;
-            // earRb.freezeRotation=true;
-            // bodyRb.rotation=0;
-            //rb.isKinematic = false;
-        }
+        //     if (!earTouch)
+        //     {
+        //         isThrow = true;
+        //         rb.isKinematic = false;
+        //         Debug.Log(f);
+        //         rb.AddForce(new Vector2(f.x, f.y));
+        //         bodyRb.rotation = 0;
+        //         earTouch = true;
+        //     }
+        //     // bodyRb.freezeRotation=true;
+        //     // earRb.freezeRotation=true;
+        //     // bodyRb.rotation=0;
+        //     //rb.isKinematic = false;
+        // }
 
-        if (!bodyIsTouch && !earIsTouch)
-        {
-            rb.isKinematic = false;
-            earJoint.enabled = false;
-            earRb.isKinematic = true;
-            playerCollider.isTrigger = false;
-        }
+        // if (!bodyIsTouch && !earIsTouch)
+        // {
+        //     rb.isKinematic = false;
+        //     earJoint.enabled = false;
+        //     earRb.isKinematic = true;
+        //     playerCollider.isTrigger = false;
+        // }
     }
 
     void Move()
