@@ -9,6 +9,8 @@ public class EarStick : MonoBehaviour
     public Rigidbody2D otherRb;
     private Rigidbody2D earRb;
     public float moveY = 0;
+
+    public Collider2D[] exclude;
     // Use this for initialization
     void Start()
     {
@@ -18,10 +20,11 @@ public class EarStick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         //idleAnim();
     }
 
@@ -40,5 +43,10 @@ public class EarStick : MonoBehaviour
         //     }
         // }
         earCanTouch = true;
+
+        if (other != exclude[0]&&other != exclude[1]){
+            otherRb = other.gameObject.GetComponent<Rigidbody2D>();
+        }
+
     }
 }

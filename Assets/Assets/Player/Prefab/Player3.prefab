@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4824921178412044}
-  - component: {fileID: 114256723936757082}
+  - component: {fileID: 114736396900890548}
   - component: {fileID: 50316747936905118}
   - component: {fileID: 58555014478328322}
   m_Layer: 0
@@ -372,7 +372,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1647923627176570}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ddf00289952c0e6439c6d1fdd098e6b8, type: 2}
   m_CullingMode: 0
@@ -390,7 +390,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810554632075542}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 549c087d04b3a244fa2a41d43c987998, type: 2}
   m_CullingMode: 0
@@ -401,24 +401,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114256723936757082
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1193426566882752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25e7eda1dc64d254daa64163892bae04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ear: {fileID: 1810554632075542}
-  earJo: {fileID: 50178946712517886}
-  body: {fileID: 1647923627176570}
-  moveSpeed: 3
-  jumpSpeed: 250
-  force: 30
-  earCanTouch: 0
 --- !u!114 &114626250354013134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,6 +414,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canTouch: 0
   canJump: 1
+--- !u!114 &114736396900890548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193426566882752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311995ae6bb986644bb276e702809077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ear: {fileID: 1810554632075542}
+  earJo: {fileID: 50178946712517886}
+  body: {fileID: 1647923627176570}
+  moveSpeed: 3
+  jumpSpeed: 250
+  force: 20
+  earCanTouch: 0
 --- !u!114 &114993365178737540
 MonoBehaviour:
   m_ObjectHideFlags: 1
