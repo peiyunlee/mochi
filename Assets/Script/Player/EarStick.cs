@@ -42,9 +42,27 @@ public class EarStick : MonoBehaviour
         //         otherRb = other.gameObject.GetComponent<Rigidbody2D>();
         //     }
         // }
-        earCanTouch = true;
+        
 
         if (other != exclude[0]&&other != exclude[1]){
+            earCanTouch = true;
+            otherRb = other.gameObject.GetComponent<Rigidbody2D>();
+        }
+
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        // if (other.gameObject.tag == "ground")
+        // {
+        //     if (other.gameObject.GetComponent<Rigidbody2D>() != null)
+        //     {
+        //         otherRb = other.gameObject.GetComponent<Rigidbody2D>();
+        //     }
+        // }
+        
+
+        if (other != exclude[0]&&other != exclude[1]){
+            earCanTouch = true;
             otherRb = other.gameObject.GetComponent<Rigidbody2D>();
         }
 
