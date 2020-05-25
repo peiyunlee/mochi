@@ -10,6 +10,7 @@ TagManager:
   - player2
   - player3
   - player4
+  - YELLOW
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - 
   - red
   - yellow
-  - 
-  - 
-  - 
+  - blue
+  - green
+  - gray
   - 
   - 
   - 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
 	//接收玩家指令
-	protected int color = (int)EColor.NONE;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -20,6 +19,10 @@ public class Item : MonoBehaviour {
 	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
 		
+	}
+
+	protected virtual void OnTriggerExit2D(Collider2D other){
+
 	}
 
 	protected virtual void Action(){

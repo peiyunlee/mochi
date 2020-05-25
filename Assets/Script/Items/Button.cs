@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Button : Item
 {
-    public int _color;
     private Transform btnTransform;
 
     [SerializeField]
     private bool isTrigger;
     public bool isClicked;
+
+    public GameObject btnCollider;
 
     // Use this for initialization
     override protected void Start()
@@ -17,7 +18,6 @@ public class Button : Item
         isClicked = false;
         isTrigger = false;
         btnTransform = this.gameObject.GetComponent<Transform>();
-        color = _color;
     }
 
     // Update is called once per frame
@@ -32,26 +32,26 @@ public class Button : Item
     override protected void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (color == (int)EColor.NONE)
+        if (this.gameObject.layer == 12)
             isTrigger = true;
-        else
+        else if ((this.gameObject.layer >> other.gameObject.layer & 1) == 1)
         {
-            // if (other.gameObject.tag == "Player"+color)
-            // {
-            // 	isTrigger = true;
-            // }
-            if ((this.gameObject.layer >> other.gameObject.layer & 1) == 1)
-            {
-                isTrigger = true;
-            }
+            isTrigger = true;
         }
+        else{
+            btnCollider.SetActive(true);
+        }
+    }
+    override protected void OnTriggerExit2D(Collider2D other)
+    {
+            btnCollider.SetActive(false);
     }
 
     override protected void Action()
     {
         //做出反應
         //呼叫player的反應
-        if (btnTransform.position.y > -0.31f)
+        if (btnTransform.position.y > 1.8f)
         {
             //做出反應
             btnTransform.position += new Vector3(0, -2.5f * Time.deltaTime, 0);

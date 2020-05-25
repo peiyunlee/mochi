@@ -13,17 +13,20 @@ public class ArrowManager : MonoBehaviour
 
     private int shootIdx;
 
+    public float speed;//2.5f
+    public float between;//2.0f
+
 
     void Start()
     {
 		btnScript = btn.GetComponent<Button>();
-		isStart = new bool[4];
+		isStart = new bool[arrow.Length];
 		for (int i = 0; i < isStart.Length; i++)
 		{
 			isStart[i] = false;
 		}
         shootIdx = 0;
-		InvokeRepeating("Shoot",2.0f,2.0f);
+		InvokeRepeating("Shoot",2.0f,between);
 		isClosed = false;
     }
 
@@ -53,7 +56,7 @@ public class ArrowManager : MonoBehaviour
         //呼叫player的反應
         if (item.transform.position.x > -9.5f)
         {
-            item.transform.position += new Vector3(-2.5f * Time.deltaTime, 0, 0);
+            item.transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
         }
         else
         {
