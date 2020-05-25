@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 212863558772353904}
   - component: {fileID: 61446449127695908}
   - component: {fileID: 114907453234867630}
-  m_Layer: 0
+  - component: {fileID: 60633228523183398}
+  m_Layer: 12
   m_Name: Button (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +40,7 @@ GameObject:
   - component: {fileID: 4725803712008960}
   - component: {fileID: 212057961068420990}
   - component: {fileID: 61521202645151578}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4304411524652168}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ArrowButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +72,7 @@ GameObject:
   - component: {fileID: 4094800070191882}
   - component: {fileID: 212350205027553268}
   - component: {fileID: 60612767976309042}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,8 +99,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667248314728800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.436, y: 1.98, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children:
   - {fileID: 4883394361883816}
   - {fileID: 4094800070191882}
@@ -142,7 +143,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -163,6 +164,36 @@ PolygonCollider2D:
       - {x: -0.21379174, y: -0.093448624}
       - {x: 0.2137918, y: -0.09189726}
       - {x: 0.2137918, y: 0.040701784}
+--- !u!60 &60633228523183398
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1201703020308108}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.84, y: 0.37}
+    newSize: {x: 0.84, y: 0.37}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.16281159, y: 0.1809972}
+      - {x: -0.16741174, y: 0.18405753}
+      - {x: -0.41663313, y: 0.08113808}
+      - {x: -0.42073035, y: -0.17536877}
+      - {x: 0.41868216, y: -0.17996137}
+      - {x: 0.4145841, y: 0.081661835}
 --- !u!61 &61446449127695908
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -224,9 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f98aeb56b59740bf826f7ee71274e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _color: 0
+  player: {fileID: 0}
   isTrigger: 0
   isClicked: 0
+  btnCollider: {fileID: 1868166821485826}
 --- !u!212 &212057961068420990
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -309,7 +341,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: c1bdec3e226f2a2489aa45a4073f4086, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -32,9 +32,10 @@ public class Button : Item
     override protected void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (this.gameObject.layer == 12)
+        if (this.gameObject.layer == 12){
             isTrigger = true;
-        else if ((this.gameObject.layer >> other.gameObject.layer & 1) == 1)
+        }
+        else if (this.gameObject.layer == other.gameObject.layer)
         {
             isTrigger = true;
         }
@@ -44,7 +45,7 @@ public class Button : Item
     }
     override protected void OnTriggerExit2D(Collider2D other)
     {
-            btnCollider.SetActive(false);
+        btnCollider.SetActive(false);
     }
 
     override protected void Action()

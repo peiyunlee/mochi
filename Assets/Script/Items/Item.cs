@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
 	//接收玩家指令
+	public GameObject player;
 
 	// Use this for initialization
 	protected virtual void Start () {
