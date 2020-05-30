@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         moveSpeed = 3;
-        jumpSpeed = 250;
+        //jumpSpeed = 250;
         rb = GetComponent<Rigidbody2D>();
         earRb = ear.GetComponent<Rigidbody2D>();
         earCollider = ear.GetComponent<Collider2D>();
@@ -195,14 +195,14 @@ public class PlayerMovement : MonoBehaviour
             playerCollider.radius = 0.96f;
             earCollider.isTrigger = true;
             bodyCollider.isTrigger = true;
-            if (!bodyTouch)
-            {
-                bodyAnim.SetBool("isBodyStick", false);
-                earAnim.SetBool("isBodyStick", false);
-                earStick.rootMotion = false;
-                earAnim.applyRootMotion = earStick.rootMotion;
-                bodyTouch = true;
-            }
+            // if (!bodyTouch)
+            // {
+            //     bodyAnim.SetBool("isBodyStick", false);
+            //     earAnim.SetBool("isBodyStick", false);
+            //     earStick.rootMotion = false;
+            //     earAnim.applyRootMotion = earStick.rootMotion;
+            //     bodyTouch = true;
+            // }
 
             //rb.isKinematic = false;
 
@@ -214,20 +214,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (earTouch)
                 {
-                    // if (earStick.otherRb != null)
-                    // {
+                    //earJoint.useLimits = true;
                     bodyRb.velocity = new Vector2(0, 0);
                     earRb.velocity = new Vector2(0, 0);
                     earJoint.connectedBody = earStick.otherRb;
                     earJoint.anchor = new Vector2(0.0f, 0.975f);
                     earTouch = false;
-                    //}
                 }
                 rb.velocity = new Vector2(0, 0);
                 rb.isKinematic = true;
                 //otherRb = earStick.otherRb;
 
-                //earJoint.useLimits = true;
+
 
                 playerCollider.isTrigger = true;
                 bodyCollider.isTrigger = false;
@@ -241,9 +239,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            earJoint.connectedBody = earJo;
-            earJoint.anchor = new Vector2(-0.02f, -1.9f);
-            earJoint.useLimits = false;
+
+            //earJoint.useLimits = false;
             //earJoint.enabled = false;
             bodyJoint.enabled = false;
             bodyRb.isKinematic = true;
@@ -252,6 +249,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (!earTouch)
             {
+                earJoint.connectedBody = earJo;
+                earJoint.anchor = new Vector2(-0.02f, -1.9f);
                 isThrow = true;
                 rb.isKinematic = false;
                 Debug.Log(f);
@@ -380,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             bodyRb.velocity = new Vector3(0, 0, 0);
-            bodyRb.angularVelocity = 0;
+            //bodyRb.angularVelocity = 0;
             earRb.angularVelocity = 0;
 
         }

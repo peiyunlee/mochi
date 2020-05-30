@@ -44,7 +44,7 @@ public class EarStick : MonoBehaviour
         // }
         
 
-        if (other != exclude[0]&&other != exclude[1]){
+        if (other != exclude[0]&&other != exclude[1]&&other.gameObject.tag!="joint"){
             earCanTouch = true;
             otherRb = other.gameObject.GetComponent<Rigidbody2D>();
         }
@@ -61,7 +61,7 @@ public class EarStick : MonoBehaviour
         // }
         
 
-        if (other != exclude[0]&&other != exclude[1]){
+        if (other != exclude[0]&&other != exclude[1]&&other.gameObject.tag!="joint"){
             earCanTouch = true;
             otherRb = other.gameObject.GetComponent<Rigidbody2D>();
         }
