@@ -46,10 +46,17 @@ public class PlayerMovement : MonoBehaviour
     private bool earIsStick = false;
     private bool isThrow = true;
 
+
+    //new
+
+
+    LayerMask playerLayer;
+    SpriteRenderer e_SR,b_SR;
+
     void Start()
     {
-        moveSpeed = 3;
-        jumpSpeed = 250;
+        // moveSpeed = 3;
+        // jumpSpeed = 250;
         rb = GetComponent<Rigidbody2D>();
         earRb = ear.GetComponent<Rigidbody2D>();
         earCollider = ear.GetComponent<Collider2D>();
@@ -64,6 +71,11 @@ public class PlayerMovement : MonoBehaviour
         bodyAnim = body.GetComponent<Animator>();
 
         Check();
+
+        //new
+        e_SR = ear.GetComponent<SpriteRenderer>();
+        b_SR = body.GetComponent<SpriteRenderer>();
+        playerLayer = this.gameObject.layer;
     }
 
     //偵測連接的搖桿
@@ -388,6 +400,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        ColorDetect(other);
         isThrow = false;
     }
 
@@ -398,5 +411,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
+    }
+
+    //判斷顏色
+    private void ColorDetect(Collision2D other)
+    {
+        if (other.gameObject.layer == 12)
+        {
+            Debug.Log("ok");
+        }
+        else if (playerLayer == other.gameObject.layer)
+        {
+            Debug.Log("ok");
+        }
+        else
+        {
+            Debug.Log(playerLayer);
+            Die();  
+        }
+    }
+
+    public void Die()
+    {
+        e_SR.color = new Color(0, 0, 0, 0.5f);
+        b_SR.color = new Color(0, 0, 0, 0.5f);
+        Debug.Log("die");
     }
 }
