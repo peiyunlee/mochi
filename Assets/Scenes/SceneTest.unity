@@ -1277,7 +1277,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a018f5f3ea58f094aa500f734d13ac4c, type: 3}
   m_Name: 
@@ -13471,7 +13471,7 @@ Prefab:
     - target: {fileID: 114343062482030806, guid: 5be2ffb269ba61449b05a9ea00b441c9,
         type: 2}
       propertyPath: jumpSpeed
-      value: 325
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114343062482030806, guid: 5be2ffb269ba61449b05a9ea00b441c9,
         type: 2}
@@ -13517,6 +13517,19 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748379608360404, guid: 5be2ffb269ba61449b05a9ea00b441c9, type: 2}
+      propertyPath: m_TagString
+      value: player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779677308205614, guid: 5be2ffb269ba61449b05a9ea00b441c9, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 50394226963912784, guid: 5be2ffb269ba61449b05a9ea00b441c9,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5be2ffb269ba61449b05a9ea00b441c9, type: 2}

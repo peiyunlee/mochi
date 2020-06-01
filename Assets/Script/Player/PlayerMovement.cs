@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        moveSpeed = 3;
+        //moveSpeed = 3;
         //jumpSpeed = 250;
         rb = GetComponent<Rigidbody2D>();
         earRb = ear.GetComponent<Rigidbody2D>();
