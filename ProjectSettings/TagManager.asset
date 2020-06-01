@@ -10,7 +10,7 @@ TagManager:
   - player2
   - player3
   - player4
-  - YELLOW
+  - joint
   layers:
   - Default
   - TransparentFX
@@ -22,9 +22,9 @@ TagManager:
   - 
   - red
   - yellow
-  - blue
-  - green
-  - gray
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -53,6 +53,9 @@ TagManager:
     locked: 0
   - name: LineRenderer
     uniqueID: 3907206669
+    locked: 0
+  - name: ear
+    uniqueID: 4163987627
     locked: 0
   - name: Player
     uniqueID: 3377062863
