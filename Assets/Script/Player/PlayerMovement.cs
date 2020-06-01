@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     LayerMask playerLayer;
-    SpriteRenderer e_SR,b_SR;
+    SpriteRenderer e_SR, b_SR;
 
     void Start()
     {
@@ -415,6 +415,7 @@ public class PlayerMovement : MonoBehaviour
     //判斷顏色
     private void ColorDetect(Collision2D other)
     {
+
         if (other.gameObject.layer == 12)
         {
             Debug.Log("ok");
@@ -425,15 +426,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log(playerLayer);
-            Die();  
+            if (other.gameObject.tag != "player1" && other.gameObject.tag != "player2" && other.gameObject.tag != "player3" && other.gameObject.tag != "player4")
+            {
+                Debug.Log(playerLayer);
+                //Die();
+            }
         }
     }
 
-    public void Die()
-    {
-        e_SR.color = new Color(0, 0, 0, 0.5f);
-        b_SR.color = new Color(0, 0, 0, 0.5f);
-        Debug.Log("die");
-    }
+    // public void Die()
+    // {
+    //     e_SR.color = new Color(0, 0, 0, 0.5f);
+    //     b_SR.color = new Color(0, 0, 0, 0.5f);
+    //     Debug.Log("die");
+    // }
 }
