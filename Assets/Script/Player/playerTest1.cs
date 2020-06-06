@@ -186,17 +186,17 @@ public class playerTest1 : MonoBehaviour
 
                 bodyRb.velocity = new Vector2(0, 0);
                 earRb.velocity = new Vector2(0, 0);
-                // bodyAnim.SetBool("isBodyStick", true);
-                // earAnim.SetBool("isBodyStick", true);
+                bodyAnim.SetBool("isBodyStick", true);
+                earAnim.SetBool("isBodyStick", true);
 
                 //earRb.position=new Vector3(earRb.position.x,earRb.position.y-0.1f);
                 bodyTouch = false;
             }
 
-            // if (!earAnim.applyRootMotion)
-            // {
-            //     earAnim.applyRootMotion = earStick.rootMotion;
-            // }
+            if (!earAnim.applyRootMotion)
+            {
+                earAnim.applyRootMotion = earStick.rootMotion;
+            }
 
         }
         else

@@ -49,7 +49,7 @@ public class PlayerTest : MonoBehaviour
     private bool earIsStick = false;
     private bool isThrow = true;
 
-
+    private bool isDead = false;
     //new
 
 
@@ -111,46 +111,52 @@ public class PlayerTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        earCanTouch = earStick.earCanTouch;
-        canTouch = bodyStick.canTouch;
-        canJump = bodyStick.canJump;
-        if (Input.GetButtonDown("BodyStick_" + this.tag))
+        if (!isDead)
         {
-            //bodyIsStick = true;
-            bodyIsStick = !bodyIsStick;
-        }
-        // else if (Input.GetButtonUp("BodyStick_" + this.tag))
-        // {
-        //     bodyIsStick = false;
-        // }
+            earCanTouch = earStick.earCanTouch;
+            canTouch = bodyStick.canTouch;
+            canJump = bodyStick.canJump;
+            if (Input.GetButtonDown("BodyStick_" + this.tag))
+            {
+                //bodyIsStick = true;
+                bodyIsStick = !bodyIsStick;
+            }
+            // else if (Input.GetButtonUp("BodyStick_" + this.tag))
+            // {
+            //     bodyIsStick = false;
+            // }
 
-        if (Input.GetButtonDown("EarStick_" + this.tag))
-        {
-            //earIsStick = true;
-            earIsStick = !earIsStick;
+            if (Input.GetButtonDown("EarStick_" + this.tag))
+            {
+                //earIsStick = true;
+                earIsStick = !earIsStick;
+            }
+            // else if (Input.GetButtonUp("EarStick_" + this.tag))
+            // {
+            //     earIsStick = false;
+            // }
         }
-        // else if (Input.GetButtonUp("EarStick_" + this.tag))
-        // {
-        //     earIsStick = false;
-        // }
+
 
     }
 
     void FixedUpdate()
     {
-        if (!bodyIsTouch && !earIsTouch)
+        if (!isDead)
         {
+            if (!bodyIsTouch && !earIsTouch)
+            {
 
-            Move();
+                Move();
 
-            Jump();
+                Jump();
+            }
+            Touch();
+
+            EarTurn();
+
+            BodyTurn();
         }
-        Touch();
-
-        EarTurn();
-
-        BodyTurn();
-
     }
 
     void Touch()
@@ -462,7 +468,10 @@ public class PlayerTest : MonoBehaviour
         }
         else
         {
-            if (other.gameObject.tag != "player1" && other.gameObject.tag != "player2" && other.gameObject.tag != "player3" && other.gameObject.tag != "player4")
+            if ((other.gameObject.tag != "player1")
+            && (other.gameObject.tag != "player2")
+            && (other.gameObject.tag != "player3")
+            && (other.gameObject.tag != "player4"))
             {
                 Debug.Log(playerLayer);
                 Die();
@@ -474,6 +483,10 @@ public class PlayerTest : MonoBehaviour
     {
         e_SR.color = new Color(0, 0, 0, 0.5f);
         b_SR.color = new Color(0, 0, 0, 0.5f);
+        rb.velocity=new Vector2(0,0);
+        rb.isKinematic=true;
+        playerCollider.isTrigger = true;
+        isDead=true;
         Debug.Log("die");
     }
 }
