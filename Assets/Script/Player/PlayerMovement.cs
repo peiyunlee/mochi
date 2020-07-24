@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //Demo1
     //Ear相關
     public GameObject ear;
     public Rigidbody2D earJo;
@@ -13,10 +14,12 @@ public class PlayerMovement : MonoBehaviour
     private HingeJoint2D earJoint;
     private EarStick earStick;
     private Animator earAnim;
+    public Rigidbody2D earPos;
     //Body相關
     public GameObject body;
     //public Rigidbody2D bodyJo;
     private Rigidbody2D bodyRb;
+    JointAngleLimits2D bodyLimits;
     private HingeJoint2D bodyJoint;
     //private bodyStick bodyStick;
     private Collider2D bodyCollider;
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool earTouch = true;
     private bool bodyTouch = true;
     public bodyStick bodyStick;
+    private Vector2 anchor;
     //Player
     private Rigidbody2D rb;
     private CircleCollider2D playerCollider;
@@ -46,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private bool earIsStick = false;
     private bool isThrow = true;
 
-
+    private bool isDead = false;
     //new
 
 
@@ -57,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
     {
         //moveSpeed = 3;
         //jumpSpeed = 250;
+        anchor = new Vector2(0, 0.58f);
+        bodyLimits.max = 16.36f;
+        bodyLimits.min = -17.22f;
         rb = GetComponent<Rigidbody2D>();
         earRb = ear.GetComponent<Rigidbody2D>();
         earCollider = ear.GetComponent<Collider2D>();
@@ -105,46 +112,52 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        earCanTouch = earStick.earCanTouch;
-        canTouch = bodyStick.canTouch;
-        canJump = bodyStick.canJump;
-        if (Input.GetButtonDown("BodyStick_" + this.tag))
+        if (!isDead)
         {
-            //bodyIsStick = true;
-            bodyIsStick = !bodyIsStick;
-        }
-        // else if (Input.GetButtonUp("BodyStick_" + this.tag))
-        // {
-        //     bodyIsStick = false;
-        // }
+            earCanTouch = earStick.earCanTouch;
+            canTouch = bodyStick.canTouch;
+            canJump = bodyStick.canJump;
+            if (Input.GetButtonDown("BodyStick_" + this.tag))
+            {
+                //bodyIsStick = true;
+                bodyIsStick = !bodyIsStick;
+            }
+            // else if (Input.GetButtonUp("BodyStick_" + this.tag))
+            // {
+            //     bodyIsStick = false;
+            // }
 
-        if (Input.GetButtonDown("EarStick_" + this.tag))
-        {
-            //earIsStick = true;
-            earIsStick = !earIsStick;
+            if (Input.GetButtonDown("EarStick_" + this.tag))
+            {
+                //earIsStick = true;
+                earIsStick = !earIsStick;
+            }
+            // else if (Input.GetButtonUp("EarStick_" + this.tag))
+            // {
+            //     earIsStick = false;
+            // }
         }
-        // else if (Input.GetButtonUp("EarStick_" + this.tag))
-        // {
-        //     earIsStick = false;
-        // }
+
 
     }
 
     void FixedUpdate()
     {
-        if (!bodyIsTouch && !earIsTouch)
+        if (!isDead)
         {
+            if (!bodyIsTouch && !earIsTouch)
+            {
 
-            Move();
+                Move();
 
-            Jump();
+                Jump();
+            }
+            Touch();
+
+            EarTurn();
+
+            BodyTurn();
         }
-        Touch();
-
-        EarTurn();
-
-        BodyTurn();
-
     }
 
     void Touch()
@@ -206,15 +219,15 @@ public class PlayerMovement : MonoBehaviour
         {
             playerCollider.radius = 0.96f;
             earCollider.isTrigger = true;
-            bodyCollider.isTrigger = true;
-            // if (!bodyTouch)
-            // {
-            //     bodyAnim.SetBool("isBodyStick", false);
-            //     earAnim.SetBool("isBodyStick", false);
-            //     earStick.rootMotion = false;
-            //     earAnim.applyRootMotion = earStick.rootMotion;
-            //     bodyTouch = true;
-            // }
+
+            if (!bodyTouch)
+            {
+                bodyAnim.SetBool("isBodyStick", false);
+                earAnim.SetBool("isBodyStick", false);
+                earStick.rootMotion = false;
+                earAnim.applyRootMotion = earStick.rootMotion;
+                bodyTouch = true;
+            }
 
             //rb.isKinematic = false;
 
@@ -229,8 +242,16 @@ public class PlayerMovement : MonoBehaviour
                     //earJoint.useLimits = true;
                     bodyRb.velocity = new Vector2(0, 0);
                     earRb.velocity = new Vector2(0, 0);
+
                     earJoint.connectedBody = earStick.otherRb;
                     earJoint.anchor = new Vector2(0.0f, 0.975f);
+
+                    bodyJoint.anchor = anchor;
+                    //bodyJoint.connectedAnchor = earPos.position;
+                    bodyJoint.limits = bodyLimits;
+                    earJoint.enabled = true;
+                    bodyJoint.enabled = true;
+
                     earTouch = false;
                 }
                 rb.velocity = new Vector2(0, 0);
@@ -238,11 +259,10 @@ public class PlayerMovement : MonoBehaviour
                 //otherRb = earStick.otherRb;
 
 
-
+                earCollider.isTrigger = true;
                 playerCollider.isTrigger = true;
                 bodyCollider.isTrigger = false;
-                earJoint.enabled = true;
-                bodyJoint.enabled = true;
+
                 earRb.isKinematic = false;
                 bodyRb.isKinematic = false;
                 // bodyRb.freezeRotation=false;
@@ -256,7 +276,6 @@ public class PlayerMovement : MonoBehaviour
             //earJoint.enabled = false;
             bodyJoint.enabled = false;
             bodyRb.isKinematic = true;
-            bodyCollider.isTrigger = true;
 
 
             if (!earTouch)
@@ -265,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
                 earJoint.anchor = new Vector2(-0.02f, -1.9f);
                 isThrow = true;
                 rb.isKinematic = false;
-                Debug.Log(f);
+                //Debug.Log(f);
                 //rb.AddForce(new Vector2(f.x, f.y));
                 //bodyRb.rotation = 0;
                 earTouch = true;
@@ -281,6 +300,7 @@ public class PlayerMovement : MonoBehaviour
             rb.isKinematic = false;
             earJoint.enabled = false;
             earRb.isKinematic = true;
+            bodyCollider.isTrigger = true;
             playerCollider.isTrigger = false;
         }
     }
@@ -339,11 +359,34 @@ public class PlayerMovement : MonoBehaviour
                 //earRb.AddForce(new Vector3(0, 0, 0));
                 //earRb.velocity = new Vector3(0, 0, 0);
             }
+
+            if (bodyRb.rotation < 90 && bodyRb.rotation > -90)
+            {
+                //anchor = new Vector2(((earRb.position.x + (earPos.position.x - earRb.position.x) / 12 * 29) - bodyRb.position.x) * Mathf.Cos(bodyRb.rotation-360), ((earRb.position.y + (earPos.position.y - earRb.position.y) / 12 * 29) - bodyRb.position.y) * Mathf.Sin(bodyRb.rotation-360));
+                anchor = new Vector2(body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).x * Mathf.Cos(bodyRb.rotation), body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).y * Mathf.Sin(bodyRb.rotation));
+                bodyLimits.max = 16.36f;
+                bodyLimits.min = -17.22f;
+            }
+            else if (bodyRb.rotation < -90)
+            {
+                anchor = new Vector2(body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).x * Mathf.Cos(bodyRb.rotation + 180), body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).y * Mathf.Sin(bodyRb.rotation + 180));
+                bodyLimits.max = 164.06f;
+                bodyLimits.min = 131.50f;
+            }
+            else if (bodyRb.rotation > 90)
+            {
+                anchor = new Vector2(body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).x * Mathf.Cos(bodyRb.rotation - 180), body.transform.InverseTransformPoint(new Vector2(earPos.position.x, earPos.position.y)).y * Mathf.Sin(bodyRb.rotation - 180));
+                bodyLimits.max = 16.36f;
+                bodyLimits.min = -17.22f;
+            }
+            //Debug.Log(anchor);
+            //bodyJoint.anchor = anchor;
         }
         else
         {
             //earRb.AddForce (new Vector3(0, 0, 0));
             earRb.velocity = new Vector3(0, 0, 0);
+            //bodyJoint.anchor = anchor;
         }
     }
 
@@ -391,7 +434,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             bodyRb.velocity = new Vector3(0, 0, 0);
-            //bodyRb.angularVelocity = 0;
+            bodyRb.angularVelocity = 0;
             earRb.angularVelocity = 0;
 
         }
@@ -426,18 +469,25 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (other.gameObject.tag != "player1" && other.gameObject.tag != "player2" && other.gameObject.tag != "player3" && other.gameObject.tag != "player4")
+            if ((other.gameObject.tag != "player1")
+            && (other.gameObject.tag != "player2")
+            && (other.gameObject.tag != "player3")
+            && (other.gameObject.tag != "player4"))
             {
                 Debug.Log(playerLayer);
-                //Die();
+                Die();
             }
         }
     }
 
-    // public void Die()
-    // {
-    //     e_SR.color = new Color(0, 0, 0, 0.5f);
-    //     b_SR.color = new Color(0, 0, 0, 0.5f);
-    //     Debug.Log("die");
-    // }
+    public void Die()
+    {
+        e_SR.color = new Color(0, 0, 0, 0.5f);
+        b_SR.color = new Color(0, 0, 0, 0.5f);
+        rb.velocity=new Vector2(0,0);
+        rb.isKinematic=true;
+        playerCollider.isTrigger = true;
+        isDead=true;
+        Debug.Log("die");
+    }
 }
