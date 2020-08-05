@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-	//public Rigidbody2D rb;
+    //public Rigidbody2D rb;
     public Rigidbody2D bodyRb;
-	public float force;
+    //public Rigidbody2D ear1;
+    //public Rigidbody2D ear2;
+    public float force;
     // Use this for initialization
     void Start()
     {
@@ -55,7 +57,7 @@ public class test : MonoBehaviour
             //bodyRb.velocity = new Vector3(0, 0, 0);
             //rb.velocity = new Vector3(0, 0, 0);
         }
-		//rb.position = bodyRb.position;
+        //rb.position = bodyRb.position;
     }
 
 }
