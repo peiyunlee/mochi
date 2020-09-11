@@ -604,9 +604,13 @@ public abstract class jellyTest : MonoBehaviour
         hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
-        if (m_CentralPoint.GameObject.name == "body Central Ref Point")
+        //Debug.Log(m_CentralPoint.GameObject.name);
+
+        if (m_CentralPoint.GameObject.name == "body Ref Point 0")
         {
-            hingeJoint.connectedBody = GameObject.Find("ear Central Ref Point").GetComponent<Rigidbody2D>();
+            Debug.Log("a");
+            // hingeJoint.connectedBody = GameObject.Find("ear Central Ref Point").GetComponent<Rigidbody2D>();
+            hingeJoint.connectedBody = GameObject.Find("ear").GetComponent<Rigidbody2D>();
             hingeJoint.anchor = new Vector2(0.0f, 0.975f);
         }
 

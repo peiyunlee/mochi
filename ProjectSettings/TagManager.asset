@@ -12,6 +12,7 @@ TagManager:
   - player4
   - joint
   - YELLOW
+  - player5
   layers:
   - Default
   - TransparentFX

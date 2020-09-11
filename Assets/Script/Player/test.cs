@@ -12,7 +12,7 @@ public class test : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        bodyRb = GameObject.Find("body Central Ref Point").GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
