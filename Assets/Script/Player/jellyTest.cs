@@ -13,7 +13,7 @@ public abstract class jellyTest : MonoBehaviour
 {
     #region PUBLIC_VARIABLES
     public bool filpLine = false;
-    public GameObject ground;
+    //public GameObject ground;
     // Arrangement of the physics bodies
     public enum PhysicsStyle
     {
@@ -600,8 +600,9 @@ public abstract class jellyTest : MonoBehaviour
 
         m_CentralPoint = AddReferencePoint(m_CentralBodyOffset, width * sphereRadius, false);
         HingeJoint2D hingeJoint = m_CentralPoint.GameObject.AddComponent<HingeJoint2D>();
+        hingeJoint.enabled=false;
 
-        hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
+        //hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
         //Debug.Log(m_CentralPoint.GameObject.name);
@@ -655,7 +656,7 @@ public abstract class jellyTest : MonoBehaviour
 
         HingeJoint2D hingeJoint = m_CentralPoint.GameObject.AddComponent<HingeJoint2D>();
 
-        hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
+        //hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
         if (m_CentralPoint.GameObject.name == "body Central Ref Point")
@@ -695,7 +696,7 @@ public abstract class jellyTest : MonoBehaviour
         m_CentralPoint = AddReferencePoint(m_CentralBodyOffset, radius, m_LockRotation);
         HingeJoint2D hingeJoint = m_CentralPoint.GameObject.AddComponent<HingeJoint2D>();
 
-        hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
+        //hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
         if (m_CentralPoint.GameObject.name == "body Central Ref Point")
@@ -786,7 +787,7 @@ public abstract class jellyTest : MonoBehaviour
         m_CentralPoint = m_ReferencePoints[m_GridColumns / 2];
         HingeJoint2D hingeJoint = m_CentralPoint.GameObject.AddComponent<HingeJoint2D>();
 
-        hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
+        //hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
         if (m_CentralPoint.GameObject.name == "body Central Ref Point")
@@ -841,7 +842,7 @@ public abstract class jellyTest : MonoBehaviour
                         m_CentralPoint = refPoint;
                         HingeJoint2D hingeJoint = m_CentralPoint.GameObject.AddComponent<HingeJoint2D>();
 
-                        hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
+                        //hingeJoint.connectedBody = ground.GetComponent<Rigidbody2D>();
                         hingeJoint.anchor = new Vector2(0.0f, 0.975f);
 
                         if (m_CentralPoint.GameObject.name == "body Central Ref Point")

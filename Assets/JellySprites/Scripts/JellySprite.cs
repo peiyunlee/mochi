@@ -441,6 +441,7 @@ public abstract class JellySprite : MonoBehaviour
 
 			m_ReferencePointParent = new GameObject();
 			m_ReferencePointParent.name = this.name + " Reference Points";
+			m_ReferencePointParent.transform.position= m_Transform.TransformPoint(m_CentralBodyOffset);
 
 			m_ReferencePoints = new List<ReferencePoint>();
 
@@ -1888,6 +1889,28 @@ public abstract class JellySprite : MonoBehaviour
 				if(referencePoint.Body3D)
 				{
 					referencePoint.Body3D.AddForce(force);
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Add a force to every reference point
+	/// </summary>
+	public void AddVelocity(Vector2 force)
+	{
+		if(m_ReferencePoints != null)
+		{
+			foreach(ReferencePoint referencePoint in m_ReferencePoints)
+			{
+				if(referencePoint.Body2D)
+				{
+					referencePoint.Body2D.velocity=new Vector2(force.x,referencePoint.Body2D.velocity.y);
+				}
+				
+				if(referencePoint.Body3D)
+				{
+					referencePoint.Body3D.velocity=force;
 				}
 			}
 		}
