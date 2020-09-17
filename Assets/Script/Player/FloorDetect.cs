@@ -6,7 +6,6 @@ public class FloorDetect : MonoBehaviour
 {
 
     // Use this for initialization
-    // public bool canJump = true;
 	private test test;
     void Start()
     {
@@ -20,10 +19,22 @@ public class FloorDetect : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
-        if (other.gameObject.tag != "wall")
+        if (other.gameObject.tag != "wall"&&other.gameObject.tag != "player3")
         {
-            //Debug.Log("trigger");
+            test.canJump = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag != "player3")
+        {
+            test.canJump = false;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.tag != "wall"&&other.gameObject.tag != "player3")
+        {
             test.canJump = true;
         }
     }

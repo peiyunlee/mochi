@@ -4634,6 +4634,7 @@ GameObject:
   - component: {fileID: 420040724}
   - component: {fileID: 420040725}
   - component: {fileID: 420040726}
+  - component: {fileID: 420040728}
   m_Layer: 0
   m_Name: floorDetect
   m_TagString: Untagged
@@ -4647,7 +4648,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 420040723}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4666,7 +4667,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011724353, y: -0.09380245}
+  m_Offset: {x: 0.0058479607, y: -1.1690177}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4677,7 +4678,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.842814, y: 2.3080144}
+  m_Size: {x: 1.7029717, y: 0.15758395}
   m_EdgeRadius: 0
 --- !u!114 &420040726
 MonoBehaviour:
@@ -4690,6 +4691,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69af44326329a0459cfeda5f93086c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &420040728
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420040723}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!50 &450253931 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 50083663291516048, guid: 5be2ffb269ba61449b05a9ea00b441c9,
@@ -6150,7 +6171,6 @@ MonoBehaviour:
   moveSpeed: 0
   jumpSpeed: 0
   canJump: 1
-  floorDetect: {fileID: 0}
 --- !u!1 &697778630
 GameObject:
   m_ObjectHideFlags: 0
@@ -7436,7 +7456,6 @@ MonoBehaviour:
   moveSpeed: 4
   jumpSpeed: 35
   canJump: 1
-  floorDetect: {fileID: 420040726}
 --- !u!1 &901647722
 GameObject:
   m_ObjectHideFlags: 0
@@ -12553,7 +12572,6 @@ MonoBehaviour:
   moveSpeed: 0
   jumpSpeed: 0
   canJump: 1
-  floorDetect: {fileID: 0}
 --- !u!1001 &1402343022
 Prefab:
   m_ObjectHideFlags: 0
@@ -13010,7 +13028,6 @@ MonoBehaviour:
   moveSpeed: 0
   jumpSpeed: 0
   canJump: 1
-  floorDetect: {fileID: 0}
 --- !u!233 &1437671597
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -15132,7 +15149,6 @@ MonoBehaviour:
   moveSpeed: 0
   jumpSpeed: 0
   canJump: 1
-  floorDetect: {fileID: 0}
 --- !u!58 &1815374653
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public bool canJump=true;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log(other.gameObject.name);
         if (other.gameObject.tag != "wall")
         {
             canJump = true;
@@ -23,7 +24,7 @@ public bool canJump=true;
         }
         if (other.gameObject.tag != "player3")
         {
-            Debug.Log(other.gameObject.name);
+            
             canTouch = true;
 
         }

@@ -12,8 +12,6 @@ public class test : MonoBehaviour
     public bool canJump = true;
     private int jumpCount = 0;
     private UnityJellySprite jellySprite;
-    private Collider2D jellyCollider;
-    public FloorDetect floorDetect;
     // Use this for initialization
     void Start()
     {
@@ -21,7 +19,6 @@ public class test : MonoBehaviour
     }
     void Update()
     {
-        //canJump = floorDetect.canJump;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -38,7 +35,7 @@ public class test : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetButtonDown("Jump_" + this.tag))
+        if (Input.GetButtonDown("Jump_" + this.tag) && canJump)
         {
             canJump = false;
             jellySprite.AddForce(new Vector2(0, jumpSpeed));
