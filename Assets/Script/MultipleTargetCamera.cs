@@ -12,7 +12,7 @@ public class MultipleTargetCamera : MonoBehaviour
     public Vector3 velocity;
 
     public float minX,minY;
-    public float maxX,maxY;
+    // public float maxX,maxY;
 
     public float maxZoom=10f;
     public float minZoom=40f;
@@ -44,13 +44,13 @@ public class MultipleTargetCamera : MonoBehaviour
 
         if(newPostion.x < minX)
             newPostion.x = minX;
-        else if(newPostion.x > maxX)
-            newPostion.x = maxX;
+        // else if(newPostion.x > maxX)
+        //     newPostion.x = maxX;
 
-        if(newPostion.y > minY)
+        if(newPostion.y < minY)
             newPostion.y = minY;
-        else if(newPostion.y < maxY)
-            newPostion.y = maxY;
+        // else if(newPostion.y < maxY)
+        //     newPostion.y = maxY;
 
         transform.position = Vector3.SmoothDamp(transform.position,newPostion,ref velocity,smoothTime);
     }
