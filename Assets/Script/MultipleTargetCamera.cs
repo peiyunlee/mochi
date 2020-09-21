@@ -6,28 +6,31 @@ using UnityEngine;
 public class MultipleTargetCamera : MonoBehaviour
 {
 
+    //farthest offset -10/-3/-15
+    //center offset 11/7/-15
     public List<Transform> targets;
     public Vector3 offset;
     public float smoothTime = .5f;
     public Vector3 velocity;
 
-    public float minX,minY;
-    // public float maxX,maxY;
+    public float minX = 11, minY = 7;
+    public float maxX = 100, maxY = 100;
 
-    public float maxZoom=10f;
-    public float minZoom=40f;
-    public float zoomLimiter=50f;
+    public float maxZoom = 10f;
+    public float minZoom = 40f;
+    public float zoomLimiter = 50f;
 
     private Camera cam;
 
-    void Start() {
-        cam=GetComponent<Camera>();
+    void Start()
+    {
+        cam = GetComponent<Camera>();
     }
 
 
     void LateUpdate()
     {
-        
+
         if (targets.Count == 0)
             return;
 
@@ -35,59 +38,63 @@ public class MultipleTargetCamera : MonoBehaviour
         Zoom();
     }
 
-    void Move(){
-			
-        // Vector3 centerPoint = GetCenterPoint();
-        Vector3 farthestPoint = GetFarthestPoint();
+    void Move()
+    {
 
-        Vector3 newPostion = farthestPoint + offset;
+        Vector3 centerPoint = GetCenterPoint();
+        // Vector3 farthestPoint = GetFarthestPoint();
 
-        if(newPostion.x < minX)
+        Vector3 newPostion = centerPoint + offset;
+
+        if (newPostion.x < minX)
             newPostion.x = minX;
-        // else if(newPostion.x > maxX)
-        //     newPostion.x = maxX;
+        else if (newPostion.x > maxX)
+            newPostion.x = maxX;
 
-        if(newPostion.y < minY)
+        if (newPostion.y < minY)
             newPostion.y = minY;
-        // else if(newPostion.y < maxY)
-        //     newPostion.y = maxY;
+        else if (newPostion.y > maxY)
+            newPostion.y = maxY;
 
-        transform.position = Vector3.SmoothDamp(transform.position,newPostion,ref velocity,smoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothTime);
     }
 
-    void Zoom(){
+    void Zoom()
+    {
 
-        float newZoom=Mathf.Lerp(maxZoom,minZoom,GetGreatestDistance()/zoomLimiter);
+        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
 
-        cam.fieldOfView=Mathf.Lerp(cam.fieldOfView,newZoom,Time.deltaTime);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
     }
 
-    float GetGreatestDistance(){
-        var bounds=new Bounds(targets[0].position,Vector3.zero);
+    float GetGreatestDistance()
+    {
+        var bounds = new Bounds(targets[0].position, Vector3.zero);
 
-        for(int i=0;i<targets.Count;i++){
+        for (int i = 0; i < targets.Count; i++)
+        {
             bounds.Encapsulate(targets[i].position);
         }
 
         return bounds.size.x;
     }
 
-    // Vector3 GetCenterPoint()
-    // {
-    //     if (targets.Count == 1)
-    //     {
-    //         return targets[0].position;
-    //     }
+    Vector3 GetCenterPoint()
+    {
+        if (targets.Count == 1)
+        {
+            return targets[0].position;
+        }
 
-    //     Bounds bounds = new Bounds(targets[0].position, Vector3.zero);
+        Bounds bounds = new Bounds(targets[0].position, Vector3.zero);
 
-    //     for (int i = 0; i < targets.Count; i++)
-    //     {
-    //         bounds.Encapsulate(targets[i].position);
-    //     }
+        for (int i = 0; i < targets.Count; i++)
+        {
+            bounds.Encapsulate(targets[i].position);
+        }
 
-    //     return bounds.center;
-    // }
+        return bounds.center;
+    }
 
     Vector3 GetFarthestPoint()
     {
@@ -102,10 +109,10 @@ public class MultipleTargetCamera : MonoBehaviour
 
         for (int i = 1; i < targets.Count; i++)
         {
-            if(maxX < targets[i].position.x) maxX = targets[i].position.x;
-            if(maxY < targets[i].position.y) maxY = targets[i].position.y;
+            if (maxX < targets[i].position.x) maxX = targets[i].position.x;
+            if (maxY < targets[i].position.y) maxY = targets[i].position.y;
         }
 
-        return new Vector3(maxX,maxY,maxZ);
+        return new Vector3(maxX, maxY, maxZ);
     }
 }
