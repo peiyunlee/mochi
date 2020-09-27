@@ -13,6 +13,9 @@ TagManager:
   - joint
   - YELLOW
   - player5
+  - Item
+  - floorDetect
+  - stickDetect
   layers:
   - Default
   - TransparentFX
@@ -67,6 +70,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3377062863
+    locked: 0
+  - name: face
+    uniqueID: 3815814191
     locked: 0
   - name: yellow
     uniqueID: 4227026241
