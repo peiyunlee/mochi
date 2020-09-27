@@ -7,6 +7,7 @@ public class FloorDetect : MonoBehaviour
 
     // Use this for initialization
     private test test;
+    public GameObject parents;
     enum DetectType
     {
         none,
@@ -28,14 +29,14 @@ public class FloorDetect : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag != "wall" && other.gameObject.tag != "player3")
+        if (other.gameObject.tag != "wall" && other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.floor)
             {
                 test.canJump = true;
             }
         }
-        if (other.gameObject.tag != "player3")
+        if (other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.stick)
             {
@@ -46,7 +47,7 @@ public class FloorDetect : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag != "wall" && other.gameObject.tag != "player3")
+        if (other.gameObject.tag != "wall" && other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.floor)
             {
@@ -54,7 +55,7 @@ public class FloorDetect : MonoBehaviour
             }
 
         }
-        if (other.gameObject.tag != "player3")
+        if (other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.stick)
             {
@@ -66,14 +67,14 @@ public class FloorDetect : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag != "wall" && other.gameObject.tag != "player3")
+        if (other.gameObject.tag != "wall" && other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.floor)
             {
                 test.canJump = false;
             }
         }
-        if (other.gameObject.tag != "player3")
+        if (other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.stick)
             {

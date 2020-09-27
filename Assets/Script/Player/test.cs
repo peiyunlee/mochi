@@ -32,9 +32,6 @@ public class test : MonoBehaviour
             // {
             //     isStick=false;
             // }
-
-            jellySprite.SetStick(isStick);
-
             if (item != null && isStick)
             {
                 stickItem = item;
@@ -44,6 +41,10 @@ public class test : MonoBehaviour
             {
                 stickItem = null;
             }
+
+            jellySprite.SetStick(isStick,stickItem);
+
+            
 
             //Item.transform.parent=this.transform;
         }
@@ -70,17 +71,17 @@ public class test : MonoBehaviour
                 jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag)*push, 0.0f));
                 // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag)*push,0.0f));
                 
-                if (stickItem != null)
-                {
-                    stickItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag), 0.0f)*push);
-                    // stickItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
-                }
+                // if (stickItem != null)
+                // {
+                //     stickItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag), 0.0f)*push);
+                //     // stickItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
+                // }
 
             }
             else
             {
                 isStick = !isStick;
-                jellySprite.SetStick(isStick);
+                jellySprite.SetStick(isStick,null);
             }
 
         }

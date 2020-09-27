@@ -931,6 +931,8 @@ public abstract class JellySprite : MonoBehaviour
 
         ReferencePoint referencePoint = null;
 
+
+
         if (m_2DMode)
         {
             CircleCollider2D circleCollider = referencePointObject.AddComponent<CircleCollider2D>();
@@ -938,6 +940,10 @@ public abstract class JellySprite : MonoBehaviour
             circleCollider.sharedMaterial = m_PhysicsMaterial2D;
 
             Rigidbody2D newRigidBody = referencePointObject.AddComponent<Rigidbody2D>();
+
+            HingeJoint2D hingjoint = referencePointObject.AddComponent<HingeJoint2D>();
+            hingjoint.enabled = false;
+            hingjoint.connectedBody = null;
 
             if (lockRotation)
             {
@@ -1922,7 +1928,7 @@ public abstract class JellySprite : MonoBehaviour
     /// Set isTrigger to every reference point
     /// </summary>
 
-    public void SetStick(bool isStick)
+    public void SetStick(bool isStick, GameObject item = null)
     {
         if (isStick)
         {
@@ -1933,7 +1939,12 @@ public abstract class JellySprite : MonoBehaviour
                 {
 
                     referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    referencePoint.SetKinematic(true);
+                    if (item != null)
+                    {
+                        referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
+                        referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                    }
+
                     // if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem != null)
                     // {
                     //     Debug.Log("a");
@@ -1951,7 +1962,9 @@ public abstract class JellySprite : MonoBehaviour
         {
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {
-                referencePoint.SetKinematic(false);
+                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+                referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = null;
+
                 //referencePoint.Collider2D.isTrigger=false;
                 haveTouch = false;
             }
@@ -1962,14 +1975,14 @@ public abstract class JellySprite : MonoBehaviour
     /// </summary>
     public void SetTransform(Vector2 trans)
     {
-        
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                //referencePoint.Collider2D.isTrigger=true;
-                referencePoint.Body2D.transform.position=new Vector2(referencePoint.Body2D.transform.position.x+trans.x,referencePoint.Body2D.transform.position.y);
+
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            //referencePoint.Collider2D.isTrigger=true;
+            referencePoint.Body2D.transform.position = new Vector2(referencePoint.Body2D.transform.position.x + trans.x, referencePoint.Body2D.transform.position.y);
 
 
-            }
+        }
     }
     /// <summary>
     /// Add a force at a given position to every reference point
