@@ -16,6 +16,7 @@ public class test : MonoBehaviour
     public GameObject item = null;
     private GameObject stickItem = null;
     public float push = 0;
+    private bool GetKeyJump=false;
     // Use this for initialization
     void Start()
     {
@@ -24,6 +25,7 @@ public class test : MonoBehaviour
     }
     void Update()
     {
+        GetKeyJump=Input.GetButtonDown("Jump_" + this.tag);
         if (Input.GetButtonDown("Stick_" + this.tag))
         {
             isStick = !isStick;
@@ -42,9 +44,9 @@ public class test : MonoBehaviour
                 stickItem = null;
             }
 
-            jellySprite.SetStick(isStick,stickItem);
+            jellySprite.SetStick(isStick, stickItem);
 
-            
+
 
             //Item.transform.parent=this.transform;
         }
@@ -68,9 +70,9 @@ public class test : MonoBehaviour
         {
             if (jellySprite.haveTouch)
             {
-                jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag)*push, 0.0f));
+                jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
                 // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag)*push,0.0f));
-                
+
                 // if (stickItem != null)
                 // {
                 //     stickItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag), 0.0f)*push);
@@ -81,7 +83,7 @@ public class test : MonoBehaviour
             else
             {
                 isStick = !isStick;
-                jellySprite.SetStick(isStick,null);
+                jellySprite.SetStick(isStick, null);
             }
 
         }
@@ -96,7 +98,9 @@ public class test : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetButtonDown("Jump_" + this.tag) && canJump)
+        if (GetKeyJump)
+            Debug.Log("C");
+        if (GetKeyJump && canJump)
         {
             canJump = false;
             Debug.Log(new Vector2(0, jumpSpeed));

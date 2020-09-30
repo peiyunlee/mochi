@@ -7,6 +7,7 @@ public class FloorDetect : MonoBehaviour
 
     // Use this for initialization
     private test test;
+    public bool canJump = false;
     public GameObject parents;
     enum DetectType
     {
@@ -33,6 +34,7 @@ public class FloorDetect : MonoBehaviour
         {
             if (detectType == DetectType.floor)
             {
+                Debug.Log("a");
                 test.canJump = true;
             }
         }
@@ -41,7 +43,7 @@ public class FloorDetect : MonoBehaviour
             if (detectType == DetectType.stick)
             {
                 test.canStick = true;
-                test.item=other.gameObject;
+                test.item = other.gameObject;
             }
         }
     }
@@ -49,10 +51,11 @@ public class FloorDetect : MonoBehaviour
     {
         if (other.gameObject.tag != "wall" && other.gameObject.tag != parents.tag)
         {
-            if (detectType == DetectType.floor)
-            {
-                test.canJump = true;
-            }
+            // if (detectType == DetectType.floor)
+            // {
+            //     Debug.Log("a");
+            //     test.canJump = true;
+            // }
 
         }
         if (other.gameObject.tag != parents.tag)
@@ -60,7 +63,7 @@ public class FloorDetect : MonoBehaviour
             if (detectType == DetectType.stick)
             {
                 test.canStick = true;
-                test.item=other.gameObject;
+                test.item = other.gameObject;
             }
         }
     }
@@ -69,17 +72,18 @@ public class FloorDetect : MonoBehaviour
     {
         if (other.gameObject.tag != "wall" && other.gameObject.tag != parents.tag)
         {
-            if (detectType == DetectType.floor)
-            {
-                test.canJump = false;
-            }
+            // if (detectType == DetectType.floor)
+            // {
+            //     Debug.Log("b");
+            //     test.canJump = false;
+            // }
         }
         if (other.gameObject.tag != parents.tag)
         {
             if (detectType == DetectType.stick)
             {
                 test.canStick = false;
-                test.item=null;
+                test.item = null;
             }
         }
     }
