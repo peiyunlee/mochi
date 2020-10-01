@@ -7,50 +7,59 @@ public class UIController : MonoBehaviour
 
     public List<Transform> levelUI;
 
+    public Transform cam;
+
+    float currentCamSpeed;
+
+    public float camSpeed;
+
+    [SerializeField]
     int currentLevel;
-	
-    float distance;
+
+    int maxLevel;
 
     // Use this for initialization
     void Start()
     {
         currentLevel = 1;
+        maxLevel = 4;
+        camSpeed = 340.0f / 1.0f;
+        currentCamSpeed = camSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetAxis("Horizontal_player1") == -1)
-            Debug.Log("LEFT");
-        // Move(distance);
+        if (Input.GetKeyDown("right") && currentLevel < maxLevel)
+        {
+            currentLevel++;
+            currentCamSpeed = camSpeed;
+        }
+        else if (Input.GetKeyDown("left") && currentLevel > 1)
+        {
+            currentLevel--;
+            currentCamSpeed = -camSpeed;
+        }
         // Zoom();
     }
-
-    public void UIBtnClick(string type)
+    void FixedUpdate()
     {
-        // if (type == "Right")
-        // {
-        //     distance = -340.0f;
-        //     currentLevel++;
-        // }
-        // else
-        // {
-        //     distance = -340.0f;
-        //     currentLevel--;
-        // }
+        CamMove();
     }
 
-    void Move(float distance)
+    void CamMove()
     {
-        levelUI.ForEach(delegate (Transform item)
+        float newPosX;
+        if (currentCamSpeed > 0 && cam.position.x < 340.0f * (currentLevel - 1))
         {
-            float newPosX = Mathf.Lerp(item.position.x, item.position.x + distance, Time.deltaTime);
-
-            item.position = new Vector3(newPosX, item.position.y, item.position.z);
-
-        });
-
-
+            newPosX = cam.position.x + currentCamSpeed * Time.deltaTime;
+            cam.position = new Vector3(newPosX, cam.position.y, cam.position.z);
+        }
+        else if (currentCamSpeed < 0 && cam.position.x > 340.0f * (currentLevel - 1))
+        {
+            newPosX = cam.position.x + currentCamSpeed * Time.deltaTime;
+            cam.position = new Vector3(newPosX, cam.position.y, cam.position.z);
+        }
     }
 
     void Zoom()
