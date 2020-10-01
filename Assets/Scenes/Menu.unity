@@ -893,7 +893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &644267677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1135,7 +1135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &999940711
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1527,7 +1527,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283862289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.2, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1639,10 +1639,10 @@ MonoBehaviour:
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal_player1
-  m_VerticalAxis: Vertical_player1
-  m_SubmitButton: AButton_palyer1
-  m_CancelButton: BButton_palyer1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
@@ -1689,6 +1689,12 @@ MonoBehaviour:
   - {fileID: 1148304469}
   - {fileID: 127754566}
   - {fileID: 2112072347}
+  cam: {fileID: 1283862293}
+  arrow:
+  - {fileID: 999940710}
+  - {fileID: 638090922}
+  camSpeed: 340
+  currentLevel: 0
 --- !u!1001 &1490653146
 Prefab:
   m_ObjectHideFlags: 0

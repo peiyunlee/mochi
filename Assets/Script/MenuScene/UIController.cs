@@ -9,6 +9,8 @@ public class UIController : MonoBehaviour
 
     public Transform cam;
 
+    public List<GameObject> arrow;
+
     float currentCamSpeed;
 
     public float camSpeed;
@@ -34,11 +36,35 @@ public class UIController : MonoBehaviour
         {
             currentLevel++;
             currentCamSpeed = camSpeed;
+            if (currentLevel == maxLevel)
+            {
+                arrow[1].SetActive(false);
+            }
+            else if (currentLevel == maxLevel - 1)
+            {
+                arrow[1].SetActive(true);
+            }
+            else if (currentLevel == 2)
+            {
+                arrow[0].SetActive(true);
+            }
         }
         else if (Input.GetKeyDown("left") && currentLevel > 1)
         {
             currentLevel--;
             currentCamSpeed = -camSpeed;
+            if (currentLevel == 1)
+            {
+                arrow[0].SetActive(false);
+            }
+            else if (currentLevel == 2)
+            {
+                arrow[0].SetActive(true);
+            }
+            else if (currentLevel == maxLevel - 1)
+            {
+                arrow[1].SetActive(true);
+            }
         }
         // Zoom();
     }
