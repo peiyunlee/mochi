@@ -20,22 +20,24 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move(distance);
-        Zoom();
+        if(Input.GetAxis("Horizontal_player1") == -1)
+            Debug.Log("LEFT");
+        // Move(distance);
+        // Zoom();
     }
 
     public void UIBtnClick(string type)
     {
-        if (type == "Right")
-        {
-            distance = -340.0f;
-            currentLevel++;
-        }
-        else
-        {
-            distance = -340.0f;
-            currentLevel--;
-        }
+        // if (type == "Right")
+        // {
+        //     distance = -340.0f;
+        //     currentLevel++;
+        // }
+        // else
+        // {
+        //     distance = -340.0f;
+        //     currentLevel--;
+        // }
     }
 
     void Move(float distance)

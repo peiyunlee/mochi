@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour {
 
-	public static SceneController Instance;
+	public static SceneController instance;
 
 	private string activeScene;
 
 	
 	// Use this for initialization
 	void Awake () {
-		if(Instance == null){
-			Instance = this;
+		if(instance == null){
+			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
 		else{
