@@ -5,9 +5,13 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
 
-    public List<Transform> levelUI;
+    public GameObject bigLevelUI;
+    Transform bigLevelTrans;
+    // public List<Transform> bigLevelUIList;
+    public GameObject smallLevelUI;
+    public GameObject cam;
+    Animator camAnim;
 
-    public Transform cam;
 
     public List<GameObject> arrow;
 
@@ -20,6 +24,17 @@ public class UIController : MonoBehaviour
 
     int maxLevel;
 
+    bool isBigMenu;
+
+    void Awake()
+    {
+        camAnim = cam.GetComponent<Animator>();
+        bigLevelTrans = bigLevelUI.GetComponent<Transform>();
+        // for(int i=0;i<maxLevel;i++){
+        //     bigLevelUIList.Add(bigLevelUI.transform.GetChild(i));
+        // }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -27,6 +42,7 @@ public class UIController : MonoBehaviour
         maxLevel = 4;
         camSpeed = 340.0f / 1.0f;
         currentCamSpeed = camSpeed;
+        isBigMenu = true;
     }
 
     // Update is called once per frame
@@ -36,6 +52,7 @@ public class UIController : MonoBehaviour
         {
             currentLevel++;
             currentCamSpeed = camSpeed;
+            camAnim.enabled = false;
             if (currentLevel == maxLevel)
             {
                 arrow[1].SetActive(false);
@@ -53,6 +70,7 @@ public class UIController : MonoBehaviour
         {
             currentLevel--;
             currentCamSpeed = -camSpeed;
+            camAnim.enabled = false;
             if (currentLevel == 1)
             {
                 arrow[0].SetActive(false);
@@ -66,6 +84,12 @@ public class UIController : MonoBehaviour
                 arrow[1].SetActive(true);
             }
         }
+
+        if (Input.GetKeyDown("a") && !isBigMenu)
+        {
+            BackLevelMenu();
+        }
+
         // Zoom();
     }
     void FixedUpdate()
@@ -76,19 +100,32 @@ public class UIController : MonoBehaviour
     void CamMove()
     {
         float newPosX;
-        if (currentCamSpeed > 0 && cam.position.x < 340.0f * (currentLevel - 1))
+        if (currentCamSpeed > 0 && bigLevelTrans.position.x > -340.0f * (currentLevel - 1))
         {
-            newPosX = cam.position.x + currentCamSpeed * Time.deltaTime;
-            cam.position = new Vector3(newPosX, cam.position.y, cam.position.z);
+            newPosX = bigLevelTrans.position.x - currentCamSpeed * Time.deltaTime;
+            bigLevelTrans.position = new Vector3(newPosX, bigLevelTrans.position.y, bigLevelTrans.position.z);
         }
-        else if (currentCamSpeed < 0 && cam.position.x > 340.0f * (currentLevel - 1))
+        else if (currentCamSpeed < 0 && bigLevelTrans.position.x < -340.0f * (currentLevel - 1))
         {
-            newPosX = cam.position.x + currentCamSpeed * Time.deltaTime;
-            cam.position = new Vector3(newPosX, cam.position.y, cam.position.z);
+            newPosX = bigLevelTrans.position.x - currentCamSpeed * Time.deltaTime;
+            bigLevelTrans.position = new Vector3(newPosX, bigLevelTrans.position.y, bigLevelTrans.position.z);
         }
     }
 
     void Zoom()
     {
+    }
+
+    public void BigLevelBtnClick(int num)
+    {
+        isBigMenu = false;
+        camAnim.enabled = true;
+        camAnim.SetTrigger("up");
+    }
+
+    public void BackLevelMenu()
+    {
+        isBigMenu = true;
+        camAnim.SetTrigger("down");
     }
 }
