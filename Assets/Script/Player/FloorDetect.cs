@@ -34,7 +34,6 @@ public class FloorDetect : MonoBehaviour
         {
             if (detectType == DetectType.floor)
             {
-                Debug.Log("a");
                 test.canJump = true;
             }
         }

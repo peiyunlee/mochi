@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class JellySpriteReferencePoint : MonoBehaviour
 {
@@ -15,9 +16,20 @@ public class JellySpriteReferencePoint : MonoBehaviour
 
     bool m_SendCollisionMessages = true;
 
-	public bool isTouch=false;
-    
-    public GameObject stickItem;
+    [SerializeField]
+    public List<bool> isTouch = new List<bool>{false,false,false,false,false};
+
+    public enum TOUCHTYPE
+    {
+        LIGHT = 0,
+        PLAYER,
+        HEAVY,
+        GROUND,
+        WALL,
+    }
+
+    public List<GameObject> stickItem = new List<GameObject>();
+    public List<bool> itemIsStick = new List<bool>();
 
     public JellySpriteReferencePoint()
     {
@@ -40,13 +52,35 @@ public class JellySpriteReferencePoint : MonoBehaviour
     {
         if (ParentJellySprite && SendCollisionMessages)
         {
-			if (collision.gameObject.tag != this.tag&&collision.gameObject.tag != "floorDetect")
+            //Self code
+            if (collision.gameObject.tag != this.tag && collision.gameObject.tag != "floorDetect")
             {
-                //Debug.Log(this.name + ":" + collision.gameObject.name);
-				isTouch=true;
-                stickItem=collision.gameObject;
-                // Debug.Log(this.name + ":" + stickItem);
+                if (collision.gameObject.layer == LayerMask.NameToLayer("heavy"))
+                {
+                    isTouch[(int)TOUCHTYPE.HEAVY] = true;
+                }
+                else if (collision.gameObject.tag == "ground")
+                {
+                    isTouch[(int)TOUCHTYPE.GROUND] = true;
+                }
+                else if (collision.gameObject.tag == "wall")
+                {
+                    isTouch[(int)TOUCHTYPE.WALL] = true;
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("light"))
+                {
+                    isTouch[(int)TOUCHTYPE.LIGHT] = true;
+                    stickItem.Add(collision.gameObject);
+                    itemIsStick.Add(true);
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("player"))
+                {
+                    isTouch[(int)TOUCHTYPE.PLAYER] = true;
+
+                }
             }
+            //
+
             m_JellyCollision2D.Collision2D = collision;
             ParentJellySprite.SendMessage("OnJellyCollisionEnter2D", m_JellyCollision2D, SendMessageOptions.DontRequireReceiver);
         }
@@ -65,12 +99,35 @@ public class JellySpriteReferencePoint : MonoBehaviour
     {
         if (ParentJellySprite && SendCollisionMessages)
         {
-			if (collision.gameObject.tag != this.tag&&collision.gameObject.tag != "floorDetect")
+            //Self code
+            if (collision.gameObject.tag != this.tag && collision.gameObject.tag != "floorDetect")
             {
-                //Debug.Log(this.name + ":" + collision.gameObject.name);
-				isTouch=false;
-                stickItem=null;
+                if (collision.gameObject.layer == LayerMask.NameToLayer("heavy"))
+                {
+                    isTouch[(int)TOUCHTYPE.HEAVY] = false;
+                }
+                else if (collision.gameObject.tag == "ground")
+                {
+                    isTouch[(int)TOUCHTYPE.GROUND] = false;
+                }
+                else if (collision.gameObject.tag == "wall")
+                {
+                    isTouch[(int)TOUCHTYPE.WALL] = false;
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("light"))
+                {
+                    isTouch[(int)TOUCHTYPE.LIGHT] = false;
+                    stickItem.Remove(collision.gameObject);
+                    itemIsStick.RemoveAt((int)TOUCHTYPE.LIGHT);
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("player"))
+                {
+                    isTouch[(int)TOUCHTYPE.PLAYER] = false;
+
+                }
             }
+            //
+
             m_JellyCollision2D.Collision2D = collision;
             ParentJellySprite.SendMessage("OnJellyCollisionExit2D", m_JellyCollision2D, SendMessageOptions.DontRequireReceiver);
         }
@@ -89,12 +146,15 @@ public class JellySpriteReferencePoint : MonoBehaviour
     {
         if (ParentJellySprite && SendCollisionMessages)
         {
-			if (collision.gameObject.tag != this.tag&&collision.gameObject.tag != "floorDetect")
-            {
-                //Debug.Log(this.name + ":" + collision.gameObject.name);
-				isTouch=true;
-                stickItem=collision.gameObject;
-            }
+            //self code
+            // if (collision.gameObject.tag != this.tag && collision.gameObject.tag != "floorDetect")
+            // {
+            //     //Debug.Log(this.name + ":" + collision.gameObject.name);
+            //     // isTouch = true;
+            //     stickItem[0] = collision.gameObject;
+            // }
+            //
+
             m_JellyCollision2D.Collision2D = collision;
             ParentJellySprite.SendMessage("OnJellyCollisionStay2D", m_JellyCollision2D, SendMessageOptions.DontRequireReceiver);
         }

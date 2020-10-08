@@ -1928,34 +1928,55 @@ public abstract class JellySprite : MonoBehaviour
     /// Set isTrigger to every reference point
     /// </summary>
 
-    public void SetStick(bool isStick, GameObject item = null)
+
+    public void SetPointsKinematic(bool isStick)
     {
         if (isStick)
         {
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {
-                //referencePoint.Collider2D.isTrigger=true;
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch)
+                //ENUM TOUCHTYPE >= HEAVY
+                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[2] || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[3])
                 {
-
                     referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    if (item != null)
+                    referencePoint.SetKinematic(true);
+                }
+            }
+        }
+        else
+        {
+            //reset
+            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            {
+                {
+                    referencePoint.SetKinematic(false);
+                }
+            }
+        }
+    }
+
+    public void SetItemStick(bool isStick)
+    {
+        if (isStick)
+        {
+            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            {
+                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[0])
+                {
+                    referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                    int index=0;
+                    foreach (var item in referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem)
                     {
-                        referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
-                        referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                        if (item != null && referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().itemIsStick[index])
+                        {
+                            GameObject stickItem = item;
+                            referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = stickItem.GetComponent<Rigidbody2D>();
+                            referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                        }
+                        index++;
                     }
 
-                    // if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem != null)
-                    // {
-                    //     Debug.Log("a");
-                    //     // stickItem[i] = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem;
-                    // }
-
-                    haveTouch = true;
-                    // Debug.Log(stickItem[i].name);
                 }
-
-
             }
         }
         else
@@ -1963,10 +1984,6 @@ public abstract class JellySprite : MonoBehaviour
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = null;
-
-                //referencePoint.Collider2D.isTrigger=false;
-                haveTouch = false;
             }
         }
     }

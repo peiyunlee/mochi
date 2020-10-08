@@ -26,11 +26,16 @@ public class UIController : MonoBehaviour
 
     bool isBigMenu;
 
+    [SerializeField]
+    int inputtimer;
+
+    int horizontalAxisRaw;
+
     void Awake()
     {
         camAnim = cam.GetComponent<Animator>();
         bigLevelTrans = bigLevelUI.GetComponent<Transform>();
-        // for(int i=0;i<maxLevel;i++){
+        // for(int i = 0 ; i < maxLevel ; i++){
         //     bigLevelUIList.Add(bigLevelUI.transform.GetChild(i));
         // }
     }
@@ -43,12 +48,31 @@ public class UIController : MonoBehaviour
         camSpeed = 340.0f / 1.0f;
         currentCamSpeed = camSpeed;
         isBigMenu = true;
+        inputtimer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("right") && currentLevel < maxLevel)
+        if (Input.GetAxisRaw("Horizontal_player1") == 1)
+        {
+            if(inputtimer == 0)
+                StartCoroutine("InputTimer");
+            if (inputtimer % 2 == 0)
+                horizontalAxisRaw = 1;
+        }
+        else if (Input.GetAxisRaw("Horizontal_player1") == 0)
+        {
+            inputtimer = 0;
+            horizontalAxisRaw = 0;
+        }
+        else if (Input.GetAxisRaw("Horizontal_player1") == -1)
+        {
+            InvokeRepeating("InputTimer", 0f, 1f);
+            if (inputtimer % 2 == 0)
+                horizontalAxisRaw = -1;
+        }
+        if ((horizontalAxisRaw == 1 || Input.GetKeyDown("right")) && currentLevel < maxLevel && isBigMenu)
         {
             currentLevel++;
             currentCamSpeed = camSpeed;
@@ -66,7 +90,7 @@ public class UIController : MonoBehaviour
                 arrow[0].SetActive(true);
             }
         }
-        else if (Input.GetKeyDown("left") && currentLevel > 1)
+        else if ((horizontalAxisRaw == -1 || Input.GetKeyDown("left")) && currentLevel > 1 && isBigMenu)
         {
             currentLevel--;
             currentCamSpeed = -camSpeed;
@@ -128,4 +152,10 @@ public class UIController : MonoBehaviour
         isBigMenu = true;
         camAnim.SetTrigger("down");
     }
+
+    void InputTimer()
+    {
+        inputtimer++;
+    }
+
 }

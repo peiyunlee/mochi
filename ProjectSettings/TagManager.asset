@@ -33,9 +33,9 @@ TagManager:
   - FirstCam
   - SecondCam
   - ThirdCam
-  - 
-  - 
-  - 
+  - player
+  - heavy
+  - light
   - 
   - 
   - 
@@ -79,4 +79,7 @@ TagManager:
     locked: 0
   - name: red
     uniqueID: 552751973
+    locked: 0
+  - name: UI
+    uniqueID: 1808291247
     locked: 0

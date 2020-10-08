@@ -44,9 +44,7 @@ public class test : MonoBehaviour
                 stickItem = null;
             }
 
-            jellySprite.SetStick(isStick, stickItem);
-
-
+            // jellySprite.SetItemStick(isStick, stickItem);
 
             //Item.transform.parent=this.transform;
         }
@@ -83,7 +81,7 @@ public class test : MonoBehaviour
             else
             {
                 isStick = !isStick;
-                jellySprite.SetStick(isStick, null);
+                // jellySprite.SetStick(isStick, null);
             }
 
         }
