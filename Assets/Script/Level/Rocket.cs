@@ -8,13 +8,9 @@ public class Rocket : MonoBehaviour
     LevelController levelController;
     int stickCount;
 
-    void Awake()
-    {
-        levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
-    }
-
     void Start()
     {
+        levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
         stickCount = 0;
     }
 

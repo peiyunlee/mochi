@@ -31,18 +31,15 @@ public class UIController : MonoBehaviour
 
     int horizontalAxisRaw;
 
-    void Awake()
+    // Use this for initialization
+    void Start()
     {
         camAnim = cam.GetComponent<Animator>();
         bigLevelTrans = bigLevelUI.GetComponent<Transform>();
         // for(int i = 0 ; i < maxLevel ; i++){
         //     bigLevelUIList.Add(bigLevelUI.transform.GetChild(i));
         // }
-    }
 
-    // Use this for initialization
-    void Start()
-    {
         currentLevel = 1;
         maxLevel = 4;
         camSpeed = 340.0f / 1.0f;

@@ -7,7 +7,7 @@ public class Radish : MonoBehaviour
 
     LevelController levelController;
 
-    void Awake()
+    void Start()
     {
         levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
     }

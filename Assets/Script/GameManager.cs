@@ -16,12 +16,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
-    void Start()
-    {
-    }
-    void Update()
-    {
-    }
 
     public void SetCurrentLevel(string levelName)
     {

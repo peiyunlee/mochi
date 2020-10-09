@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class testPlayerStick : MonoBehaviour
 {
-
+    public bool getIsOnFloor;
     // Use this for initialization
     [SerializeField]
     public bool isStick { get { return m_isStick; } }
 
     [SerializeField]
-    private bool m_isStick;
+    private bool m_isStick;  //黏的狀態
 
     [SerializeField]
-    private bool canStick;
+    private bool canStick;  //有碰到東西可以黏
 
-    private int stickItemCount;
+    [SerializeField]
+    private bool isAttachHeavyItem;  //有碰到除了地板的HEAVYITEM
 
     public GameObject parents;
     private UnityJellySprite jellySprite;
 
-    public List<GameObject> heavyItem;
+    [SerializeField]
+    private bool isAttachLightItem;  //有碰到light
 
-    public List<GameObject> lightItem;
+    [SerializeField]
+    private bool isAttachPlayer;  //有碰到角色
+
+    [SerializeField]
+    public List<GameObject> stickPlayerList;  //黏住的角色
     public enum DETECTTYPE
     {
         NONE,
@@ -32,78 +38,84 @@ public class testPlayerStick : MonoBehaviour
     // public DETECTTYPE detectType{ get {return m_detectType;} } 
     DETECTTYPE m_detectType = DETECTTYPE.NONE;
 
-    void Awake()
-    {
-        jellySprite = parents.GetComponent<UnityJellySprite>();
-        // playerFloorDetect = gameObject.GetComponentIn<testPlayerFloorDetect>();
-    }
+    testPlayerMovement testPlayerMovement;
     void Start()
     {
+        jellySprite = parents.GetComponent<UnityJellySprite>();
+        testPlayerMovement = gameObject.GetComponentInParent<testPlayerMovement>();
 
     }
     void Update()
     {
         // Input.GetButtonDown("Stick_" + this.tag) || 
-        if ((Input.GetKeyDown("x")) && canStick)
+        if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
         {
-            m_isStick = !m_isStick;
-
-            if (!m_isStick)
+            if (canStick && !m_isStick)
             {
-                ResetNotStick();
+                m_isStick = true;
             }
-            
-            // if (item != null && m_isStick)
-            // {
-            //     stickItem = item;
-            // }
-            // else
-            // {
-            //     stickItem = null;
-            // }
-
-            // jellySprite.SetStick(m_isStick, stickItem);
-
-
-
-            //Item.transform.parent=this.transform;
+            else if (m_isStick)
+            {
+                m_isStick = false;
+                ResetNotStick_Normal();
+            }
         }
-        // else if (Input.GetButtonUp("Stick_" + this.tag))
-        // {
-        //     jellySprite.PullItem(true);
-        // }
 
-        if (m_isStick)
+
+        if (isStick)
         {
-            StickToItem();
+            if (isAttachHeavyItem || getIsOnFloor)
+            {
+                StickToItem();
+            }
+            // if (attachLightItem.Count > 0)
+            // {
+            //     ItemToStick();
+            // }
             ItemToStick();
+            PlayerToStick();
+        }
+
+
+        isAttachLightItem = jellySprite.GetIsLightAttach();
+        isAttachPlayer = jellySprite.GetIsPlayerAttach();
+        if (getIsOnFloor || isAttachHeavyItem || isAttachPlayer || isAttachLightItem)
+        {
+            canStick = true;
+        }
+        // else if (!getIsOnFloor && !isAttachHeavyItem && stickLightItem.Count == 0)
+        // {
+        else if (!getIsOnFloor && !isAttachHeavyItem && isAttachLightItem && isAttachPlayer)
+        {
+            canStick = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "ground" && other.gameObject.tag != "wall")
-        {
-            canStick = true;
-            stickItemCount++;
-        }
+        // if (other.gameObject.tag != parents.tag)
+        // {
+        //     if (other.gameObject.layer == LayerMask.NameToLayer("light"))
+        //     {
+        //         attachLightItem.Add(other.gameObject);
+        //     }
+        // }
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ground" || other.gameObject.tag == "wall")
-            canStick = true;
-
-
+        if (other.gameObject.tag == "wall" && !isAttachPlayer)
+        {
+            isAttachHeavyItem = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "ground" && other.gameObject.tag != "wall")
+        if (other.gameObject.tag != parents.tag)
         {
-            stickItemCount--;
-            if (stickItemCount == 0)
+            if (other.gameObject.tag == "wall")
             {
-                canStick = false;
+                isAttachHeavyItem = false;
             }
         }
     }
@@ -113,14 +125,28 @@ public class testPlayerStick : MonoBehaviour
         jellySprite.SetPointsKinematic(true);
     }
 
-    private void ResetNotStick()
+    private void ResetNotStick_Normal()
     {
+        isAttachHeavyItem = false;
         jellySprite.SetPointsKinematic(false);
         jellySprite.SetItemStick(false);
+        stickPlayerList = jellySprite.SetPlayerStick(false);
     }
 
     private void ItemToStick()
     {
-       jellySprite.SetItemStick(true);
+        jellySprite.SetItemStick(true);
+    }
+
+    private void PlayerToStick()
+    {
+        stickPlayerList = jellySprite.SetPlayerStick(true);
+    }
+
+    //
+    public void ResetNotStick_Pop()
+    {
+        isAttachHeavyItem = false;
+        jellySprite.SetPointsKinematic(false);
     }
 }

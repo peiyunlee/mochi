@@ -7,6 +7,8 @@ public class testPlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float jumpSpeed;
 
+    public float popForce;
+
     [SerializeField]
     private bool canJump;
     private bool canMove;
@@ -18,24 +20,44 @@ public class testPlayerMovement : MonoBehaviour
 
     testPlayerFloorDetect playerFloorDetect;
 
+    public bool testType;
 
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
+        if (gameObject.tag == "player1")
+            testType = true;
+        else testType = false;
         // item = null;
     }
     void Update()
     {
-        GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
+        if (testType)
+        {
+            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
 
-        if (Input.GetKeyDown("right")) testGetKeyMove = 1;
-        else if (Input.GetKeyDown("left")) testGetKeyMove = -1;
+            if (Input.GetKeyDown("right")) testGetKeyMove = 1;
+            else if (Input.GetKeyDown("left")) testGetKeyMove = -1;
+            else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyMove = 0;
+        }
+
+        else
+        {
+            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
+
+
+            if (Input.GetKeyDown("d")) testGetKeyMove = 1;
+            else if (Input.GetKeyDown("a")) testGetKeyMove = -1;
+            else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyMove = 0;
+        }
 
 
         canJump = playerFloorDetect.isOnFloor;
         canMove = playerFloorDetect.isOnFloor;
+
+        playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
     }
 
     void FixedUpdate()
@@ -61,6 +83,11 @@ public class testPlayerMovement : MonoBehaviour
             canJump = false;
             jellySprite.AddForce(new Vector2(0, jumpSpeed));
         }
+    }
+
+    public void Pop(Vector2 slot)
+    {
+        jellySprite.AddForce(slot*popForce);
     }
 
 }

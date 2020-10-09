@@ -6,7 +6,7 @@ public class Mochi : MonoBehaviour {
 
 	LevelController levelController;
 
-    void Awake()
+    void Start()
     {
         levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
     }
