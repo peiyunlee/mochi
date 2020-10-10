@@ -40,13 +40,13 @@ public class JellySpriteReferencePoint : MonoBehaviour
     {
         if (ParentJellySprite && SendCollisionMessages)
         {
-			if (collision.gameObject.tag != this.tag&&collision.gameObject.tag != "floorDetect")
-            {
-                //Debug.Log(this.name + ":" + collision.gameObject.name);
-				isTouch=true;
-                stickItem=collision.gameObject;
-                // Debug.Log(this.name + ":" + stickItem);
-            }
+			// if (collision.gameObject.tag != this.tag&&collision.gameObject.tag != "floorDetect")
+            // {
+            //     //Debug.Log(this.name + ":" + collision.gameObject.name);
+			// 	isTouch=true;
+            //     stickItem=collision.gameObject;
+            //     // Debug.Log(this.name + ":" + stickItem);
+            // }
             m_JellyCollision2D.Collision2D = collision;
             ParentJellySprite.SendMessage("OnJellyCollisionEnter2D", m_JellyCollision2D, SendMessageOptions.DontRequireReceiver);
         }
@@ -113,6 +113,7 @@ public class JellySpriteReferencePoint : MonoBehaviour
     {
         if (ParentJellySprite && SendCollisionMessages)
         {
+            Debug.Log(collider);
             m_JellyCollider2D.Collider2D = collider;
             ParentJellySprite.SendMessage("OnJellyTriggerEnter2D", m_JellyCollider2D, SendMessageOptions.DontRequireReceiver);
         }

@@ -1905,57 +1905,103 @@ public abstract class JellySprite : MonoBehaviour
     /// <summary>
     /// Add a force to every reference point
     /// </summary>
-    public void AddVelocity(Vector2 force)
+    public void AddVelocity(Vector2 force, bool isWalk = true)
     {
         if (m_ReferencePoints != null)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            if (isWalk)
             {
-                if (referencePoint.Body2D)
+                foreach (ReferencePoint referencePoint in m_ReferencePoints)
                 {
-                    referencePoint.Body2D.velocity = new Vector2(force.x, referencePoint.Body2D.velocity.y);
-                }
+                    if (referencePoint.Body2D)
+                    {
+                        referencePoint.Body2D.velocity = new Vector2(force.x, referencePoint.Body2D.velocity.y);
+                    }
 
-                if (referencePoint.Body3D)
-                {
-                    referencePoint.Body3D.velocity = force;
+                    if (referencePoint.Body3D)
+                    {
+                        referencePoint.Body3D.velocity = force;
+                    }
                 }
             }
+            else
+            {
+                foreach (ReferencePoint referencePoint in m_ReferencePoints)
+                {
+                    if (referencePoint.Body2D)
+                    {
+                        referencePoint.Body2D.velocity = new Vector2(force.x, force.y);
+                    }
+
+                    if (referencePoint.Body3D)
+                    {
+                        referencePoint.Body3D.velocity = force;
+                    }
+                }
+            }
+
         }
     }
-
-    /// <summary>
-    /// Set isTrigger to every reference point
-    /// </summary>
-
-    public void SetStick(bool isStick, GameObject item = null)
+    public void SetStick(bool isStick)
     {
         if (isStick)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            GameObject item = null;
+            foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
             {
-                //referencePoint.Collider2D.isTrigger=true;
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch)
+                item = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem;
+                Debug.Log(item);
+                if (item != null)
                 {
-
-                    referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    if (item != null)
+                    if (item.gameObject.tag == "player1" || item.gameObject.tag == "player2" || item.gameObject.tag == "player3" || item.gameObject.tag == "player4" || item.gameObject.tag == "player5")
                     {
-                        referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
-                        referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                        foreach (JellySprite.ReferencePoint referencePoints in ReferencePoints)
+                        {
+                            if (referencePoints == m_CentralPoint)
+                            {
+                                // Debug.Log("Central" + referencePoint.GameObject);
+                                referencePoints.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                                GameObject stickPlayer = GameObject.Find(item.gameObject.tag.ToString());
+                                item = stickPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+                                // Debug.Log("item" + item);
+                                // Debug.Log("Central" + referencePoint.GameObject);
+                                referencePoints.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
+                                referencePoints.GameObject.GetComponent<HingeJoint2D>().connectedAnchor = referencePoints.Body2D.GetPoint(item.GetComponent<Rigidbody2D>().position);
+                                item.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                                item.GetComponent<Rigidbody2D>().isKinematic = true;
+                                referencePoints.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+
+                                haveTouch = true;
+                            }
+                        }
                     }
 
-                    // if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem != null)
-                    // {
-                    //     Debug.Log("a");
-                    //     // stickItem[i] = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem;
-                    // }
 
-                    haveTouch = true;
-                    // Debug.Log(stickItem[i].name);
+                    else
+                    {
+
+                        //referencePoint.Collider2D.isTrigger=true;
+                        if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch)
+                        {
+
+                            referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+
+                            referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
+                            referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+
+
+                            // if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem != null)
+                            // {
+                            //     Debug.Log("a");
+                            //     // stickItem[i] = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().stickItem;
+                            // }
+
+                            haveTouch = true;
+                            // Debug.Log(stickItem[i].name);
+                        }
+
+                    }
                 }
-
-
             }
         }
         else

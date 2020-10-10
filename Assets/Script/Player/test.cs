@@ -10,13 +10,15 @@ public class test : MonoBehaviour
     public bool canStick = false;
     private int jumpCount = 0;
     private UnityJellySprite jellySprite;
-    UnityJellySprite.JellyCollision2D jellyCollision;
     private bool isStick = false;
     public float force = 20;
     public GameObject item = null;
-    private GameObject stickItem = null;
+    public GameObject stickItem = null;
     public float push = 0;
-    private bool GetKeyJump=false;
+    private bool GetKeyJump = false;
+    public bool canBomb = false;
+    public GameObject stickPlayer = null;
+    bool isPlayer = false;
     // Use this for initialization
     void Start()
     {
@@ -25,31 +27,12 @@ public class test : MonoBehaviour
     }
     void Update()
     {
-        GetKeyJump=Input.GetButtonDown("Jump_" + this.tag);
+        GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
         if (Input.GetButtonDown("Stick_" + this.tag))
         {
             isStick = !isStick;
-
-            // if (isStick&&!canStick)
-            // {
-            //     isStick=false;
-            // }
-            if (item != null && isStick)
-            {
-                stickItem = item;
-                // Debug.Log(stickItem.name);
-            }
-            else
-            {
-                stickItem = null;
-            }
-
-            jellySprite.SetStick(isStick, stickItem);
-
-
-
-            //Item.transform.parent=this.transform;
         }
+        jellySprite.SetStick(isStick);
         // else if (Input.GetButtonUp("Stick_" + this.tag))
         // {
         //     jellySprite.PullItem(true);
@@ -70,7 +53,42 @@ public class test : MonoBehaviour
         {
             if (jellySprite.haveTouch)
             {
-                jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
+                // jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
+
+                if (item != null && (item.gameObject.tag == "player1" || item.gameObject.tag == "player2" || item.gameObject.tag == "player3" || item.gameObject.tag == "player4" || item.gameObject.tag == "player5"))
+                {
+                    Vector2 turn=new Vector2(0.0f,0.0f);
+                    // Debug.Log(GameObject.Find(item.gameObject.tag.ToString()));
+                    // stickPlayer=GameObject.Find(item.gameObject.tag.ToString());
+                    // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
+                    if (Input.GetAxisRaw("Horizontal_" + this.tag) < 0)
+                    {
+                        turn.x=Vector2.left.x * moveSpeed;
+                        // jellySprite.AddVelocity(new Vector2(Vector2.left.x * moveSpeed, Vector2.left.y * moveSpeed));
+                    }
+                    if (Input.GetAxisRaw("Horizontal_" + this.tag) > 0)
+                    {
+                        turn.x=Vector2.right.x * moveSpeed;
+                        // jellySprite.AddVelocity(new Vector2(Vector2.right.x * moveSpeed, Vector2.right.y * moveSpeed));
+                    }
+                    if (Input.GetAxisRaw("Vertical_" + this.tag) > 0)
+                    {
+                        turn.y=Vector2.up.y * moveSpeed;
+                        // jellySprite.AddVelocity(new Vector2(Vector2.up.x * moveSpeed, Vector2.up.y * moveSpeed));
+                    }
+                    if (Input.GetAxisRaw("Vertical_" + this.tag) < 0)
+                    {
+                        turn.y=Vector2.down.y * moveSpeed;
+                        // jellySprite.AddVelocity(new Vector2(Vector2.down.x * moveSpeed, Vector2.down.y * moveSpeed));
+                    }
+                    jellySprite.AddVelocity(turn,false);
+                }
+                else
+                {
+                    jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * push, 0.0f));
+                }
+
+
                 // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag)*push,0.0f));
 
                 // if (stickItem != null)
@@ -83,7 +101,7 @@ public class test : MonoBehaviour
             else
             {
                 isStick = !isStick;
-                jellySprite.SetStick(isStick, null);
+                jellySprite.SetStick(isStick);
             }
 
         }

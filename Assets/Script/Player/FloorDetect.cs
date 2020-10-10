@@ -44,6 +44,9 @@ public class FloorDetect : MonoBehaviour
             {
                 test.canStick = true;
                 test.item = other.gameObject;
+                // if(other.gameObject.tag=="player1"||other.gameObject.tag=="player2"||other.gameObject.tag=="player3"||other.gameObject.tag=="player4"||other.gameObject.tag=="player5"){
+                //     test.canBomb=true;
+                // }
             }
         }
     }
@@ -64,6 +67,9 @@ public class FloorDetect : MonoBehaviour
             {
                 test.canStick = true;
                 test.item = other.gameObject;
+                if(other.gameObject.tag=="player1"||other.gameObject.tag=="player2"||other.gameObject.tag=="player3"||other.gameObject.tag=="player4"||other.gameObject.tag=="player5"){
+                    test.canBomb=false;
+                }
             }
         }
     }
@@ -84,6 +90,9 @@ public class FloorDetect : MonoBehaviour
             {
                 test.canStick = false;
                 test.item = null;
+                if(other.gameObject.tag=="player1"||other.gameObject.tag=="player2"||other.gameObject.tag=="player3"||other.gameObject.tag=="player4"||other.gameObject.tag=="player5"){
+                    test.canBomb=false;
+                }
             }
         }
     }
