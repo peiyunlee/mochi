@@ -40,6 +40,9 @@ public class testPlayerStick : MonoBehaviour
     DETECTTYPE m_detectType = DETECTTYPE.NONE;
 
     testPlayerMovement testPlayerMovement;
+
+    bool stopStick = true;
+
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();

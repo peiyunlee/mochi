@@ -12,6 +12,8 @@ public class testPlayerPop : MonoBehaviour
 
     float popTime;
 
+    bool getKeyPop;
+
     void Start()
     {
         playerStick = gameObject.GetComponent<testPlayerStick>();
@@ -26,11 +28,18 @@ public class testPlayerPop : MonoBehaviour
         if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
         // if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
         {
-            Debug.Log("input");
-            Pop();
+            getKeyPop = true;
         }
 
         canPop = playerStick.isStick;
+    }
+    void FixedUpdate()
+    {
+        if (getKeyPop)
+        {
+            getKeyPop = false;
+            Pop();
+        }
     }
 
     void Pop()
@@ -45,12 +54,14 @@ public class testPlayerPop : MonoBehaviour
         if (playerStick.stickItemList.Count > 0)
         {
             List<GameObject> stickItemList = playerStick.stickItemList;
-            // ResetStickItem();
-            Debug.Log(stickItemList);
+            ResetStickItem();
             foreach (var item in stickItemList)
             {
-                Vector2 slop = item.transform.position - this.gameObject.transform.position;
-                item.GetComponent<Rigidbody2D>().AddForce(slop * popForce);
+                if (item.tag != "ground" && item.tag != "wall")
+                {
+                    Vector2 slop = item.transform.position - this.gameObject.transform.position;
+                    item.GetComponent<Rigidbody2D>().velocity = slop * popForce;
+                }
             }
         }
 
