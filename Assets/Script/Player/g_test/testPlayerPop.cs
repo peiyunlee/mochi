@@ -16,7 +16,8 @@ public class testPlayerPop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("c") && playerStick.isStick)
+        // if (Input.GetKeyDown("c") && playerStick.isStick)
+        if (Input.GetButtonDown("Pop_" + this.tag) && playerStick.isStick)
         {
             ResetOtherPlayerStick();
             Pop();

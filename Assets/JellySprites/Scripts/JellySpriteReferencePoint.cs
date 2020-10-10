@@ -71,9 +71,13 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 else if (collision.gameObject.layer == LayerMask.NameToLayer("light"))
                 {
                     isTouch[(int)TOUCHTYPE.LIGHT] = true;
-                    attachItem.Add(collision.gameObject);
-                    itemIsAttach.Add(true);
                 }
+                // else if (collision.gameObject.layer == LayerMask.NameToLayer("player"))
+                // {
+                //     Debug.Log("attach" + collision.gameObject.name);
+                // }
+                attachItem.Add(collision.gameObject);
+                itemIsAttach.Add(true);
             }
             //
 
@@ -113,9 +117,9 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 else if (collision.gameObject.layer == LayerMask.NameToLayer("light"))
                 {
                     isTouch[(int)TOUCHTYPE.LIGHT] = false;
-                    attachItem.Remove(collision.gameObject);
-                    itemIsAttach.RemoveAt((int)TOUCHTYPE.LIGHT);
                 }
+                attachItem.Remove(collision.gameObject);
+                itemIsAttach.RemoveAt((int)TOUCHTYPE.LIGHT);
             }
             //
 

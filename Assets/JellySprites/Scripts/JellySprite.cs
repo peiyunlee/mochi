@@ -1965,7 +1965,7 @@ public abstract class JellySprite : MonoBehaviour
         {
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[0])
+                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[0]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[2]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[3]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[4])
                 {
                     referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
                     int index = 0;

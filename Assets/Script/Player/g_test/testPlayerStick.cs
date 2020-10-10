@@ -48,7 +48,8 @@ public class testPlayerStick : MonoBehaviour
     void Update()
     {
         // Input.GetButtonDown("Stick_" + this.tag) || 
-        if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
+        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
+        if (Input.GetButtonDown("Stick_" + this.tag))
         {
             if (canStick && !m_isStick)
             {
@@ -64,13 +65,9 @@ public class testPlayerStick : MonoBehaviour
 
         if (isStick)
         {
-            if (isAttachHeavyItem || getIsOnFloor)
-            {
-                StickToItem();
-            }
-            // if (attachLightItem.Count > 0)
+            // if (isAttachHeavyItem || getIsOnFloor)
             // {
-            //     ItemToStick();
+            //     StickToItem();
             // }
             ItemToStick();
             PlayerToStick();
@@ -83,8 +80,6 @@ public class testPlayerStick : MonoBehaviour
         {
             canStick = true;
         }
-        // else if (!getIsOnFloor && !isAttachHeavyItem && stickLightItem.Count == 0)
-        // {
         else if (!getIsOnFloor && !isAttachHeavyItem && isAttachLightItem && isAttachPlayer)
         {
             canStick = false;
@@ -103,7 +98,7 @@ public class testPlayerStick : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "wall" && !isAttachPlayer)
+        if (other.gameObject.tag == "wall" && !isAttachPlayer)  //?
         {
             isAttachHeavyItem = true;
         }
@@ -128,7 +123,7 @@ public class testPlayerStick : MonoBehaviour
     private void ResetNotStick_Normal()
     {
         isAttachHeavyItem = false;
-        jellySprite.SetPointsKinematic(false);
+        // jellySprite.SetPointsKinematic(false);
         jellySprite.SetItemStick(false);
         stickPlayerList = jellySprite.SetPlayerStick(false);
     }
