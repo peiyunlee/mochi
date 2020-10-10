@@ -1956,7 +1956,6 @@ public abstract class JellySprite : MonoBehaviour
     {
         if (isStick)
         {
-            GameObject item = null;
             foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
             {
                 //ENUM TOUCHTYPE >= HEAVY
