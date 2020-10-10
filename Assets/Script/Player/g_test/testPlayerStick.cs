@@ -14,21 +14,22 @@ public class testPlayerStick : MonoBehaviour
 
     [SerializeField]
     private bool canStick;  //有碰到東西可以黏
-
-    [SerializeField]
-    private bool isAttachHeavyItem;  //有碰到除了地板的HEAVYITEM
-
-    public GameObject parents;
     private UnityJellySprite jellySprite;
 
     [SerializeField]
-    private bool isAttachLightItem;  //有碰到light
+    private bool isAttachItem;  //有碰到Item
+
+    [SerializeField]
+    public List<GameObject> stickItemList;  //黏住的角色
 
     [SerializeField]
     private bool isAttachPlayer;  //有碰到角色
 
     [SerializeField]
     public List<GameObject> stickPlayerList;  //黏住的角色
+
+    [SerializeField]
+    private bool isAttachWall;  //有碰到wall or floor
     public enum DETECTTYPE
     {
         NONE,
@@ -41,15 +42,14 @@ public class testPlayerStick : MonoBehaviour
     testPlayerMovement testPlayerMovement;
     void Start()
     {
-        jellySprite = parents.GetComponent<UnityJellySprite>();
-        testPlayerMovement = gameObject.GetComponentInParent<testPlayerMovement>();
+        jellySprite = gameObject.GetComponent<UnityJellySprite>();
+        testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
 
     }
     void Update()
     {
-        // Input.GetButtonDown("Stick_" + this.tag) || 
-        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
-        if (Input.GetButtonDown("Stick_" + this.tag))
+        // Input.GetButtonDown("Stick_" + this.tag)
+        if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
         {
             if (canStick && !m_isStick)
             {
@@ -63,85 +63,53 @@ public class testPlayerStick : MonoBehaviour
         }
 
 
-        if (isStick)
+        if (m_isStick)
         {
-            // if (isAttachHeavyItem || getIsOnFloor)
-            // {
-            //     StickToItem();
-            // }
             ItemToStick();
             PlayerToStick();
         }
 
 
-        isAttachLightItem = jellySprite.GetIsLightAttach();
+        isAttachItem = jellySprite.GetIsItemAttach();
         isAttachPlayer = jellySprite.GetIsPlayerAttach();
-        if (getIsOnFloor || isAttachHeavyItem || isAttachPlayer || isAttachLightItem)
+        isAttachWall = jellySprite.GetIsFloorOrWallAttach();
+
+        if (getIsOnFloor || isAttachWall || isAttachPlayer || isAttachItem)
         {
             canStick = true;
         }
-        else if (!getIsOnFloor && !isAttachHeavyItem && isAttachLightItem && isAttachPlayer)
+        else if (!getIsOnFloor && !isAttachItem && !isAttachPlayer && !isAttachWall)
         {
             canStick = false;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // if (other.gameObject.tag != parents.tag)
-        // {
-        //     if (other.gameObject.layer == LayerMask.NameToLayer("light"))
-        //     {
-        //         attachLightItem.Add(other.gameObject);
-        //     }
-        // }
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "wall" && !isAttachPlayer)  //?
-        {
-            isAttachHeavyItem = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag != parents.tag)
-        {
-            if (other.gameObject.tag == "wall")
-            {
-                isAttachHeavyItem = false;
-            }
-        }
-    }
-
-    private void StickToItem()
-    {
-        jellySprite.SetPointsKinematic(true);
-    }
-
     private void ResetNotStick_Normal()
     {
-        isAttachHeavyItem = false;
-        // jellySprite.SetPointsKinematic(false);
-        jellySprite.SetItemStick(false);
-        stickPlayerList = jellySprite.SetPlayerStick(false);
+        ResetItemNotStick();
+
+        stickPlayerList = null;
+        jellySprite.ResetPlayerStick();
+
+        jellySprite.ResetFloorOrWallStick();
     }
 
     private void ItemToStick()
     {
-        jellySprite.SetItemStick(true);
+        stickItemList = jellySprite.SetItemStick();
+
+        jellySprite.SetFloorOrWallStick();
     }
 
     private void PlayerToStick()
     {
-        stickPlayerList = jellySprite.SetPlayerStick(true);
+        stickPlayerList = jellySprite.SetPlayerStick();
     }
 
-    //
-    public void ResetNotStick_Pop()
+
+    public void ResetItemNotStick()
     {
-        isAttachHeavyItem = false;
-        jellySprite.SetPointsKinematic(false);
+        stickItemList = null;
+        jellySprite.ResetItemStick();
     }
 }

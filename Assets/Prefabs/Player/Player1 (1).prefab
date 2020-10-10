@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 114884324956027448}
   - component: {fileID: 114776657087782702}
   - component: {fileID: 114126424324672384}
+  - component: {fileID: 114820946459761400}
   m_Layer: 16
   m_Name: Player1 (1)
   m_TagString: player1
@@ -305,6 +306,7 @@ MonoBehaviour:
   moveSpeed: 4
   jumpSpeed: 350
   popForce: 100
+  pullForce: 15
   canJump: 0
   testType: 0
 --- !u!114 &114494364507452290
@@ -313,7 +315,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1279573238279932}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
   m_Name: 
@@ -321,11 +323,10 @@ MonoBehaviour:
   getIsOnFloor: 0
   m_isStick: 0
   canStick: 0
-  isAttachHeavyItem: 0
-  parents: {fileID: 1474401365958956}
-  isAttachLightItem: 0
+  isAttachItem: 0
   isAttachPlayer: 0
   stickPlayerList: []
+  attachItemList: []
 --- !u!114 &114776657087782702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -350,6 +351,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isOnFloor: 0
   parents: {fileID: 1474401365958956}
+--- !u!114 &114820946459761400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1474401365958956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  getIsOnFloor: 0
+  m_isStick: 0
+  canStick: 0
+  isAttachItem: 0
+  isAttachPlayer: 0
+  stickPlayerList: []
+  attachItemList: []
 --- !u!114 &114884324956027448
 MonoBehaviour:
   m_ObjectHideFlags: 1
