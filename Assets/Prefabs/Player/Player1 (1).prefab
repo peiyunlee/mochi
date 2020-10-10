@@ -305,8 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   jumpSpeed: 350
-  popForce: 100
-  pullForce: 15
+  pullForce: 20
   canJump: 0
   testType: 0
 --- !u!114 &114494364507452290
@@ -324,9 +323,10 @@ MonoBehaviour:
   m_isStick: 0
   canStick: 0
   isAttachItem: 0
+  stickItemList: []
   isAttachPlayer: 0
   stickPlayerList: []
-  attachItemList: []
+  isAttachWall: 0
 --- !u!114 &114776657087782702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e535f187f7589d40879e6216d0f305f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popForce: 10
 --- !u!114 &114803212924578986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -366,9 +367,10 @@ MonoBehaviour:
   m_isStick: 0
   canStick: 0
   isAttachItem: 0
+  stickItemList: []
   isAttachPlayer: 0
   stickPlayerList: []
-  attachItemList: []
+  isAttachWall: 0
 --- !u!114 &114884324956027448
 MonoBehaviour:
   m_ObjectHideFlags: 1
