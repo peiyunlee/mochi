@@ -1909,22 +1909,41 @@ public abstract class JellySprite : MonoBehaviour
     /// <summary>
     /// Add a force to every reference point
     /// </summary>
-    public void AddVelocity(Vector2 force)
+    public void AddVelocity(Vector2 force, bool isWalk = true)
     {
         if (m_ReferencePoints != null)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            if (isWalk)
             {
-                if (referencePoint.Body2D)
+                foreach (ReferencePoint referencePoint in m_ReferencePoints)
                 {
-                    referencePoint.Body2D.velocity = new Vector2(force.x, referencePoint.Body2D.velocity.y);
-                }
+                    if (referencePoint.Body2D)
+                    {
+                        referencePoint.Body2D.velocity = new Vector2(force.x, referencePoint.Body2D.velocity.y);
+                    }
 
-                if (referencePoint.Body3D)
-                {
-                    referencePoint.Body3D.velocity = force;
+                    if (referencePoint.Body3D)
+                    {
+                        referencePoint.Body3D.velocity = force;
+                    }
                 }
             }
+            else
+            {
+                foreach (ReferencePoint referencePoint in m_ReferencePoints)
+                {
+                    if (referencePoint.Body2D)
+                    {
+                        referencePoint.Body2D.velocity = new Vector2(force.x, force.y);
+                    }
+
+                    if (referencePoint.Body3D)
+                    {
+                        referencePoint.Body3D.velocity = force;
+                    }
+                }
+            }
+
         }
     }
 
@@ -1937,7 +1956,8 @@ public abstract class JellySprite : MonoBehaviour
     {
         if (isStick)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            GameObject item = null;
+            foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
             {
                 //ENUM TOUCHTYPE >= HEAVY
                 if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[2] || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[3])
