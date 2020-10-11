@@ -7,7 +7,7 @@ public class testPlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float jumpSpeed;
 
-    public float popForce;
+    public float pullForce;
 
     [SerializeField]
     private bool canJump;
@@ -30,64 +30,62 @@ public class testPlayerMovement : MonoBehaviour
         if (gameObject.tag == "player1")
             testType = true;
         else testType = false;
-        // item = null;
     }
     void Update()
     {
-        // if (testType)
-        // {
-        //     GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
+        if (testType)
+        {
+            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
 
-        //     if (Input.GetKeyDown("right")) testGetKeyMove = 1;
-        //     else if (Input.GetKeyDown("left")) testGetKeyMove = -1;
-        //     else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyMove = 0;
-        // }
+            if (Input.GetKeyDown("right")) testGetKeyMove = 1;
+            else if (Input.GetKeyDown("left")) testGetKeyMove = -1;
+            else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyMove = 0;
+        }
 
-        // else
-        // {
+        else
+        {
             GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
 
 
             if (Input.GetKeyDown("d")) testGetKeyMove = 1;
             else if (Input.GetKeyDown("a")) testGetKeyMove = -1;
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyMove = 0;
-        // }
+        }
 
 
         canJump = playerFloorDetect.isOnFloor;
-        canMove = playerFloorDetect.isOnFloor;
 
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
     }
 
     void FixedUpdate()
     {
-        if (!playerStick.isStick)
+        if (GetKeyJump && canJump)
         {
-            Move();
             Jump();
         }
+
+        if (!playerStick.isStick)
+            Move();
+        else
+            Pull();
 
     }
     void Move()
     {
-        if (canMove)
-            jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
-            // jellySprite.AddVelocity(new Vector2(testGetKeyMove * moveSpeed, 0.0f));
+        // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
+        jellySprite.AddVelocity(new Vector2(testGetKeyMove * moveSpeed, 0.0f));
+    }
+    void Pull()
+    {
+        // jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * pullForce, 0.0f));
+        jellySprite.AddForce(new Vector2(testGetKeyMove * pullForce, 0.0f));
     }
 
     void Jump()
     {
-        if (GetKeyJump && canJump)
-        {
-            canJump = false;
-            jellySprite.AddForce(new Vector2(0, jumpSpeed));
-        }
-    }
-
-    public void Pop(Vector2 slot)
-    {
-        jellySprite.AddForce(slot*popForce);
+        canJump = false;
+        jellySprite.AddForce(new Vector2(0, jumpSpeed));
     }
 
 }

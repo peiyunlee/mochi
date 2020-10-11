@@ -945,10 +945,6 @@ public abstract class JellySprite : MonoBehaviour
             hingjoint.enabled = false;
             hingjoint.connectedBody = null;
 
-            FixedJoint2D fixedjoint = referencePointObject.AddComponent<FixedJoint2D>();
-            fixedjoint.enabled = false;
-            fixedjoint.connectedBody = null;
-
             if (lockRotation)
             {
                 newRigidBody.constraints |= RigidbodyConstraints2D.FreezeRotation;
@@ -1951,125 +1947,144 @@ public abstract class JellySprite : MonoBehaviour
     /// Set isTrigger to every reference point
     /// </summary>
 
-
-    public void SetPointsKinematic(bool isStick)
+    public List<GameObject> SetItemStick()
     {
-        if (isStick)
+        List<GameObject> stickItemList = new List<GameObject>();
+
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            GameObject item = null;
-            foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
+            // > wall
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
             {
-                //ENUM TOUCHTYPE >= HEAVY
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[2] || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[3])
+                referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                GameObject attachItem = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem;
+                if (attachItem != null)
                 {
-                    referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    referencePoint.SetKinematic(true);
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                    if (!stickItemList.Contains(attachItem))
+                    {
+                        stickItemList.Add(attachItem);
+                    }
                 }
             }
         }
-        else
-        {
-            //reset
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                {
-                    referencePoint.SetKinematic(false);
-                }
-            }
-        }
+        return stickItemList;
     }
 
-    public void SetItemStick(bool isStick)
+    public void ResetItemStick()
     {
-        if (isStick)
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
             {
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[0]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[2]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[3]||referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[4])
-                {
-                    referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    int index = 0;
-                    foreach (var item in referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem)
-                    {
-                        if (item != null && referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().itemIsAttach[index])
-                        {
-                            referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>();
-                            referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
-                        }
-                        index++;
-                    }
-
-                }
-            }
-        }
-        else
-        {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
             }
         }
     }
-
-
-
-    public List<GameObject> SetPlayerStick(bool isStick)
-    {
-        List<GameObject> stickPlayer = new List<GameObject>();
-        bool m_isSet = false;
-        if (isStick)
-        {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[1] && !m_isSet)
-                {
-                    referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                    GameObject attachPlayer = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachPlayer;
-                    if (attachPlayer != null)
-                    {
-                        FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-                        fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
-                        fixedJoint2D.enabled = true;
-                        m_isSet = true;
-                        stickPlayer.Add(attachPlayer.GetComponent<testPlayerStick>().parents);
-                    }
-                }
-            }
-            return stickPlayer;
-        }
-        else
-        {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                if (!m_isSet)
-                {
-                    GameObject attachPlayer = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachPlayer;
-                    if (attachPlayer != null)
-                    {
-                        FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-                        fixedJoint2D.enabled = false;
-                    }
-                }
-            }
-            return null;
-        }
-    }
-
-    public bool GetIsLightAttach()
+    public bool GetIsItemAttach()
     {
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[0])
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
                 return true;
         }
         return false;
+    }
+
+    public void SetFloorOrWallStick()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            // == floor or wall
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 2 || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 3)
+            {
+                referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                GameObject attachItem = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem;
+                if (attachItem != null)
+                {
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                }
+            }
+        }
+    }
+
+    public void ResetFloorOrWallStick()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            // == floor or wall
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 2 || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 3)
+            {
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+            }
+        }
+    }
+    public bool GetIsFloorOrWallAttach()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 2 || referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 3)
+                return true;
+        }
+        return false;
+    }
+
+    public List<GameObject> SetPlayerStick()
+    {
+        List<GameObject> stickPlayerList = new List<GameObject>();
+
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            GameObject point = referencePoint.GameObject;
+
+            // = player
+            if (point.GetComponent<JellySpriteReferencePoint>().isTouch == 1)
+            {
+                GameObject attachPlayer = point.GetComponent<JellySpriteReferencePoint>().attachItem;
+                if (attachPlayer != null && !stickPlayerList.Contains(attachPlayer))
+                {
+                    HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
+                    hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
+                    hingeJoint2D.enabled = true;
+                    stickPlayerList.Add(attachPlayer);
+                }
+            }
+        }
+        return stickPlayerList;
+    }
+
+    public void ResetPlayerStick()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            GameObject points = referencePoint.GameObject;
+
+            // = player
+            if (points.GetComponent<JellySpriteReferencePoint>().isTouch == 1)
+            {
+                GameObject attachPlayer = points.GetComponent<JellySpriteReferencePoint>().attachItem;
+                if (attachPlayer != null)
+                {
+                    points.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                    points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                    HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
+                    hingeJoint2D.enabled = false;
+                }
+            }
+        }
     }
 
     public bool GetIsPlayerAttach()
     {
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch[1])
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 1)
                 return true;
         }
         return false;
