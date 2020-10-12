@@ -20,7 +20,7 @@ public class testPlayerMovement : MonoBehaviour
 
     testPlayerFloorDetect playerFloorDetect;
 
-    public bool testType;
+    public int testType;
 
     void Start()
     {
@@ -28,12 +28,16 @@ public class testPlayerMovement : MonoBehaviour
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
         if (gameObject.tag == "player1")
-            testType = true;
-        else testType = false;
+            testType = 1;
+        else if (gameObject.tag == "player2")
+            testType = 2;
+        else if (gameObject.tag == "player3")
+            testType = 3;
+        else testType = 4;
     }
     void Update()
     {
-        if (testType)
+        if (testType == 1)
         {
             GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
 
@@ -42,7 +46,7 @@ public class testPlayerMovement : MonoBehaviour
             else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyMove = 0;
         }
 
-        else
+        else if (testType == 2)
         {
             GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
 
@@ -50,6 +54,26 @@ public class testPlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("d")) testGetKeyMove = 1;
             else if (Input.GetKeyDown("a")) testGetKeyMove = -1;
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyMove = 0;
+        }
+
+        else if (testType == 3)
+        {
+            GetKeyJump = Input.GetKeyDown("4");
+
+
+            if (Input.GetKeyDown("3")) testGetKeyMove = 1;
+            else if (Input.GetKeyDown("1")) testGetKeyMove = -1;
+            else if (Input.GetKeyUp("3") || Input.GetKeyUp("1")) testGetKeyMove = 0;
+        }
+
+        else if (testType == 4)
+        {
+            GetKeyJump = Input.GetKeyDown("k");
+
+
+            if (Input.GetKeyDown("l")) testGetKeyMove = 1;
+            else if (Input.GetKeyDown("j")) testGetKeyMove = -1;
+            else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyMove = 0;
         }
 
 
@@ -86,6 +110,13 @@ public class testPlayerMovement : MonoBehaviour
     {
         canJump = false;
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
+    }
+
+    public void Pop(Vector2 slop, float popForce)
+    {
+        // jellySprite.AddVelocity(slop * popForce, false);
+        jellySprite.AddForce(slop * 500.0f);
+        jellySprite.AddForce(slop * 500.0f);
     }
 
 }

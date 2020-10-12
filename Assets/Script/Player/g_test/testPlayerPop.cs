@@ -25,7 +25,7 @@ public class testPlayerPop : MonoBehaviour
     void Update()
     {
 
-        if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
+        if (((Input.GetKeyDown("c") && playerMovement.testType == 1 ) || (Input.GetKeyDown("h") && playerMovement.testType ==2)|| (Input.GetKeyDown("6") && playerMovement.testType == 3)|| (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
         // if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
         {
             getKeyPop = true;
@@ -44,39 +44,77 @@ public class testPlayerPop : MonoBehaviour
 
     void Pop()
     {
-        // if (playerStick.stickPlayerList.Count > 0)
-        // {
-        //     List<GameObject> stickItemList = playerStick.stickItemList;
-        //     Vector2 slop = playerStick.stickPlayerList[0].transform.position - this.gameObject.transform.position;
-        //     // playerMovement.Pop(slop);
-        // }
 
         if (playerStick.stickItemList.Count > 0)
         {
             List<GameObject> stickItemList = playerStick.stickItemList;
-            ResetStickItem();
+            playerStick.ResetItemNotStick();
             foreach (var item in stickItemList)
             {
                 if (item.tag != "ground" && item.tag != "wall")
                 {
-                    Vector2 slop = item.transform.position - this.gameObject.transform.position;
-                    item.GetComponent<Rigidbody2D>().velocity = slop * popForce;
+                    PopItem(item);
                 }
+            }
+        }
+
+        if (playerStick.stickPlayerList.Count > 0)
+        {
+            List<GameObject> stickPlayerList = playerStick.stickPlayerList;
+            List<GameObject> popPlayerList = new List<GameObject>();
+            List<GameObject> withPlayerList = new List<GameObject>();
+            foreach (var player in stickPlayerList)
+            {
+                bool isStick = player.GetComponent<testPlayerStick>().isStick;
+                if (!isStick) //可以單獨彈出去的player
+                {
+                    popPlayerList.Add(player);
+                }
+                else if (isStick)
+                {
+                    withPlayerList.Add(player);
+                }
+            }
+
+            if (popPlayerList.Count > 0)
+            {
+                playerStick.ResetThePlayersNotStick(popPlayerList);
+                foreach (var player in popPlayerList)
+                {
+                    PopPlayer(player);
+                }
+            }
+
+            if (withPlayerList.Count > 0)
+            {
+                //計算pop方向、給予每隻受力
+                foreach (var player in withPlayerList)
+                {
+                    PopWithPlayer(player);
+                }
+                //重設黏
+                playerStick.ResetNotStick_Normal();
             }
         }
 
     }
 
-    void ResetOtherPlayerStick()
+    void PopItem(GameObject item)
     {
-        // foreach (GameObject player in playerStick.stickPlayerList)
-        // {
-        //     player.GetComponent<testPlayerStick>().ResetItemNotStick();
-        // }
+        Vector2 slop = item.transform.position - this.gameObject.transform.position;
+        item.GetComponent<Rigidbody2D>().velocity = slop * popForce;
     }
 
-    void ResetStickItem()
+    void PopPlayer(GameObject player)
     {
-        playerStick.ResetItemNotStick();
+        Vector2 slop = player.transform.position - this.gameObject.transform.position;
+        player.GetComponent<testPlayerMovement>().Pop(slop, popForce * 0.5f);
+    }
+
+    void PopWithPlayer(GameObject player)
+    {
+        Vector2 slop = player.transform.position - this.gameObject.transform.position;
+        // playerMovement.Pop(slop, popForce);
+        player.GetComponent<testPlayerMovement>().Pop(slop, popForce * 3.0f);
     }
 }

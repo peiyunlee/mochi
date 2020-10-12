@@ -52,7 +52,7 @@ public class testPlayerStick : MonoBehaviour
     void Update()
     {
         // Input.GetButtonDown("Stick_" + this.tag)
-        if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
+        if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
         {
             if (canStick && !m_isStick)
             {
@@ -60,7 +60,6 @@ public class testPlayerStick : MonoBehaviour
             }
             else if (m_isStick)
             {
-                m_isStick = false;
                 ResetNotStick_Normal();
             }
         }
@@ -87,14 +86,15 @@ public class testPlayerStick : MonoBehaviour
         }
     }
 
-    private void ResetNotStick_Normal()
+    public void ResetNotStick_Normal()
     {
+        m_isStick = false;
+
         ResetItemNotStick();
 
-        stickPlayerList = null;
-        jellySprite.ResetPlayerStick();
+        ResetOtherPlayersNotStick();
 
-        jellySprite.ResetFloorOrWallStick();
+        ResetFloorOrWallStick();
     }
 
     private void ItemToStick()
@@ -104,15 +104,37 @@ public class testPlayerStick : MonoBehaviour
         jellySprite.SetFloorOrWallStick();
     }
 
+
+    public void ResetItemNotStick()
+    {
+        stickItemList = null;
+        jellySprite.ResetItemStick();
+    }
+
+    public void ResetFloorOrWallStick()
+    {
+        jellySprite.ResetFloorOrWallStick();
+    }
+
     private void PlayerToStick()
     {
         stickPlayerList = jellySprite.SetPlayerStick();
     }
 
 
-    public void ResetItemNotStick()
+    public void ResetOtherPlayersNotStick()
     {
-        stickItemList = null;
-        jellySprite.ResetItemStick();
+        stickPlayerList = null;
+        jellySprite.ResetPlayerStick();
+    }
+
+
+    public void ResetThePlayersNotStick(List<GameObject> popPlayerList)
+    {
+        foreach (var player in popPlayerList)
+        {
+            stickPlayerList.Remove(player);
+            jellySprite.ResetThePlayeStick(player);
+        }
     }
 }
