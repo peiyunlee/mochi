@@ -194,6 +194,11 @@ public abstract class JellySprite : MonoBehaviour
     Transform m_Transform;
     //Check have collider touch
     public bool haveTouch = false;
+    // public bool isStick = false;
+
+    //我輩黏了
+    public bool sticked = false;
+
     #endregion
 
     #region PUBLIC_CLASSES
@@ -2073,16 +2078,37 @@ public abstract class JellySprite : MonoBehaviour
             if (point.GetComponent<JellySpriteReferencePoint>().isTouch == 1)
             {
                 GameObject attachPlayer = point.GetComponent<JellySpriteReferencePoint>().attachItem;
+                GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+
                 if (attachPlayer != null && m_stickPlayerList != null && !m_stickPlayerList.Contains(attachPlayer))
                 {
-                    HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
+
+                    //黏
+                    HingeJoint2D hingeJoint2D = attachCentral.GetComponent<HingeJoint2D>();
                     hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
+                    hingeJoint2D.anchor = attachCentral.transform.InverseTransformPoint(CentralPoint.transform.position);
                     hingeJoint2D.enabled = true;
-                    FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-                    fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
-                    fixedJoint2D.enabled = true;
+
+                    // FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
+                    // fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
+                    // fixedJoint2D.enabled = true;
+
+                    attachPlayer.GetComponent<UnityJellySprite>().sticked = true;
+
                     m_stickPlayerList.Add(attachPlayer);
                     Debug.Log("stick" + attachPlayer);
+
+
+                    // if (!attachPlayer.GetComponent<UnityJellySprite>().sticked)
+                    // {
+                    //turn
+
+
+                    // }
+                    // attachPlayer.GetComponent<UnityJellySprite>().sticked = true;
+
+                    stickPlayerList.Add(attachPlayer);
+
                 }
             }
         }
@@ -2101,13 +2127,19 @@ public abstract class JellySprite : MonoBehaviour
                 GameObject attachPlayer = points.GetComponent<JellySpriteReferencePoint>().attachItem;
                 if (attachPlayer != null)
                 {
+                    attachPlayer.GetComponent<UnityJellySprite>().sticked = false;
+
+                    attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+
                     points.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                     points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+
                     HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
                     hingeJoint2D.enabled = false;
-                    FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-                    fixedJoint2D.connectedBody = null;
-                    fixedJoint2D.enabled = false;
+
+                    // FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
+                    // fixedJoint2D.connectedBody = null;
+                    // fixedJoint2D.enabled = false;
                 }
             }
         }
@@ -2129,9 +2161,11 @@ public abstract class JellySprite : MonoBehaviour
                     flag = true;
                     HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
                     hingeJoint2D.enabled = false;
-                    FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-                    fixedJoint2D.connectedBody = null;
-                    fixedJoint2D.enabled = false;
+                    
+                    // FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
+                    // fixedJoint2D.connectedBody = null;
+                    // fixedJoint2D.enabled = false;
+
                     Debug.Log("reset" + thePlayer);
                 }
                 if (attachPlayer != null && attachPlayer == thePlayer)
@@ -2140,6 +2174,67 @@ public abstract class JellySprite : MonoBehaviour
                     points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 }
             }
+        }
+    }
+
+    public void SetPlayerRot(List<GameObject> stickPlayerList)
+    {
+        foreach (var attachPlayer in stickPlayerList)
+        {
+            GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+
+            if (attachPlayer != null && stickPlayerList != null)
+            {
+                //turn
+                // CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
+                float angle = 0;
+                if (Dir.y <= 0)
+                    angle = Vector2.SignedAngle(Vector2.down, Dir);
+                else if (Dir.y > 0)
+                    angle = Vector2.SignedAngle(Vector2.up, Dir);
+                Quaternion rotation = Quaternion.Euler(0, 0, angle);
+                attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 50.0f);
+            }
+        }
+    }
+
+    public void FreezePlayerRot()
+    {
+        if (!sticked)
+        {
+            // Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            // CentralPoint.transform.rotation = Quaternion.RotateTowards(CentralPoint.transform.rotation, rotation, 50.0f);
+            if (CentralPoint.Body2D.rotation < 1.0f && CentralPoint.Body2D.rotation > -1.0f)
+            {
+                CentralPoint.Body2D.rotation = 0;
+                CentralPoint.Body2D.freezeRotation = true;
+            }
+        }
+
+    }
+
+    public void ResetSelfRot()
+    {
+        if (!sticked)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            CentralPoint.transform.rotation = Quaternion.RotateTowards(CentralPoint.transform.rotation, rotation, 100.0f);
+        }
+    }
+
+    public void ResetPlayerRot(List<GameObject> stickPlayerList)
+    {
+        foreach (var attachPlayer in stickPlayerList)
+        {
+            GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+
+            if (attachPlayer != null && stickPlayerList != null)
+            {
+                Quaternion rotation = Quaternion.Euler(0, 0, 0);
+                attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 100.0f);
+            }
+
         }
     }
 

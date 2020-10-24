@@ -7,12 +7,14 @@ public class testPlayerPop : MonoBehaviour
     public float popForce;
     testPlayerStick playerStick;
     testPlayerMovement playerMovement;
+    private UnityJellySprite jellySprite;
 
     bool canPop;    //可以彈的情況：按黏才可以彈
 
     float popTime;
 
-    bool getKeyPop;
+    public bool getKeyPop;
+    public bool canTurn;
 
     //aa
     // float stickTimer;
@@ -22,8 +24,9 @@ public class testPlayerPop : MonoBehaviour
 
     void Start()
     {
-        playerStick = gameObject.GetComponent<testPlayerStick>();
+        playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerMovement = gameObject.GetComponent<testPlayerMovement>();
+        jellySprite = gameObject.GetComponent<UnityJellySprite>();
         canPop = false;
     }
 
@@ -31,10 +34,20 @@ public class testPlayerPop : MonoBehaviour
     void Update()
     {
 
+        canPop = playerStick.isStick;
+
         if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
-        // if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
         {
+            //讓對方轉
+            canTurn = true;
+            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+        }
+
+        if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
+        {
+            canTurn = false;
             getKeyPop = true;
+            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
         }
 
         canPop = playerStick.isStick;
@@ -50,14 +63,48 @@ public class testPlayerPop : MonoBehaviour
         // }
         //aa
     }
+
     void FixedUpdate()
     {
+
+        Turn();
+
         if (getKeyPop)
         {
             getKeyPop = false;
             Pop();
         }
 
+    }
+
+    void Turn()
+    {
+        if (canTurn)
+        {
+            //按彈時unfreeze對方的rotation
+            if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
+            {
+                List<GameObject> stickPlayerList = playerStick.stickPlayerList;
+                foreach (var player in stickPlayerList)
+                {
+                    // GetComponent<UnityJellySprite>().isStick = false;
+                    player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+                }
+            }
+        }
+        else if (playerStick.isStick && !canTurn)
+        {
+            //黏住的時候&&沒有按彈時freeze對方的rotation
+            if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
+            {
+                List<GameObject> stickPlayerList = playerStick.stickPlayerList;
+                foreach (var player in stickPlayerList)
+                {
+                    player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
+
+                }
+            }
+        }
     }
 
     void Pop()

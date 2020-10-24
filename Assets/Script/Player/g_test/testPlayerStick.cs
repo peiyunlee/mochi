@@ -57,6 +57,7 @@ public class testPlayerStick : MonoBehaviour
         {
             if (canStick && !m_isStick)
             {
+                // jellySprite.isStick = true;
                 m_isStick = true;
             }
             else if (m_isStick)
@@ -68,19 +69,16 @@ public class testPlayerStick : MonoBehaviour
 
         if (m_isStick)
         {
+
             ItemToStick();
             PlayerToStick();
-
-            //aa
-            // if (!isPopPlayer)
-            // {
-            //aa
-            // }
         }
 
 
         isAttachItem = jellySprite.GetIsItemAttach();
+
         isAttachPlayer = jellySprite.GetIsPlayerAttach();
+
         isAttachWall = jellySprite.GetIsFloorOrWallAttach();
 
         if (getIsOnFloor || isAttachWall || isAttachPlayer || isAttachItem)
@@ -115,7 +113,9 @@ public class testPlayerStick : MonoBehaviour
 
     private void ItemToStick()
     {
+
         stickItemList = jellySprite.SetItemStick();
+
 
         jellySprite.SetFloorOrWallStick();
     }
