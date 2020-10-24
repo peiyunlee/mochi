@@ -30,6 +30,8 @@ public class JellySpriteReferencePoint : MonoBehaviour
 
     public GameObject attachItem;
 
+    public Vector3 attachPosition;
+
     public JellySpriteReferencePoint()
     {
         m_JellyCollision.ReferencePoint = this;
@@ -84,6 +86,7 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 {
                     isTouch = 0;
                     attachItem = null;
+                    Debug.Log("exit" + attachItem);
                 }
             }
             //

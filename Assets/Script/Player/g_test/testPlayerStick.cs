@@ -41,12 +41,13 @@ public class testPlayerStick : MonoBehaviour
 
     testPlayerMovement testPlayerMovement;
 
-    bool stopStick = true;
+    public bool isPopPlayer;
 
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
+        isPopPlayer = false;
 
     }
     void Update()
@@ -69,6 +70,12 @@ public class testPlayerStick : MonoBehaviour
         {
             ItemToStick();
             PlayerToStick();
+
+            //aa
+            // if (!isPopPlayer)
+            // {
+            //aa
+            // }
         }
 
 
@@ -97,6 +104,15 @@ public class testPlayerStick : MonoBehaviour
         ResetFloorOrWallStick();
     }
 
+    public void ResetNotStick_PopWithPlayer()
+    {
+        m_isStick = false;
+
+        ResetItemNotStick();
+
+        ResetOtherPlayersNotStick();
+    }
+
     private void ItemToStick()
     {
         stickItemList = jellySprite.SetItemStick();
@@ -118,7 +134,7 @@ public class testPlayerStick : MonoBehaviour
 
     private void PlayerToStick()
     {
-        stickPlayerList = jellySprite.SetPlayerStick();
+        stickPlayerList = jellySprite.SetPlayerStick(stickPlayerList);
     }
 
 
@@ -136,5 +152,12 @@ public class testPlayerStick : MonoBehaviour
             stickPlayerList.Remove(player);
             jellySprite.ResetThePlayeStick(player);
         }
+    }
+
+
+    public void ResetThePlayersNotStick(int index)
+    {
+        jellySprite.ResetThePlayeStick(stickPlayerList[index]);
+        stickPlayerList[index] = null;
     }
 }

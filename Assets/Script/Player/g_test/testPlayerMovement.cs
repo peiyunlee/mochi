@@ -115,8 +115,9 @@ public class testPlayerMovement : MonoBehaviour
     public void Pop(Vector2 slop, float popForce)
     {
         // jellySprite.AddVelocity(slop * popForce, false);
-        jellySprite.AddForce(slop * 500.0f);
-        jellySprite.AddForce(slop * 500.0f);
+        // jellySprite.AddForce(slop * popForce * 70.0f);
+        // jellySprite.AddForce(slop * popForce * 100.0f);
+        jellySprite.MovePosition(slop * 2.0f);
     }
 
 }
