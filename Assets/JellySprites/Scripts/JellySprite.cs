@@ -2052,14 +2052,10 @@ public abstract class JellySprite : MonoBehaviour
                 GameObject attachPlayer = point.GetComponent<JellySpriteReferencePoint>().attachItem;
                 if (attachPlayer != null && !stickPlayerList.Contains(attachPlayer))
                 {
-
-                    // attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<Rigidbody2D>().velocity=new Vector2(0.0f,0.0f);
                     GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
-                    if (attachCentral.GetComponent<Rigidbody2D>().freezeRotation && !attachPlayer.GetComponent<UnityJellySprite>().sticked)
+                    if (!attachPlayer.GetComponent<UnityJellySprite>().sticked)
                     {
-                        // 
                         CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                        CentralPoint.Body2D.isKinematic = true;
                         if (!sticked)
                         {
                             Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
@@ -2069,7 +2065,6 @@ public abstract class JellySprite : MonoBehaviour
                             else if (Dir.y > 0)
                                 angle = Vector2.SignedAngle(Vector2.up, Dir);
                             Quaternion rotation = Quaternion.Euler(0, 0, angle);
-                            // attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<Rigidbody2D>().rotation
                             attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 50.0f);
                         }
 
@@ -2101,10 +2096,11 @@ public abstract class JellySprite : MonoBehaviour
                 if (attachPlayer != null)
                 {
                     attachPlayer.GetComponent<UnityJellySprite>().sticked = false;
-                    CentralPoint.Body2D.isKinematic = false;
                     attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+
                     points.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                     points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                    
                     HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
                     hingeJoint2D.enabled = false;
                 }

@@ -26,14 +26,14 @@ public class testPlayerPop : MonoBehaviour
     void Update()
     {
         canPop = playerStick.isStick;
-        // if (((Input.GetKeyUp("c") && playerMovement.testType) || (Input.GetKeyUp("h") && playerMovement.testType)) && canPop)
-        if ((Input.GetKeyUp("h") && playerMovement.testType) || (Input.GetButtonUp("Pop_" + this.tag) && !playerMovement.testType) && canPop)
+        if (((Input.GetKeyUp("c") && playerMovement.testType) || (Input.GetKeyUp("h") && playerMovement.testType)) && canPop)
+        // if ((Input.GetKeyUp("h") && playerMovement.testType) || (Input.GetButtonUp("Pop_" + this.tag) && !playerMovement.testType) && canPop)
         {
             getKeyTurn = false;
             getKeyPop = true;
         }
-        // if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
-        if ((Input.GetKeyDown("h") && playerMovement.testType) || (Input.GetButtonDown("Pop_" + this.tag) && !playerMovement.testType) && canPop)
+        if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
+        // if ((Input.GetKeyDown("h") && playerMovement.testType) || (Input.GetButtonDown("Pop_" + this.tag) && !playerMovement.testType) && canPop)
         {
             getKeyTurn = true;
         }
@@ -62,33 +62,19 @@ public class testPlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var item in stickPlayerList)
                 {
-                    if (item.tag != "ground" && item.tag != "wall")
-                    {
-                        // GameObject stickPlayer=item.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
-                        // Debug.Log(item);
-                        // stickPlayer.GetComponent<Rigidbody2D>().isKinematic = false;
-                        // stickPlayer.GetComponent<Rigidbody2D>().freezeRotation = false;
-                        GetComponent<UnityJellySprite>().isStick = false;
-                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
-                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.isKinematic = false;
-
-                    }
+                    GetComponent<UnityJellySprite>().isStick = false;
+                    item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                 }
             }
         }
-        else if (playerStick.isStick)
+        else if (playerStick.isStick)//不轉&&黏住的狀態
         {
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var item in stickPlayerList)
                 {
-                    if (item.tag != "ground" && item.tag != "wall")
-                    {
-
-                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
-                        // item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
-                    }
+                    item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
                 }
             }
         }

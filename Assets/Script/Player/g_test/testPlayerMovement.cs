@@ -29,7 +29,7 @@ public class testPlayerMovement : MonoBehaviour
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
-        if (gameObject.tag == "player2")
+        if (gameObject.tag == "player1")
             testType = true;
         else testType = false;
     }
