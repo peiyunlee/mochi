@@ -11,10 +11,12 @@ public class testPlayerMovement : MonoBehaviour
 
     [SerializeField]
     private bool canJump;
+    private bool isJump;
     private bool canMove;
     private UnityJellySprite jellySprite;
     private bool GetKeyJump;
     private int testGetKeyMove;
+    private int testGetKeyVMove;
 
     testPlayerStick playerStick;
 
@@ -27,7 +29,7 @@ public class testPlayerMovement : MonoBehaviour
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
-        if (gameObject.tag == "player1")
+        if (gameObject.tag == "player2")
             testType = true;
         else testType = false;
     }
@@ -40,18 +42,33 @@ public class testPlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("right")) testGetKeyMove = 1;
             else if (Input.GetKeyDown("left")) testGetKeyMove = -1;
             else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyMove = 0;
+
+            // GetKeyJump = Input.GetKeyDown("f");
+
+            // if (Input.GetKeyDown("d")) testGetKeyMove = 1;
+            // else if (Input.GetKeyDown("a")) testGetKeyMove = -1;
+            // else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyMove = 0;
+
+            // if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
+            // else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
+            // else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
         }
 
         else
         {
             GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
+            // GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
 
-
+            // testGetKeyMove = (int)Input.GetAxisRaw("Horizontal_" + this.tag);
+            // testGetKeyVMove = (int)Input.GetAxisRaw("Vertical_" + this.tag);
             if (Input.GetKeyDown("d")) testGetKeyMove = 1;
             else if (Input.GetKeyDown("a")) testGetKeyMove = -1;
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyMove = 0;
         }
 
+        isJump = playerFloorDetect.m_isJump;
+
+        ResetRotation();
 
         canJump = playerFloorDetect.isOnFloor;
 
@@ -62,6 +79,8 @@ public class testPlayerMovement : MonoBehaviour
     {
         if (GetKeyJump && canJump)
         {
+            isJump = true;
+            playerFloorDetect.m_isJump = true;
             Jump();
         }
 
@@ -79,7 +98,7 @@ public class testPlayerMovement : MonoBehaviour
     void Pull()
     {
         // jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * pullForce, 0.0f));
-        jellySprite.AddForce(new Vector2(testGetKeyMove * pullForce, 0.0f));
+        jellySprite.AddForce(new Vector2(testGetKeyMove * pullForce, testGetKeyVMove*pullForce));
     }
 
     void Jump()
@@ -88,4 +107,17 @@ public class testPlayerMovement : MonoBehaviour
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
     }
 
+    void ResetRotation()
+    {
+
+        jellySprite.ResetTurn();
+        if (jellySprite.CentralPoint.transform.rotation.z != 0)
+        {
+            if (isJump && jellySprite.CentralPoint.Body2D.velocity.y > 0.0f)
+            {
+
+                jellySprite.JumpResetTurn();
+            }
+        }
+    }
 }

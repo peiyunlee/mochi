@@ -12,11 +12,12 @@ public class testPlayerPop : MonoBehaviour
 
     float popTime;
 
-    bool getKeyPop;
+    public bool getKeyPop;
+    public bool getKeyTurn;
 
     void Start()
     {
-        playerStick = gameObject.GetComponent<testPlayerStick>();
+        playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerMovement = gameObject.GetComponent<testPlayerMovement>();
         canPop = false;
     }
@@ -24,21 +25,72 @@ public class testPlayerPop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
-        // if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
+        canPop = playerStick.isStick;
+        // if (((Input.GetKeyUp("c") && playerMovement.testType) || (Input.GetKeyUp("h") && playerMovement.testType)) && canPop)
+        if ((Input.GetKeyUp("h") && playerMovement.testType) || (Input.GetButtonUp("Pop_" + this.tag) && !playerMovement.testType) && canPop)
         {
+            getKeyTurn = false;
             getKeyPop = true;
         }
+        // if (((Input.GetKeyDown("c") && playerMovement.testType) || (Input.GetKeyDown("h") && playerMovement.testType)) && canPop)
+        if ((Input.GetKeyDown("h") && playerMovement.testType) || (Input.GetButtonDown("Pop_" + this.tag) && !playerMovement.testType) && canPop)
+        {
+            getKeyTurn = true;
+        }
 
-        canPop = playerStick.isStick;
+
     }
     void FixedUpdate()
     {
+
+        Turn();
+
         if (getKeyPop)
         {
+            // getKeyTurn = false;
             getKeyPop = false;
             Pop();
+        }
+    }
+
+    void Turn()
+    {
+        if (getKeyTurn)
+        {
+            if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
+            {
+                List<GameObject> stickPlayerList = playerStick.stickPlayerList;
+                foreach (var item in stickPlayerList)
+                {
+                    if (item.tag != "ground" && item.tag != "wall")
+                    {
+                        // GameObject stickPlayer=item.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+                        // Debug.Log(item);
+                        // stickPlayer.GetComponent<Rigidbody2D>().isKinematic = false;
+                        // stickPlayer.GetComponent<Rigidbody2D>().freezeRotation = false;
+                        GetComponent<UnityJellySprite>().isStick = false;
+                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.isKinematic = false;
+
+                    }
+                }
+            }
+        }
+        else if (playerStick.isStick)
+        {
+            if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
+            {
+                List<GameObject> stickPlayerList = playerStick.stickPlayerList;
+                foreach (var item in stickPlayerList)
+                {
+                    if (item.tag != "ground" && item.tag != "wall")
+                    {
+
+                        item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
+                        // item.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
+                    }
+                }
+            }
         }
     }
 
@@ -50,8 +102,7 @@ public class testPlayerPop : MonoBehaviour
         //     Vector2 slop = playerStick.stickPlayerList[0].transform.position - this.gameObject.transform.position;
         //     // playerMovement.Pop(slop);
         // }
-
-        if (playerStick.stickItemList.Count > 0)
+        if (playerStick.stickPlayerList != null && playerStick.stickItemList.Count > 0)
         {
             List<GameObject> stickItemList = playerStick.stickItemList;
             ResetStickItem();

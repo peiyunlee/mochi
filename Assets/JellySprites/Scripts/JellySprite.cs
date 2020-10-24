@@ -194,6 +194,9 @@ public abstract class JellySprite : MonoBehaviour
     Transform m_Transform;
     //Check have collider touch
     public bool haveTouch = false;
+    public bool isStick = false;
+    public bool sticked = false;
+
     #endregion
 
     #region PUBLIC_CLASSES
@@ -2049,10 +2052,36 @@ public abstract class JellySprite : MonoBehaviour
                 GameObject attachPlayer = point.GetComponent<JellySpriteReferencePoint>().attachItem;
                 if (attachPlayer != null && !stickPlayerList.Contains(attachPlayer))
                 {
-                    HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
-                    hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
-                    hingeJoint2D.enabled = true;
+
+                    // attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<Rigidbody2D>().velocity=new Vector2(0.0f,0.0f);
+                    GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+                    if (attachCentral.GetComponent<Rigidbody2D>().freezeRotation && !attachPlayer.GetComponent<UnityJellySprite>().sticked)
+                    {
+                        // 
+                        CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                        CentralPoint.Body2D.isKinematic = true;
+                        if (!sticked)
+                        {
+                            Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
+                            float angle = 0;
+                            if (Dir.y <= 0)
+                                angle = Vector2.SignedAngle(Vector2.down, Dir);
+                            else if (Dir.y > 0)
+                                angle = Vector2.SignedAngle(Vector2.up, Dir);
+                            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+                            // attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<Rigidbody2D>().rotation
+                            attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 50.0f);
+                        }
+
+                        HingeJoint2D hingeJoint2D = attachCentral.GetComponent<HingeJoint2D>();
+                        hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
+                        hingeJoint2D.anchor = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.transform.InverseTransformPoint(CentralPoint.transform.position);
+                        hingeJoint2D.enabled = true;
+                    }
+                    attachPlayer.GetComponent<UnityJellySprite>().sticked = true;
+
                     stickPlayerList.Add(attachPlayer);
+
                 }
             }
         }
@@ -2071,12 +2100,39 @@ public abstract class JellySprite : MonoBehaviour
                 GameObject attachPlayer = points.GetComponent<JellySpriteReferencePoint>().attachItem;
                 if (attachPlayer != null)
                 {
+                    attachPlayer.GetComponent<UnityJellySprite>().sticked = false;
+                    CentralPoint.Body2D.isKinematic = false;
+                    attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                     points.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                     points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                     HingeJoint2D hingeJoint2D = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
                     hingeJoint2D.enabled = false;
                 }
             }
+        }
+    }
+
+    public void ResetTurn()
+    {
+        if (!sticked)
+        {
+            // Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            // CentralPoint.transform.rotation = Quaternion.RotateTowards(CentralPoint.transform.rotation, rotation, 50.0f);
+            if (CentralPoint.Body2D.rotation < 1.0f && CentralPoint.Body2D.rotation > -1.0f)
+            {
+                CentralPoint.Body2D.rotation = 0;
+                CentralPoint.Body2D.freezeRotation = true;
+            }
+        }
+
+    }
+
+    public void JumpResetTurn()
+    {
+        if (!sticked)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            CentralPoint.transform.rotation = Quaternion.RotateTowards(CentralPoint.transform.rotation, rotation, 100.0f);
         }
     }
 

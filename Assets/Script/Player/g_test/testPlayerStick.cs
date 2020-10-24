@@ -41,21 +41,24 @@ public class testPlayerStick : MonoBehaviour
 
     testPlayerMovement testPlayerMovement;
 
-    bool stopStick = true;
+    bool isTouchPlayer;
+    bool isTouchWall;
+    bool isTouchItem;
 
     void Start()
     {
-        jellySprite = gameObject.GetComponent<UnityJellySprite>();
-        testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
-
+        jellySprite = gameObject.GetComponentInParent<UnityJellySprite>();
+        testPlayerMovement = gameObject.GetComponentInParent<testPlayerMovement>();
     }
     void Update()
     {
         // Input.GetButtonDown("Stick_" + this.tag)
-        if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
+        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType) || (Input.GetKeyDown("g") && !testPlayerMovement.testType))
+        if ((Input.GetKeyDown("g") && testPlayerMovement.testType) || (Input.GetButtonDown("Stick_" + this.tag) && !testPlayerMovement.testType))
         {
             if (canStick && !m_isStick)
             {
+                jellySprite.isStick = true;
                 m_isStick = true;
             }
             else if (m_isStick)
@@ -68,13 +71,17 @@ public class testPlayerStick : MonoBehaviour
 
         if (m_isStick)
         {
-            ItemToStick();
-            PlayerToStick();
+            if (isTouchItem || isTouchWall)
+                ItemToStick();
+            if (isTouchPlayer)
+                PlayerToStick();
         }
 
 
         isAttachItem = jellySprite.GetIsItemAttach();
+
         isAttachPlayer = jellySprite.GetIsPlayerAttach();
+
         isAttachWall = jellySprite.GetIsFloorOrWallAttach();
 
         if (getIsOnFloor || isAttachWall || isAttachPlayer || isAttachItem)
@@ -99,13 +106,16 @@ public class testPlayerStick : MonoBehaviour
 
     private void ItemToStick()
     {
+
         stickItemList = jellySprite.SetItemStick();
+
 
         jellySprite.SetFloorOrWallStick();
     }
 
     private void PlayerToStick()
     {
+
         stickPlayerList = jellySprite.SetPlayerStick();
     }
 
@@ -114,5 +124,43 @@ public class testPlayerStick : MonoBehaviour
     {
         stickItemList = null;
         jellySprite.ResetItemStick();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.tag != this.tag && other.gameObject.name != "floorDetect")
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("thing"))
+            {
+                isTouchItem = true;
+            }
+            else if (other.gameObject.tag == "ground" || other.gameObject.tag == "wall")
+            {
+                isTouchWall = true;
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+            {
+                isTouchPlayer = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag != this.tag && other.gameObject.name != "floorDetect")
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("thing"))
+            {
+                isTouchItem = false;
+            }
+            else if (other.gameObject.tag == "ground" || other.gameObject.tag == "wall")
+            {
+                isTouchWall = false;
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+            {
+                isTouchPlayer = false;
+            }
+        }
     }
 }
