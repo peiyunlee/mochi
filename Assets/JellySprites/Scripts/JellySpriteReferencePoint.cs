@@ -86,7 +86,6 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 {
                     isTouch = 0;
                     attachItem = null;
-                    Debug.Log("exit" + attachItem);
                 }
             }
             //

@@ -87,7 +87,7 @@ public class testPlayerMovement : MonoBehaviour
             else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
         }
 
-        ResetRotation();
+        // ResetRotation();
 
         canJump = playerFloorDetect.isOnFloor;
 
@@ -130,9 +130,9 @@ public class testPlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
-        // jellySprite.AddVelocity(slop * popForce, false);
-        jellySprite.AddForce(slop * popForce * 70.0f);
-        // jellySprite.AddForce(slop * popForce * 100.0f);
+        // jellySprite.AddVelocity(slop * popForce * 3.0f, false);
+        jellySprite.AddForce(slop * popForce * 30.0f);
+        jellySprite.AddForce(slop * popForce * 40.0f);
         // jellySprite.MovePosition(slop * 2.0f);
     }
 

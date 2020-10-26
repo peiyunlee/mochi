@@ -40,14 +40,14 @@ public class testPlayerPop : MonoBehaviour
         {
             //讓對方轉
             canTurn = true;
-            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+            // jellySprite.SetPlayerRot(playerStick.stickPlayerList);
         }
 
         if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
         {
             canTurn = false;
+            // jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
             getKeyPop = true;
-            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
         }
 
         canPop = playerStick.isStick;
@@ -67,7 +67,7 @@ public class testPlayerPop : MonoBehaviour
     void FixedUpdate()
     {
 
-        Turn();
+        // Turn();
 
         if (getKeyPop)
         {
@@ -143,32 +143,30 @@ public class testPlayerPop : MonoBehaviour
             if (popPlayerList.Count > 0)
             {
                 playerStick.isPopPlayer = true;
-                int index = 0;
                 foreach (var player in popPlayerList)
                 {
-                    playerStick.ResetThePlayersNotStick(index);
+                    playerStick.ResetThePlayersNotStick(player);
                     PopPlayer(player);
-                    index++;
                 }
-                playerStick.stickPlayerList.Clear();
             }
 
-            // if (withPlayerList.Count > 0)
-            // {
-            //     //重設黏
-            //     playerStick.ResetFloorOrWallStick();
-            //     Vector2 slop = Vector2.zero;
-            //     foreach (var player in withPlayerList)
-            //     {
-            //         Vector2 slop_p = player.transform.position - this.gameObject.transform.position;
-            //         slop += slop_p;
-            //         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
-            //         PopWithPlayer(player);
-            //     }
-            //     // playerMovement.Pop(slop * 1.0f, popForce * 0.5f);
-            //     //重設黏
-            //     // playerStick.ResetNotStick_PopWithPlayer();
-            // }
+            if (withPlayerList.Count > 0)
+            {
+                //重設黏
+                playerStick.ResetFloorStick();
+                playerStick.ResetWallStick();
+                Vector2 slop = Vector2.zero;
+                foreach (var player in withPlayerList)
+                {
+                    Vector2 slop_p = player.transform.position - this.gameObject.transform.position;
+                    slop += slop_p;
+                    slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
+                    PopWithPlayer(player);
+                }
+                playerMovement.Pop(slop * 1.5f, popForce);
+                //重設黏
+                playerStick.ResetNotStick_PopWithPlayer();
+            }
         }
 
     }
@@ -185,7 +183,6 @@ public class testPlayerPop : MonoBehaviour
         Vector2 slop = player.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
         player.GetComponent<testPlayerMovement>().Pop(slop, popForce);
-        Debug.Log("pop" + player);
     }
 
     void PopWithPlayer(Vector2 slop)
@@ -197,6 +194,6 @@ public class testPlayerPop : MonoBehaviour
     {
         Vector2 slop = player.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
-        player.GetComponent<testPlayerMovement>().Pop(slop * 2.5f, popForce * 0.5f);
+        player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
     }
 }

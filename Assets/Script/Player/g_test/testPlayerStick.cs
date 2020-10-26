@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class testPlayerStick : MonoBehaviour
 {
+
+    testPlayerMovement testPlayerMovement;
+    UnityJellySprite jellySprite;
+    public StickDetect stickDetect;
+
+    //
+
     public bool getIsOnFloor;
     // Use this for initialization
     [SerializeField]
@@ -14,39 +21,48 @@ public class testPlayerStick : MonoBehaviour
 
     [SerializeField]
     private bool canStick;  //有碰到東西可以黏
-    private UnityJellySprite jellySprite;
+
 
     [SerializeField]
-    private bool isAttachItem;  //有碰到Item
+    private bool isPointAttachItem;  //有碰到Item
 
     [SerializeField]
     public List<GameObject> stickItemList;  //黏住的角色
 
     [SerializeField]
-    private bool isAttachPlayer;  //有碰到角色
+    private List<GameObject> pointAttachPlayerList;  //有碰到角色
 
     [SerializeField]
-    public List<GameObject> stickPlayerList;  //黏住的角色
+    public List<GameObject> stickPlayerList = new List<GameObject>();  //黏住的角色
 
     [SerializeField]
-    private bool isAttachWall;  //有碰到wall or floor
-    public enum DETECTTYPE
-    {
-        NONE,
-        STICKHEAVY,
-        STICKLIGHT
-    }
-    // public DETECTTYPE detectType{ get {return m_detectType;} } 
-    DETECTTYPE m_detectType = DETECTTYPE.NONE;
+    public List<GameObject> touchPlayerList;  //黏住的角色
 
-    testPlayerMovement testPlayerMovement;
+
+    [SerializeField]
+    private bool isTouchWall;  //有碰到Item
+
+    [SerializeField]
+    private bool isPointAttachWall;  //有碰到wall
+
+
+    [SerializeField]
+    private bool isTouchGround;  //有碰到Item
+
+    [SerializeField]
+    private bool isPointAttachGround;  //有碰到Ground
+
+    //
 
     public bool isPopPlayer;
+
+    //
 
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
+        stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         isPopPlayer = false;
 
     }
@@ -66,58 +82,45 @@ public class testPlayerStick : MonoBehaviour
             }
         }
 
+        isPointAttachItem = jellySprite.GetIsItemAttach();
 
-        if (m_isStick)
-        {
+        touchPlayerList = stickDetect.touchPlayerList;
 
-            ItemToStick();
-            PlayerToStick();
-        }
+        pointAttachPlayerList = jellySprite.GetPlayersAttach();
 
+        isPointAttachWall = jellySprite.GetIsWallAttach();
 
-        isAttachItem = jellySprite.GetIsItemAttach();
+        isTouchWall = stickDetect.isTouchWall;
 
-        isAttachPlayer = jellySprite.GetIsPlayerAttach();
+        isPointAttachGround = jellySprite.GetIsFloorAttach();
 
-        isAttachWall = jellySprite.GetIsFloorOrWallAttach();
+        isTouchGround = stickDetect.isTouchGround;
 
-        if (getIsOnFloor || isAttachWall || isAttachPlayer || isAttachItem)
+        if ((getIsOnFloor) || (isPointAttachGround && isTouchGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem)
         {
             canStick = true;
         }
-        else if (!getIsOnFloor && !isAttachItem && !isAttachPlayer && !isAttachWall)
+        else
         {
             canStick = false;
         }
-    }
 
-    public void ResetNotStick_Normal()
-    {
-        m_isStick = false;
-
-        ResetItemNotStick();
-
-        ResetOtherPlayersNotStick();
-
-        ResetFloorOrWallStick();
-    }
-
-    public void ResetNotStick_PopWithPlayer()
-    {
-        m_isStick = false;
-
-        ResetItemNotStick();
-
-        ResetOtherPlayersNotStick();
+        if (m_isStick)
+        {
+            ItemToStick();
+            PlayerToStick();
+        }
     }
 
     private void ItemToStick()
     {
-
         stickItemList = jellySprite.SetItemStick();
 
-
-        jellySprite.SetFloorOrWallStick();
+        if(isTouchWall && isPointAttachWall)
+            jellySprite.SetWallStick();
+        
+        if(getIsOnFloor || (isPointAttachGround && isTouchGround))
+            jellySprite.SetFloorStick();
     }
 
 
@@ -127,21 +130,38 @@ public class testPlayerStick : MonoBehaviour
         jellySprite.ResetItemStick();
     }
 
-    public void ResetFloorOrWallStick()
+    public void ResetFloorStick()
     {
-        jellySprite.ResetFloorOrWallStick();
+        jellySprite.ResetFloorStick();
+    }
+
+    public void ResetWallStick()
+    {
+        jellySprite.ResetWallStick();
     }
 
     private void PlayerToStick()
     {
-        stickPlayerList = jellySprite.SetPlayerStick(stickPlayerList);
+        if (touchPlayerList != null && pointAttachPlayerList != null)
+        {
+            foreach (var pointAttachPlayer in pointAttachPlayerList)
+            {
+                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer))
+                {
+                    stickPlayerList.Add(pointAttachPlayer);
+                }
+            }
+
+            if (stickPlayerList != null)
+                jellySprite.SetPlayerStick(stickPlayerList);
+        }
     }
 
 
-    public void ResetOtherPlayersNotStick()
+    public void ResetPlayersNotStick()
     {
-        stickPlayerList = null;
-        jellySprite.ResetPlayerStick();
+        jellySprite.ResetPlayersStick(stickPlayerList);
+        stickPlayerList.Clear();
     }
 
 
@@ -155,9 +175,39 @@ public class testPlayerStick : MonoBehaviour
     }
 
 
-    public void ResetThePlayersNotStick(int index)
+    public void ResetThePlayersNotStick(GameObject player)
     {
-        jellySprite.ResetThePlayeStick(stickPlayerList[index]);
-        stickPlayerList[index] = null;
+        if (player != null && stickPlayerList != null)
+        {
+            if (stickPlayerList.Contains(player))
+            {
+                // int index = stickPlayerList.IndexOf(player);
+                jellySprite.ResetThePlayeStick(player);
+                // stickPlayerList[index] = null;
+                stickPlayerList.Remove(player);
+            }
+        }
+    }
+
+    public void ResetNotStick_Normal()
+    {
+        m_isStick = false;
+
+        ResetItemNotStick();
+
+        ResetPlayersNotStick();
+
+        ResetFloorStick();
+
+        ResetWallStick();
+    }
+
+    public void ResetNotStick_PopWithPlayer()
+    {
+        m_isStick = false;
+
+        ResetItemNotStick();
+
+        ResetPlayersNotStick();
     }
 }
