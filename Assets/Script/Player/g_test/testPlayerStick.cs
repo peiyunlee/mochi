@@ -40,10 +40,10 @@ public class testPlayerStick : MonoBehaviour
 
 
     [SerializeField]
-    private bool isTouchWall;  //有碰到Item
+    public bool isTouchWall;  //有碰到Item
 
     [SerializeField]
-    private bool isPointAttachWall;  //有碰到wall
+    public bool isPointAttachWall;  //有碰到wall
 
 
     [SerializeField]
@@ -73,7 +73,6 @@ public class testPlayerStick : MonoBehaviour
         {
             if (canStick && !m_isStick)
             {
-                // jellySprite.isStick = true;
                 m_isStick = true;
             }
             else if (m_isStick)
@@ -81,6 +80,23 @@ public class testPlayerStick : MonoBehaviour
                 ResetNotStick_Normal();
             }
         }
+
+        //hold住黏
+        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
+        // {
+        //     if (canStick && !m_isStick)
+        //     {
+        //         m_isStick = true;
+        //     }
+        // }
+        // if ((Input.GetKeyUp("x") && testPlayerMovement.testType == 1) || (Input.GetKeyUp("g") && testPlayerMovement.testType == 2) || (Input.GetKeyUp("o") && testPlayerMovement.testType == 4) || (Input.GetKeyUp("5") && testPlayerMovement.testType == 3))
+        // {
+        //     if (m_isStick)
+        //     {
+        //         ResetNotStick_Normal();
+        //     }
+        // }
+        //hold住黏
 
         isPointAttachItem = jellySprite.GetIsItemAttach();
 
@@ -94,9 +110,7 @@ public class testPlayerStick : MonoBehaviour
 
         isPointAttachGround = jellySprite.GetIsFloorAttach();
 
-        isTouchGround = stickDetect.isTouchGround;
-
-        if ((getIsOnFloor) || (isPointAttachGround && isTouchGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem)
+        if ((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem)
         {
             canStick = true;
         }
@@ -116,11 +130,14 @@ public class testPlayerStick : MonoBehaviour
     {
         stickItemList = jellySprite.SetItemStick();
 
-        if(isTouchWall && isPointAttachWall)
+        if (isTouchWall && isPointAttachWall)
             jellySprite.SetWallStick();
-        
-        if(getIsOnFloor || (isPointAttachGround && isTouchGround))
+
+        if (getIsOnFloor || isPointAttachGround)
+        {
             jellySprite.SetFloorStick();
+            Debug.Log("attach ground");
+        }
     }
 
 
@@ -181,9 +198,7 @@ public class testPlayerStick : MonoBehaviour
         {
             if (stickPlayerList.Contains(player))
             {
-                // int index = stickPlayerList.IndexOf(player);
                 jellySprite.ResetThePlayeStick(player);
-                // stickPlayerList[index] = null;
                 stickPlayerList.Remove(player);
             }
         }

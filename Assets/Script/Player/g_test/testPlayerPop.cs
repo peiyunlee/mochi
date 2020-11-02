@@ -16,12 +16,6 @@ public class testPlayerPop : MonoBehaviour
     public bool getKeyPop;
     public bool canTurn;
 
-    //aa
-    // float stickTimer;
-
-    // public float a;
-    //aa
-
     void Start()
     {
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
@@ -34,40 +28,35 @@ public class testPlayerPop : MonoBehaviour
     void Update()
     {
 
-        canPop = playerStick.isStick;
+        canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
+        Debug.Log(playerStick.getIsOnFloor || playerStick.isPointAttachWall);
 
         if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
         {
             //讓對方轉
             canTurn = true;
-            // jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+        }
+
+        if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
+        {
+            //讓對方轉
+            canTurn = false;
+            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
         }
 
         if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
         {
             canTurn = false;
-            // jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
             getKeyPop = true;
         }
-
-        canPop = playerStick.isStick;
-
-
-        //aa
-        // if(playerStick.isPopPlayer){
-        //     stickTimer ++;
-        // }
-        // if(stickTimer >= a){
-        //     playerStick.isPopPlayer = false;
-        //     stickTimer = 0;
-        // }
-        //aa
     }
 
     void FixedUpdate()
     {
 
-        // Turn();
+        Turn();
 
         if (getKeyPop)
         {
@@ -87,7 +76,6 @@ public class testPlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
-                    // GetComponent<UnityJellySprite>().isStick = false;
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                 }
             }

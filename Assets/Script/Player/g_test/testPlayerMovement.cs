@@ -87,7 +87,7 @@ public class testPlayerMovement : MonoBehaviour
             else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
         }
 
-        // ResetRotation();
+        ResetRotation();
 
         canJump = playerFloorDetect.isOnFloor;
 
