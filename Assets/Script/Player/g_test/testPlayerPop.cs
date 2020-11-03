@@ -44,7 +44,6 @@ public class testPlayerPop : MonoBehaviour
             canTurn = false;
             jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
         }
-        //R
 
         if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
         {
