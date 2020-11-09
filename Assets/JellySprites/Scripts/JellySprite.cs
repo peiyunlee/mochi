@@ -1989,7 +1989,6 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
                     if (!stickItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
@@ -2009,7 +2008,6 @@ public abstract class JellySprite : MonoBehaviour
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
             }
         }
     }
