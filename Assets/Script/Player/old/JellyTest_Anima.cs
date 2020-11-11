@@ -1,4 +1,4 @@
-//#define TOOLKIT2D_SUPPORT_ENABLED
+﻿//#define TOOLKIT2D_SUPPORT_ENABLED
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public abstract class JellySprite : MonoBehaviour
+public abstract class JellyTest_Anima : MonoBehaviour
 {
     #region PUBLIC_VARIABLES
     // Arrangement of the physics bodies
@@ -581,6 +581,11 @@ public abstract class JellySprite : MonoBehaviour
     /// Check if the sprite is valid
     /// </summary>
     protected abstract bool IsSpriteValid();
+
+    /// <summary>
+    /// Check if the sprite is valid
+    /// </summary>
+    protected abstract bool IsSpriteChange();
 
     /// <summary>
     /// Raises the destroy event.
@@ -1416,7 +1421,7 @@ public abstract class JellySprite : MonoBehaviour
 
         Vector3 offset = position - CentralPoint.transform.position;
 
-        foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
+        foreach (JellyTest_Anima.ReferencePoint referencePoint in ReferencePoints)
         {
             if (!referencePoint.IsDummy)
             {
@@ -1437,6 +1442,27 @@ public abstract class JellySprite : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetAnimation()
+    {
+        if (IsSpriteChange())
+        {
+            Bounds spriteBounds = new Bounds();
+
+            if (IsSpriteValid())
+            {
+                spriteBounds = GetSpriteBounds();
+                InitVertices(spriteBounds);
+                InitMaterial();
+                m_SpriteMesh.RecalculateBounds();
+                m_SpriteMesh.RecalculateNormals();
+                UpdateTextureCoords();
+                // InitMesh();
+            }
+
+        }
+
     }
 
     /// <summary>
@@ -1479,7 +1505,7 @@ public abstract class JellySprite : MonoBehaviour
     /// </summary>
     public void SetKinematic(bool isKinematic, bool centralPointOnly)
     {
-        foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
+        foreach (JellyTest_Anima.ReferencePoint referencePoint in ReferencePoints)
         {
             if (!referencePoint.IsDummy)
             {
@@ -1528,7 +1554,7 @@ public abstract class JellySprite : MonoBehaviour
     {
         int numGroundedBodies = 0;
 
-        foreach (JellySprite.ReferencePoint referencePoint in ReferencePoints)
+        foreach (JellyTest_Anima.ReferencePoint referencePoint in ReferencePoints)
         {
             if (!referencePoint.IsDummy)
             {
@@ -1910,24 +1936,6 @@ public abstract class JellySprite : MonoBehaviour
             }
         }
     }
-    public void AddRelativeForce(Vector2 force, ForceMode2D mode = ForceMode2D.Force)
-    {
-        if (m_ReferencePoints != null)
-        {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                if (referencePoint.Body2D)
-                {
-                    referencePoint.Body2D.AddRelativeForce(force, mode);
-                }
-
-                if (referencePoint.Body3D)
-                {
-                    referencePoint.Body3D.AddRelativeForce(force);
-                }
-            }
-        }
-    }
     public void MovePosition(Vector3 position)
     {
         if (m_ReferencePoints != null)
@@ -2089,16 +2097,15 @@ public abstract class JellySprite : MonoBehaviour
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
             // == floor
-            GameObject point = referencePoint.GameObject;
-            if (point.GetComponent<JellySpriteReferencePoint>().isTouch == 2)
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 2)
             {
                 referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
-                GameObject attachItem = point.GetComponent<JellySpriteReferencePoint>().attachItem;
+                GameObject attachItem = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem;
                 if (attachItem != null)
                 {
-                    point.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
-                    point.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
+                    // referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2109,13 +2116,12 @@ public abstract class JellySprite : MonoBehaviour
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
             // == floor or wall
-            GameObject point = referencePoint.GameObject;
-            if (point.GetComponent<JellySpriteReferencePoint>().isTouch == 2)
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 2)
             {
-                point.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
-                point.GetComponent<JellySpriteReferencePoint>().attachItem = null;
-                point.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+                // referencePoint.SetKinematic(false);
             }
         }
     }
@@ -2162,13 +2168,13 @@ public abstract class JellySprite : MonoBehaviour
             hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
             hingeJoint2D.enabled = true;
 
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
+            // FixedJoint2D fixedJoint2D = player.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             // fixedJoint2D.enabled = true;
 
             player.GetComponent<UnityJellySprite>().sticked = true;
 
-            // Debug.Log("stick" + player);
+            Debug.Log("stick" + player);
         }
     }
 
@@ -2179,12 +2185,12 @@ public abstract class JellySprite : MonoBehaviour
             GameObject centralPoint = player.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
 
             player.GetComponent<UnityJellySprite>().sticked = false;
-            player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+            // player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.enabled = false;
 
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
+            // FixedJoint2D fixedJoint2D = attachPlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
             // fixedJoint2D.enabled = false;
         }
@@ -2205,12 +2211,10 @@ public abstract class JellySprite : MonoBehaviour
     {
         if (thePlayer != null)
         {
-            GameObject centralPoint = thePlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
-
-            HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
+            HingeJoint2D hingeJoint2D = thePlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>();
             hingeJoint2D.enabled = false;
-            thePlayer.GetComponent<UnityJellySprite>().sticked = false;
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
+
+            // FixedJoint2D fixedJoint2D = thePlayer.GetComponentInParent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
             // fixedJoint2D.enabled = false;
 
@@ -2244,7 +2248,7 @@ public abstract class JellySprite : MonoBehaviour
             if (attachPlayer != null && stickPlayerList != null)
             {
                 //turn
-                CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
+                // CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
                 Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
                 float angle = 0;
                 if (Dir.y <= 0)
@@ -2287,15 +2291,10 @@ public abstract class JellySprite : MonoBehaviour
         {
             GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
 
-            if (attachPlayer != null)
+            if (attachPlayer != null && stickPlayerList != null)
             {
                 Quaternion rotation = Quaternion.Euler(0, 0, 0);
                 attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 100.0f);
-                if (CentralPoint.Body2D.rotation < 1.0f && CentralPoint.Body2D.rotation > -1.0f)
-                {
-                    CentralPoint.Body2D.rotation = 0;
-                    CentralPoint.Body2D.freezeRotation = true;
-                }
             }
 
         }
@@ -2673,6 +2672,7 @@ public abstract class JellySprite : MonoBehaviour
             }
 
             // Apply our rigid body movements to the rendered mesh
+            SetAnimation();
             UpdateMesh();
             UpdateAttachPoints();
         }

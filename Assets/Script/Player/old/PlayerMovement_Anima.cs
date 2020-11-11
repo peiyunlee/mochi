@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testPlayerMovement : MonoBehaviour
+public class PlayerMovement_Anima : MonoBehaviour
 {
     public float moveSpeed;
     public float jumpSpeed;
@@ -13,21 +13,21 @@ public class testPlayerMovement : MonoBehaviour
     private bool canJump;
     private bool isJump;
     private bool canMove;
-    private UnityJellySprite jellySprite;
+    private UnityJelly_Anima jellySprite;
     private bool GetKeyJump;
     private int testGetKeyHMove;
     private int testGetKeyVMove;
-
-    testPlayerStick playerStick;
 
     testPlayerFloorDetect playerFloorDetect;
 
     public int testType;
 
+    private Animator playerAnim;
+
     void Start()
     {
-        jellySprite = GetComponent<UnityJellySprite>();
-        playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
+        playerAnim=GetComponent<Animator>();
+        jellySprite = GetComponent<UnityJelly_Anima>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
 
         if (gameObject.tag == "player1")
@@ -87,14 +87,12 @@ public class testPlayerMovement : MonoBehaviour
             else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
         }
 
-        ResetRotation();
+        // ResetRotation();
 
         canJump = playerFloorDetect.isOnFloor;
 
         if (canJump && isJump)
             isJump = false;
-
-        playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
     }
 
     void FixedUpdate()
@@ -105,15 +103,18 @@ public class testPlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (!playerStick.isStick&&!playerStick.isPop)
-            Move();
-        else
-            Pull();
+        Move();
 
     }
     void Move()
     {
         // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
+        if(testGetKeyHMove!=0){
+            playerAnim.SetBool("isWalk", true);
+        }
+        else{
+            playerAnim.SetBool("isWalk", false);
+        }
         jellySprite.AddVelocity(new Vector2(testGetKeyHMove * moveSpeed, 0.0f));
     }
     void Pull()
@@ -130,10 +131,9 @@ public class testPlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
-        // jellySprite.AddVelocity(slop * popForce, false);
+        // jellySprite.AddVelocity(slop * popForce * 3.0f, false);
         jellySprite.AddForce(slop * popForce * 30.0f);
-        // jellySprite.AddForce(slop * popForce * 40.0f);
-        // jellySprite.AddRelativeForce(slop * popForce * 40.0f);
+        jellySprite.AddForce(slop * popForce * 40.0f);
         // jellySprite.MovePosition(slop * 2.0f);
     }
 
