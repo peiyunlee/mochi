@@ -7,11 +7,11 @@ public class StickDetect : MonoBehaviour
     testPlayerStick playerStick;
 
     public List<GameObject> touchPlayerList = new List<GameObject>();  //碰到的角色
-	public bool isTouchWall = false;
+    public bool isTouchWall = false;
     public List<GameObject> touchItemList = new List<GameObject>();  //碰到的物體
 
     //TEST
-    public List<GameObject> playerList =  new List<GameObject>();  //碰到的物體
+    public List<GameObject> playerList = new List<GameObject>();  //碰到的物體
 
     void Start()
     {
@@ -21,12 +21,11 @@ public class StickDetect : MonoBehaviour
             touchPlayerList.Add(player);
         }
     }
-
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag != this.gameObject.tag)
         {
-            if (other.gameObject.gameObject.layer == LayerMask.NameToLayer("player"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("player"))
             {
                 if (other.gameObject.name == "stickDetect")
                 {
@@ -41,30 +40,33 @@ public class StickDetect : MonoBehaviour
             else if (other.gameObject.tag == "wall")
             {
                 Debug.Log("enter wall");
-				isTouchWall = true;
+                isTouchWall = true;
             }
+            
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag != this.gameObject.tag)
         {
-            if (other.gameObject.gameObject.layer == LayerMask.NameToLayer("player"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("player"))
             {
                 if (other.gameObject.name == "stickDetect")
                 {
-                    GameObject touchPlayer = other.transform.parent.gameObject;
-                    if (touchPlayerList != null && touchPlayerList.Contains(touchPlayer))
-                    {
-                        // touchPlayerList.Remove(touchPlayer);
-                        // playerStick.ResetThePlayersNotStick(touchPlayer);
-                    }
+                    //     GameObject touchPlayer = other.transform.parent.gameObject;
+                    //     if (touchPlayerList != null && touchPlayerList.Contains(touchPlayer))
+                    //     {
+
+                    //         // touchPlayerList.Remove(touchPlayer);
+                    //         // playerStick.ResetThePlayersNotStick(touchPlayer);
+                    //     }
+                    // }
                 }
             }
             else if (other.gameObject.tag == "wall")
             {
                 Debug.Log("exit wall");
-				isTouchWall = false;
+                isTouchWall = false;
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("thing"))
             {

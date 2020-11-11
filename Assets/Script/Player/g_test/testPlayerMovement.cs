@@ -61,7 +61,7 @@ public class testPlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
             else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyHMove = 0;
-            
+
             if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
             else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
             else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
@@ -91,7 +91,7 @@ public class testPlayerMovement : MonoBehaviour
 
         canJump = playerFloorDetect.isOnFloor;
 
-        if(canJump && isJump)
+        if (canJump && isJump)
             isJump = false;
 
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
@@ -105,7 +105,7 @@ public class testPlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (!playerStick.isStick)
+        if (!playerStick.isStick&&!playerStick.isPop)
             Move();
         else
             Pull();
@@ -130,9 +130,10 @@ public class testPlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
-        // jellySprite.AddVelocity(slop * popForce * 3.0f, false);
+        // jellySprite.AddVelocity(slop * popForce, false);
         jellySprite.AddForce(slop * popForce * 30.0f);
-        jellySprite.AddForce(slop * popForce * 40.0f);
+        // jellySprite.AddForce(slop * popForce * 40.0f);
+        // jellySprite.AddRelativeForce(slop * popForce * 40.0f);
         // jellySprite.MovePosition(slop * 2.0f);
     }
 

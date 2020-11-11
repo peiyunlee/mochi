@@ -1910,6 +1910,24 @@ public abstract class JellySprite : MonoBehaviour
             }
         }
     }
+    public void AddRelativeForce(Vector2 force, ForceMode2D mode = ForceMode2D.Force)
+    {
+        if (m_ReferencePoints != null)
+        {
+            foreach (ReferencePoint referencePoint in m_ReferencePoints)
+            {
+                if (referencePoint.Body2D)
+                {
+                    referencePoint.Body2D.AddRelativeForce(force, mode);
+                }
+
+                if (referencePoint.Body3D)
+                {
+                    referencePoint.Body3D.AddRelativeForce(force);
+                }
+            }
+        }
+    }
     public void MovePosition(Vector3 position)
     {
         if (m_ReferencePoints != null)
@@ -2150,7 +2168,7 @@ public abstract class JellySprite : MonoBehaviour
 
             player.GetComponent<UnityJellySprite>().sticked = true;
 
-            Debug.Log("stick" + player);
+            // Debug.Log("stick" + player);
         }
     }
 
@@ -2191,7 +2209,7 @@ public abstract class JellySprite : MonoBehaviour
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.enabled = false;
-
+            thePlayer.GetComponent<UnityJellySprite>().sticked = false;
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
             // fixedJoint2D.enabled = false;

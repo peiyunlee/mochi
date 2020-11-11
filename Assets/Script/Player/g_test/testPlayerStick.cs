@@ -53,9 +53,8 @@ public class testPlayerStick : MonoBehaviour
     private bool isPointAttachGround;  //有碰到Ground
 
     //
-
-    public bool isPopPlayer;
-
+    [SerializeField]
+    public bool isPop;  //有碰到Ground
     //
 
     void Start()
@@ -63,8 +62,7 @@ public class testPlayerStick : MonoBehaviour
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
-        isPopPlayer = false;
-
+        isPop = false;
     }
     void Update()
     {
@@ -110,7 +108,16 @@ public class testPlayerStick : MonoBehaviour
 
         isPointAttachGround = jellySprite.GetIsFloorAttach();
 
-        if ((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem)
+        if (isTouchWall || isPointAttachGround)
+        {
+            if (isPop)
+            {
+                isPop = false;
+            }
+
+        }
+
+        if (((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem))
         {
             canStick = true;
         }
@@ -136,7 +143,7 @@ public class testPlayerStick : MonoBehaviour
         if (getIsOnFloor || isPointAttachGround)
         {
             jellySprite.SetFloorStick();
-            Debug.Log("attach ground");
+            // Debug.Log("attach ground");
         }
     }
 
@@ -163,7 +170,7 @@ public class testPlayerStick : MonoBehaviour
         {
             foreach (var pointAttachPlayer in pointAttachPlayerList)
             {
-                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer))
+                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<testPlayerStick>().isPop)
                 {
                     stickPlayerList.Add(pointAttachPlayer);
                 }
@@ -198,8 +205,8 @@ public class testPlayerStick : MonoBehaviour
         {
             if (stickPlayerList.Contains(player))
             {
-                jellySprite.ResetThePlayeStick(player);
                 stickPlayerList.Remove(player);
+                jellySprite.ResetThePlayeStick(player);
             }
         }
     }

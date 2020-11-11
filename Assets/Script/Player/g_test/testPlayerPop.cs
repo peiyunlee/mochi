@@ -18,7 +18,8 @@ public class testPlayerPop : MonoBehaviour
 
     void Start()
     {
-        playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
+        // playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
+        playerStick = gameObject.GetComponent<testPlayerStick>();
         playerMovement = gameObject.GetComponent<testPlayerMovement>();
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         canPop = false;
@@ -29,7 +30,7 @@ public class testPlayerPop : MonoBehaviour
     {
 
         canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
-        Debug.Log(playerStick.getIsOnFloor || playerStick.isPointAttachWall);
+        // Debug.Log(playerStick.getIsOnFloor || playerStick.isPointAttachWall);
 
         if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
         {
@@ -38,12 +39,12 @@ public class testPlayerPop : MonoBehaviour
             jellySprite.SetPlayerRot(playerStick.stickPlayerList);
         }
 
-        if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
-        {
-            //讓對方轉
-            canTurn = false;
-            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-        }
+        // if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
+        // {
+        //     //讓對方轉
+        //     canTurn = false;
+        //     jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+        // }
 
         if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
         {
@@ -63,7 +64,7 @@ public class testPlayerPop : MonoBehaviour
             getKeyPop = false;
             Pop();
         }
-
+        // Debug.Log(this.tag + ":" + jellySprite.sticked);
     }
 
     void Turn()
@@ -77,6 +78,8 @@ public class testPlayerPop : MonoBehaviour
                 foreach (var player in stickPlayerList)
                 {
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+                    if (GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled)
+                        GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
                 }
             }
         }
@@ -130,7 +133,6 @@ public class testPlayerPop : MonoBehaviour
 
             if (popPlayerList.Count > 0)
             {
-                playerStick.isPopPlayer = true;
                 foreach (var player in popPlayerList)
                 {
                     playerStick.ResetThePlayersNotStick(player);
@@ -151,7 +153,7 @@ public class testPlayerPop : MonoBehaviour
                     slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
                     PopWithPlayer(player);
                 }
-                playerMovement.Pop(slop * 1.5f, popForce);
+                // playerMovement.Pop(slop * 1.5f, popForce);
                 //重設黏
                 playerStick.ResetNotStick_PopWithPlayer();
             }
@@ -168,20 +170,24 @@ public class testPlayerPop : MonoBehaviour
 
     void PopPlayer(GameObject player)
     {
-        Vector2 slop = player.transform.position - this.gameObject.transform.position;
+        player.GetComponent<testPlayerStick>().isPop = true;
+        Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
         player.GetComponent<testPlayerMovement>().Pop(slop, popForce);
     }
 
-    void PopWithPlayer(Vector2 slop)
-    {
-        // playerMovement.Pop(slop * 2.5f, popForce * 0.5f);
-    }
+    // void PopWithPlayer(Vector2 slop)
+    // {
+    //     // playerMovement.Pop(slop * 2.5f, popForce * 0.5f);
+    // }
 
     void PopWithPlayer(GameObject player)
     {
-        Vector2 slop = player.transform.position - this.gameObject.transform.position;
+        playerStick.isPop = true;
+        player.GetComponent<testPlayerStick>().isPop = true;
+        Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
-        player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
+        // player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
+        player.GetComponent<testPlayerMovement>().Pop(slop, popForce * 2f);
     }
 }
