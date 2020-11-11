@@ -88,7 +88,7 @@ public class testPlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
-                    player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
+                    // player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
 
                 }
             }

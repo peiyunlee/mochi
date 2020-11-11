@@ -24,6 +24,8 @@ public class testPlayerMovement : MonoBehaviour
 
     public int testType;
 
+    bool notFreeze;
+
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
@@ -138,7 +140,10 @@ public class testPlayerMovement : MonoBehaviour
 
     void ResetRotation()
     {
-        jellySprite.FreezePlayerRot();
+        if(!jellySprite.notFreeze)
+            jellySprite.FreezePlayerRot();
+
+        Debug.Log(jellySprite.notFreeze);
 
         if (jellySprite.CentralPoint.transform.rotation.z != 0)
         {

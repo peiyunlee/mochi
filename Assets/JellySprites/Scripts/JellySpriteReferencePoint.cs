@@ -26,6 +26,7 @@ public class JellySpriteReferencePoint : MonoBehaviour
         GROUND,
         WALL,
         THING,
+        ROTATETHING
     }
 
     public GameObject attachItem;
@@ -115,6 +116,10 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 if (collision.gameObject.tag == "Item")
                 {
                     isTouch = (int)TOUCHTYPE.THING;
+                }
+                else if (collision.gameObject.tag == "RotateItem")
+                {
+                    isTouch = (int)TOUCHTYPE.ROTATETHING;
                 }
                 else if (collision.gameObject.tag == "ground")
                 {

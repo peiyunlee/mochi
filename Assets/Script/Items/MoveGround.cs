@@ -30,7 +30,7 @@ public class MoveGround : MonoBehaviour
             canMove = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (canMove)
         {

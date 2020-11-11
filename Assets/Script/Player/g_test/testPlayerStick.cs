@@ -136,7 +136,6 @@ public class testPlayerStick : MonoBehaviour
         if (getIsOnFloor || isPointAttachGround)
         {
             jellySprite.SetFloorStick();
-            Debug.Log("attach ground");
         }
     }
 
