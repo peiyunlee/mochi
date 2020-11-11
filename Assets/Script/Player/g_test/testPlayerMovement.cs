@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class testPlayerMovement : MonoBehaviour
 {
+    public string playerColor;
     public float moveSpeed;
     public float jumpSpeed;
 
@@ -142,8 +143,6 @@ public class testPlayerMovement : MonoBehaviour
     {
         if(!jellySprite.notFreeze)
             jellySprite.FreezePlayerRot();
-
-        Debug.Log(jellySprite.notFreeze);
 
         if (jellySprite.CentralPoint.transform.rotation.z != 0)
         {

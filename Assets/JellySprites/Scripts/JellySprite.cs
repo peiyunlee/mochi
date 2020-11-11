@@ -2014,15 +2014,14 @@ public abstract class JellySprite : MonoBehaviour
         {
             if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
             {
-                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
-                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
-                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-
                 if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 5)
                 {
                     notFreeze = false;
                 }
 
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
             }
         }
     }
