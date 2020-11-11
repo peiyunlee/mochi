@@ -583,6 +583,11 @@ public abstract class JellySprite : MonoBehaviour
     protected abstract bool IsSpriteValid();
 
     /// <summary>
+    /// Check if the sprite is change
+    /// </summary>
+    protected abstract bool IsSpriteChange();
+
+    /// <summary>
     /// Raises the destroy event.
     /// </summary>
     void OnDestroy()
@@ -2335,6 +2340,27 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
 
+    public void SetAnimation()
+    {
+        if (IsSpriteValid())
+        {
+            if (IsSpriteChange())
+            {
+                InitMesh();
+                InitVertices(GetSpriteBounds());
+                InitMaterial();
+
+                if (m_ReferencePoints != null)
+                {
+                    CalculateInitialOffsets();
+                    CalculateWeightingValues();
+                }
+            }
+
+        }
+
+    }
+
     /// <summary>
     /// Called when the editor wants to update the visible mesh
     /// </summary>
@@ -2673,6 +2699,7 @@ public abstract class JellySprite : MonoBehaviour
             }
 
             // Apply our rigid body movements to the rendered mesh
+            SetAnimation();
             UpdateMesh();
             UpdateAttachPoints();
         }

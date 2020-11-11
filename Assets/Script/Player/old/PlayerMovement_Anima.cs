@@ -13,7 +13,7 @@ public class PlayerMovement_Anima : MonoBehaviour
     private bool canJump;
     private bool isJump;
     private bool canMove;
-    private UnityJelly_Anima jellySprite;
+    private UnityJellySprite jellySprite;
     private bool GetKeyJump;
     private int testGetKeyHMove;
     private int testGetKeyVMove;
@@ -27,7 +27,7 @@ public class PlayerMovement_Anima : MonoBehaviour
     void Start()
     {
         playerAnim=GetComponent<Animator>();
-        jellySprite = GetComponent<UnityJelly_Anima>();
+        jellySprite = GetComponent<UnityJellySprite>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
 
         if (gameObject.tag == "player1")
@@ -89,7 +89,7 @@ public class PlayerMovement_Anima : MonoBehaviour
 
         // ResetRotation();
 
-        canJump = playerFloorDetect.isOnFloor;
+        // canJump = playerFloorDetect.isOnFloor;
 
         if (canJump && isJump)
             isJump = false;
@@ -109,12 +109,12 @@ public class PlayerMovement_Anima : MonoBehaviour
     void Move()
     {
         // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
-        if(testGetKeyHMove!=0){
-            playerAnim.SetBool("isWalk", true);
-        }
-        else{
-            playerAnim.SetBool("isWalk", false);
-        }
+        // if(testGetKeyHMove!=0){
+        //     playerAnim.SetBool("isWalk", true);
+        // }
+        // else{
+        //     playerAnim.SetBool("isWalk", false);
+        // }
         jellySprite.AddVelocity(new Vector2(testGetKeyHMove * moveSpeed, 0.0f));
     }
     void Pull()
@@ -127,27 +127,6 @@ public class PlayerMovement_Anima : MonoBehaviour
     {
         canJump = false;
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
-    }
-
-    public void Pop(Vector2 slop, float popForce)
-    {
-        // jellySprite.AddVelocity(slop * popForce * 3.0f, false);
-        jellySprite.AddForce(slop * popForce * 30.0f);
-        jellySprite.AddForce(slop * popForce * 40.0f);
-        // jellySprite.MovePosition(slop * 2.0f);
-    }
-
-    void ResetRotation()
-    {
-        jellySprite.FreezePlayerRot();
-
-        if (jellySprite.CentralPoint.transform.rotation.z != 0)
-        {
-            if (isJump && jellySprite.CentralPoint.Body2D.velocity.y > 0.0f)
-            {
-                jellySprite.ResetSelfRot();
-            }
-        }
     }
 }
 
