@@ -13,6 +13,8 @@ public class CircleGround : MonoBehaviour
 
     public List<GameObject> childList;
 
+    public GameObject sprite;
+
     List<Transform> transList;
     public List<Rigidbody2D> rbList;
 
@@ -48,7 +50,7 @@ public class CircleGround : MonoBehaviour
             Rotate(i);
         }
 
-        // this.gameObject.transform.Rotate(new Vector3(0, 0, rotateDeg * Time.deltaTime));
+        sprite.transform.Rotate(new Vector3(0, 0, rotateDeg * 5.0f * Time.deltaTime));
     }
 
     void Rotate(int index)
