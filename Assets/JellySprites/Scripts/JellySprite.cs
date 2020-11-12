@@ -2092,7 +2092,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     point.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     point.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    // referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2109,7 +2109,7 @@ public abstract class JellySprite : MonoBehaviour
                 point.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 point.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 point.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                // referencePoint.SetKinematic(false);
             }
         }
     }

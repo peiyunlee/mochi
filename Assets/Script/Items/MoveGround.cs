@@ -21,13 +21,21 @@ public class MoveGround : MonoBehaviour
     Transform trans;
     Rigidbody2D rb;
 
+    public GameObject tile;
+
+    MoveTile moveTile;
 
     void Start()
     {
         trans = this.gameObject.GetComponent<Transform>();
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        if(needMochi)
+        if (needMochi)
             canMove = false;
+
+        if (tile != null)
+        {
+            moveTile = tile.GetComponent<MoveTile>();
+        }
     }
 
     void FixedUpdate()
@@ -53,9 +61,14 @@ public class MoveGround : MonoBehaviour
             moveSpeed = -moveSpeed;
             canMove = false;
             Invoke("SetCanMove", maxStopSec);
+
+            if (tile != null)
+            {
+                moveTile.SetStart();
+            }
         }
 
-        rb.MovePosition(pos + moveSpeed*Time.deltaTime);
+        rb.MovePosition(pos + moveSpeed);
 
     }
 
@@ -66,13 +79,21 @@ public class MoveGround : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        // 判斷有沒有腳色黏上來
         if (needMochi)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+            MochiDetect(other);
+        }
+    }
+
+    void MochiDetect(Collision2D other)
+    {
+        // 判斷有沒有腳色黏上來
+        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+        {
+            if (other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject != null)
             {
                 GameObject player = other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject;
-                if (player!=null && player.GetComponent<testPlayerStick>().stickItemList.Contains(this.gameObject))
+                if (player.GetComponent<testPlayerStick>().stickItemList.Contains(this.gameObject))
                 {
                     Invoke("SetCanMove", waitSec);
                     needMochi = false;

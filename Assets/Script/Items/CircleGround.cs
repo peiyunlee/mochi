@@ -47,6 +47,8 @@ public class CircleGround : MonoBehaviour
         {
             Rotate(i);
         }
+
+        // this.gameObject.transform.Rotate(new Vector3(0, 0, rotateDeg * Time.deltaTime));
     }
 
     void Rotate(int index)

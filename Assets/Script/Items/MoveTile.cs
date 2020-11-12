@@ -9,8 +9,6 @@ public class MoveTile : MonoBehaviour
 
     public Vector3 moveSpeed;
 
-    public List<Vector3Int> tileList;
-
     public bool canMove;
 
     public float maxStopSec;
@@ -18,21 +16,28 @@ public class MoveTile : MonoBehaviour
 
     public float waitSec;
 
-    Tilemap tilemap;
-
-    Matrix4x4 matrix;
-
     Vector3 translate;
+
+    Transform trans;
+    Rigidbody2D rb;
+
+    Vector2 newPos;
+
+    public bool selfStart;
+
+    public bool isContinue;
+
+    public bool isMax;
 
     void Start()
     {
-        tilemap = GetComponent<Tilemap>();
-        if (waitSec > 0)
-        {
-            canMove = false;
-            Invoke("SetCanMove", waitSec);
-        }
+        trans = this.gameObject.GetComponent<Transform>();
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
 
+        if (selfStart)
+        {
+            SetStart();
+        }
     }
 
     void Update()
@@ -45,32 +50,78 @@ public class MoveTile : MonoBehaviour
 
     void Move()
     {
-        
+        Vector3 pos = trans.position;
 
-        if (translate.x < minVec.x || translate.y < minVec.y)
+        if (trans.position.x < minVec.x || trans.position.y < minVec.y)
         {
             moveSpeed = -moveSpeed;
             canMove = false;
-            Invoke("SetCanMove", minStopSec);
+            if (!isContinue)
+            {
+                if (isMax)
+                    Invoke("SetCanMove", minStopSec);
+            }
+            else
+                Invoke("SetCanMove", minStopSec);
+
+
         }
-        else if (translate.x > maxVec.x || translate.y > maxVec.y)
+
+        else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
         {
             moveSpeed = -moveSpeed;
             canMove = false;
-            Invoke("SetCanMove", maxStopSec);
+            if (!isContinue)
+            {
+                if (!isMax)
+                    Invoke("SetCanMove", minStopSec);
+            }
+            else
+                Invoke("SetCanMove", minStopSec);
         }
 
+        newPos = pos + moveSpeed;
 
-        translate += moveSpeed*Time.deltaTime;
-        foreach (var tileVec in tileList)
-        {
-            matrix = Matrix4x4.TRS(translate, Quaternion.Euler(0f, 0f, 0f), Vector3.one);
-            tilemap.SetTransformMatrix(tileVec, matrix);
-        }
+        rb.MovePosition(newPos);
+
     }
 
     void SetCanMove()
     {
         canMove = true;
+    }
+
+    public void SetStart()
+    {
+        if (waitSec > 0)
+        {
+            canMove = false;
+            Invoke("SetCanMove", waitSec);
+        }
+        else
+        {
+            SetCanMove();
+        }
+    }
+
+    //讓角色跟著移動
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
+        {
+            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
+            testPlayerMovement.followTarget = this.gameObject.GetComponent<Rigidbody2D>();
+            testPlayerMovement.isFollow = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
+        {
+            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
+            testPlayerMovement.followTarget = null;
+            testPlayerMovement.isFollow = false;
+        }
     }
 }

@@ -77,23 +77,6 @@ public class testPlayerStick : MonoBehaviour
             }
         }
 
-        //hold住黏
-        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
-        // {
-        //     if (canStick && !m_isStick)
-        //     {
-        //         m_isStick = true;
-        //     }
-        // }
-        // if ((Input.GetKeyUp("x") && testPlayerMovement.testType == 1) || (Input.GetKeyUp("g") && testPlayerMovement.testType == 2) || (Input.GetKeyUp("o") && testPlayerMovement.testType == 4) || (Input.GetKeyUp("5") && testPlayerMovement.testType == 3))
-        // {
-        //     if (m_isStick)
-        //     {
-        //         ResetNotStick_Normal();
-        //     }
-        // }
-        //hold住黏
-
         isPointAttachItem = jellySprite.GetIsItemAttach();
 
         touchPlayerList = stickDetect.touchPlayerList;
