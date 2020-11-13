@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee5d1dcee16e784cad0f17d0379778a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: Level1-1
+  playerCount: 1
 --- !u!114 &114993044643536110
 MonoBehaviour:
   m_ObjectHideFlags: 1

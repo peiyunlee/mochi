@@ -30,7 +30,7 @@ public class testPlayerPop : MonoBehaviour
     {
 
         canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
-        // Debug.Log(playerStick.getIsOnFloor || playerStick.isPointAttachWall);
+        
 
         if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
         {
@@ -91,7 +91,7 @@ public class testPlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
-                    player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
+                    // player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
 
                 }
             }

@@ -7,50 +7,46 @@ public class testPlayerStick : MonoBehaviour
 
     testPlayerMovement testPlayerMovement;
     UnityJellySprite jellySprite;
-    public StickDetect stickDetect;
+
+    [SerializeField]
+    StickDetect stickDetect;
 
     //
 
     public bool getIsOnFloor;
     // Use this for initialization
-    [SerializeField]
     public bool isStick { get { return m_isStick; } }
 
     [SerializeField]
-    private bool m_isStick;  //黏的狀態
+    bool m_isStick;  //黏的狀態
 
     [SerializeField]
-    private bool canStick;  //有碰到東西可以黏
+    bool canStick;  //有碰到東西可以黏
 
 
     [SerializeField]
-    private bool isPointAttachItem;  //有碰到Item
+    bool isPointAttachItem;  //有碰到Item
 
-    [SerializeField]
     public List<GameObject> stickItemList;  //黏住的角色
 
     [SerializeField]
-    private List<GameObject> pointAttachPlayerList;  //有碰到角色
+    List<GameObject> pointAttachPlayerList;  //有碰到角色
 
-    [SerializeField]
     public List<GameObject> stickPlayerList = new List<GameObject>();  //黏住的角色
 
     [SerializeField]
-    public List<GameObject> touchPlayerList;  //黏住的角色
+    List<GameObject> touchPlayerList;  //黏住的角色
 
 
     [SerializeField]
-    public bool isTouchWall;  //有碰到Item
+    bool isTouchWall;  //有碰到Item
 
-    [SerializeField]
     public bool isPointAttachWall;  //有碰到wall
 
 
     [SerializeField]
-    private bool isTouchGround;  //有碰到Item
-
-    [SerializeField]
-    private bool isPointAttachGround;  //有碰到Ground
+    bool isTouchGround;  //有碰到Item
+    bool isPointAttachGround;  //有碰到Ground
 
     //
     [SerializeField]
@@ -78,23 +74,6 @@ public class testPlayerStick : MonoBehaviour
                 ResetNotStick_Normal();
             }
         }
-
-        //hold住黏
-        // if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
-        // {
-        //     if (canStick && !m_isStick)
-        //     {
-        //         m_isStick = true;
-        //     }
-        // }
-        // if ((Input.GetKeyUp("x") && testPlayerMovement.testType == 1) || (Input.GetKeyUp("g") && testPlayerMovement.testType == 2) || (Input.GetKeyUp("o") && testPlayerMovement.testType == 4) || (Input.GetKeyUp("5") && testPlayerMovement.testType == 3))
-        // {
-        //     if (m_isStick)
-        //     {
-        //         ResetNotStick_Normal();
-        //     }
-        // }
-        //hold住黏
 
         isPointAttachItem = jellySprite.GetIsItemAttach();
 
@@ -143,7 +122,6 @@ public class testPlayerStick : MonoBehaviour
         if (getIsOnFloor || isPointAttachGround)
         {
             jellySprite.SetFloorStick();
-            // Debug.Log("attach ground");
         }
     }
 
