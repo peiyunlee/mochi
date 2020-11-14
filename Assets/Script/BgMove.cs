@@ -11,22 +11,27 @@ public class BgMove : MonoBehaviour
 
     public Vector2 start;
 
+    RectTransform rectTransform;
+
     // Use this for initialization
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 pos = transform.position;
+        Vector2 pos = rectTransform.offsetMin;
 
         if (pos.x <= turn.x)
         {
-            transform.position = new Vector3(start.x, transform.position.y, 0f);
-            pos = transform.position;
+            rectTransform.offsetMin = new Vector2(start.x, pos.y);
+            pos = rectTransform.offsetMin;
         }
 
-        transform.Translate(Vector3.right * Time.deltaTime * speed);
+        Vector2 newPos = Vector2.right * Time.deltaTime * speed + pos;
+
+        rectTransform.offsetMin = newPos;
     }
 }
