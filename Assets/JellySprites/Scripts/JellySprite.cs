@@ -198,8 +198,8 @@ public abstract class JellySprite : MonoBehaviour
 
     //我輩黏了
     public bool sticked = false;
-    //動畫Collider移動
-    public Vector2 animCollider = new Vector2(0, 0);
+    //Animation Controller
+    public Animator playAnim;
 
     #endregion
 
@@ -2106,7 +2106,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     point.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     point.GetComponent<HingeJoint2D>().enabled = true;
-                    // referencePoint.SetKinematic(true);
+                    referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2124,6 +2124,7 @@ public abstract class JellySprite : MonoBehaviour
                 point.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 point.GetComponent<HingeJoint2D>().enabled = false;
                 referencePoint.SetKinematic(false);
+
             }
         }
     }
@@ -2332,49 +2333,34 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set Animation
+    /// </summary>
+
     public void SetAnimation()
     {
         if (IsSpriteValid())
         {
             if (IsSpriteChange())
             {
-                // m_SpriteMesh.Clear();
-                // m_SpriteMesh.vertices = m_Vertices;
-                // m_SpriteMesh.uv = m_TexCoords;
-                // m_SpriteMesh.triangles = m_Triangles;
-                // m_SpriteMesh.colors = m_Colors;
-                
-                // InitVertices(GetSpriteBounds());
+                InitVertices(GetSpriteBounds());
                 InitMesh();
-                // InitVertices(GetSpriteBounds());
-                // Debug.Log(GetSpriteBounds().size);
-                // // UpdateTextureCoords();
-                // InitMaterial();
-                
-                // // m_SpriteMesh.RecalculateBounds();
-                // // m_SpriteMesh.RecalculateNormals();
-                // if (m_ReferencePoints != null)
-                // {
-                //     CalculateInitialOffsets();
-                //     CalculateWeightingValues();
-                // }
-                // InitVertices(GetSpriteBounds());
-                // UpdateTextureCoords();
-                // m_SpriteMesh.RecalculateBounds();
-                // m_SpriteMesh.RecalculateNormals();
-                // m_SpriteMesh.RecalculateTangents();
                 InitMaterial();
-                
-                // if (m_ReferencePoints != null)
-                // {
-                //     CalculateInitialOffsets();
-                //     CalculateWeightingValues();
-                // }
-                
             }
 
         }
 
+    }
+
+    public void SetAnimMirror(string name, bool value)
+    {
+        // playAnim.an
+    }
+
+    public void SetAnimBool(string name, bool value)
+    {
+        playAnim = GetComponent<Animator>();
+        playAnim.SetBool(name, value);
     }
 
     /// <summary>

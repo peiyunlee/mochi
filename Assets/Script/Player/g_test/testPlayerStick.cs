@@ -79,6 +79,8 @@ public class testPlayerStick : MonoBehaviour
             }
         }
 
+        jellySprite.SetAnimBool("isStick",m_isStick);
+
         //hold住黏
         // if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
         // {
