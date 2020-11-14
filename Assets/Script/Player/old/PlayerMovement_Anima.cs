@@ -13,7 +13,7 @@ public class PlayerMovement_Anima : MonoBehaviour
     private bool canJump;
     private bool isJump;
     private bool canMove;
-    private UnityJellySprite jellySprite;
+    private UnityJelly_Anima jellySprite;
     private bool GetKeyJump;
     private int testGetKeyHMove;
     private int testGetKeyVMove;
@@ -27,7 +27,7 @@ public class PlayerMovement_Anima : MonoBehaviour
     void Start()
     {
         playerAnim=GetComponent<Animator>();
-        jellySprite = GetComponent<UnityJellySprite>();
+        jellySprite = GetComponent<UnityJelly_Anima>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
 
         if (gameObject.tag == "player1")

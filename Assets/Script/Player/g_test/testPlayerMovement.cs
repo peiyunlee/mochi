@@ -11,6 +11,7 @@ public class testPlayerMovement : MonoBehaviour
 
     [SerializeField]
     private bool canJump;
+    [SerializeField]
     private bool isJump;
     private bool canMove;
     private UnityJellySprite jellySprite;
@@ -24,11 +25,14 @@ public class testPlayerMovement : MonoBehaviour
 
     public int testType;
 
+    Animator playAnim;
+
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
+        playAnim = gameObject.GetComponent<Animator>();
 
         if (gameObject.tag == "player1")
             testType = 1;
@@ -94,6 +98,9 @@ public class testPlayerMovement : MonoBehaviour
         if (canJump && isJump)
             isJump = false;
 
+
+        playAnim.SetBool("isJump", !canJump);
+
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
     }
 
@@ -101,11 +108,10 @@ public class testPlayerMovement : MonoBehaviour
     {
         if (GetKeyJump && canJump)
         {
-            isJump = true;
             Jump();
         }
 
-        if (!playerStick.isStick&&!playerStick.isPop)
+        if (!playerStick.isStick && !playerStick.isPop)
             Move();
         else
             Pull();
@@ -125,6 +131,7 @@ public class testPlayerMovement : MonoBehaviour
     void Jump()
     {
         canJump = false;
+        isJump = true;
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
     }
 

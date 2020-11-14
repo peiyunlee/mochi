@@ -198,6 +198,8 @@ public abstract class JellySprite : MonoBehaviour
 
     //我輩黏了
     public bool sticked = false;
+    //動畫Collider移動
+    public Vector2 animCollider = new Vector2(0, 0);
 
     #endregion
 
@@ -1211,6 +1213,7 @@ public abstract class JellySprite : MonoBehaviour
         float width = spriteBounds.size.x * m_SpriteScale.x;
         float height = spriteBounds.size.y * m_SpriteScale.y;
 
+
         // Work out how many nodes we need in each direction
         float nodeDistance = Mathf.Min(width, height) / m_VertexDensity;
         int vertexGridWidth = Mathf.CeilToInt(width / nodeDistance);
@@ -2012,7 +2015,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    // referencePoint.SetKinematic(true);
                     if (!stickItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
@@ -2032,7 +2035,7 @@ public abstract class JellySprite : MonoBehaviour
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                // referencePoint.SetKinematic(false);
             }
         }
     }
@@ -2075,7 +2078,7 @@ public abstract class JellySprite : MonoBehaviour
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                // referencePoint.SetKinematic(false);
             }
         }
     }
@@ -2103,7 +2106,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     point.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     point.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    // referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2319,24 +2322,13 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
     /// <summary>
-    /// Add a force at a given position to every reference point
+    /// Reset centralPoint position for animation
     /// </summary>
-    public void AddForceAtPosition(Vector2 force, Vector2 position)
+    public void ResetCentralPos(Vector3 position)
     {
-        if (m_ReferencePoints != null)
+        if (CentralPoint != null)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                if (referencePoint.Body2D)
-                {
-                    referencePoint.Body2D.AddForceAtPosition(force, position);
-                }
-
-                if (referencePoint.Body3D)
-                {
-                    referencePoint.Body3D.AddForceAtPosition(force, position);
-                }
-            }
+            CentralPoint.Body2D.MovePosition(CentralPoint.transform.position + position);
         }
     }
 
@@ -2346,15 +2338,39 @@ public abstract class JellySprite : MonoBehaviour
         {
             if (IsSpriteChange())
             {
+                // m_SpriteMesh.Clear();
+                // m_SpriteMesh.vertices = m_Vertices;
+                // m_SpriteMesh.uv = m_TexCoords;
+                // m_SpriteMesh.triangles = m_Triangles;
+                // m_SpriteMesh.colors = m_Colors;
+                
+                // InitVertices(GetSpriteBounds());
                 InitMesh();
-                InitVertices(GetSpriteBounds());
+                // InitVertices(GetSpriteBounds());
+                // Debug.Log(GetSpriteBounds().size);
+                // // UpdateTextureCoords();
+                // InitMaterial();
+                
+                // // m_SpriteMesh.RecalculateBounds();
+                // // m_SpriteMesh.RecalculateNormals();
+                // if (m_ReferencePoints != null)
+                // {
+                //     CalculateInitialOffsets();
+                //     CalculateWeightingValues();
+                // }
+                // InitVertices(GetSpriteBounds());
+                // UpdateTextureCoords();
+                // m_SpriteMesh.RecalculateBounds();
+                // m_SpriteMesh.RecalculateNormals();
+                // m_SpriteMesh.RecalculateTangents();
                 InitMaterial();
-
-                if (m_ReferencePoints != null)
-                {
-                    CalculateInitialOffsets();
-                    CalculateWeightingValues();
-                }
+                
+                // if (m_ReferencePoints != null)
+                // {
+                //     CalculateInitialOffsets();
+                //     CalculateWeightingValues();
+                // }
+                
             }
 
         }
