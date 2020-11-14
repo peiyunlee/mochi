@@ -68,15 +68,6 @@ public class testPlayerMovement : MonoBehaviour
         {
             GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
 
-<<<<<<< HEAD
-            if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
-            else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
-            else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyHMove = 0;
-
-            if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
-            else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
-            else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
-=======
             if (Input.GetKeyDown("d")) { testGetKeyHMove = 1; isMove = true; }
             else if (Input.GetKeyDown("a")) { testGetKeyHMove = -1; isMove = true; }
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) { testGetKeyHMove = 0; isMove = false; }
@@ -84,7 +75,6 @@ public class testPlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("w")) { testGetKeyHMove = 1; isMove = true; }
             else if (Input.GetKeyDown("s")) { testGetKeyHMove = -1; isMove = true; }
             else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) { testGetKeyHMove = 0; isMove = false; }
->>>>>>> Gu_2
         }
 
         else if (testType == 3)

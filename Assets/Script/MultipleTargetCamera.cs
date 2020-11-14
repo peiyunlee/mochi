@@ -15,8 +15,7 @@ public class MultipleTargetCamera : MonoBehaviour
     public float smoothTime = .5f;
     public Vector3 velocity;
 
-    public float minX, minY;
-    public float maxX, maxY;
+    public Vector2 min, max;
 
     public float maxZoom, minZoom;
     public float zoomLimiter;
@@ -62,32 +61,13 @@ public class MultipleTargetCamera : MonoBehaviour
     {
 
         Vector3 centerPoint = GetCenterPoint();
-        // Vector3 farthestPoint = GetFarthestPoint();
 
         Vector3 newPostion = centerPoint + offset;
-
-        // Vector3 p = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth,cam.pixelHeight, cam.nearClipPlane));
 
 
         float greatestDistance = m_bounds.size.x > m_bounds.size.y ? m_bounds.size.x : m_bounds.size.y;
 
         float p = Mathf.Lerp(14.5f, 64.5f, greatestDistance / zoomLimiter);
-
-        // Debug.Log(p);
-
-        if (cam.transform.position.x - p < minX)
-        {
-            newPostion.x += minX + p;
-        }
-        else if (cam.transform.position.x + p > maxX)
-        {
-            newPostion.x = newPostion.x - (newPostion.x + p - maxX);
-        }
-
-        // if (newPostion.y < minY)
-        //     newPostion.y = minY;
-        // else if (newPostion.y > maxY)
-        //     newPostion.y = maxY;
 
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothTime);
     }
@@ -129,26 +109,6 @@ public class MultipleTargetCamera : MonoBehaviour
         }
 
         return bounds.center;
-    }
-
-    Vector3 GetFarthestPoint()
-    {
-        if (targets.Count == 1)
-        {
-            return targets[0].position;
-        }
-
-        float maxX = targets[0].position.x;
-        float maxY = targets[0].position.y;
-        float maxZ = targets[0].position.z;
-
-        for (int i = 1; i < targets.Count; i++)
-        {
-            if (maxX < targets[i].position.x) maxX = targets[i].position.x;
-            if (maxY < targets[i].position.y) maxY = targets[i].position.y;
-        }
-
-        return new Vector3(maxX, maxY, maxZ);
     }
 
     public void AddTarget(Transform newTarget)
