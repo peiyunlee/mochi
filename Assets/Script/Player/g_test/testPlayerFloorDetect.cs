@@ -20,7 +20,6 @@ public class testPlayerFloorDetect : MonoBehaviour
         // if (other.gameObject.tag == "ground" && other.gameObject.tag != parents.tag)
         if (other.gameObject.tag != parents.tag && other.gameObject.tag!="wall")
         {
-            Debug.Log("Stayfloor");
             m_isOnFloor = true;
         }
     }
@@ -29,7 +28,6 @@ public class testPlayerFloorDetect : MonoBehaviour
     {
         if (other.gameObject.tag != parents.tag && other.gameObject.tag!="wall")
         {
-            Debug.Log("Exitfloor");
             m_isOnFloor = false;
         }
     }
