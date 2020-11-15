@@ -15,6 +15,7 @@ using System.Collections.Generic;
 public class UnityJellySprite : JellySprite
 {
 	public Sprite m_Sprite;
+	public Sprite m_Sprite_Pre;
 	
 	// Rendering materials - cached to enable reuse where possible
 	static List<Material> s_MaterialList = new List<Material>();
@@ -44,6 +45,20 @@ public class UnityJellySprite : JellySprite
 	{
 		return m_Sprite != null;
 	}
+
+	/// <summary>
+    /// Check if the sprite is change
+    /// </summary>
+    protected override bool IsSpriteChange()
+    {
+        if (m_Sprite != m_Sprite_Pre)
+        {
+            m_Sprite_Pre = m_Sprite;
+            return true;
+        }
+        else return false;
+
+    }
 		
 	/// <summary>
 	/// Check if the source sprite is rotated

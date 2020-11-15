@@ -5,6 +5,15 @@ using UnityEngine;
 public class testPlayerMovement : MonoBehaviour
 {
     public string playerColor;
+    enum State
+    {
+        Left,
+        Right,
+        Idle
+    };
+    State walkPreState;
+    State walkCurState;
+    bool playerLeft = true;
     public float moveSpeed;
     public float jumpSpeed;
 
@@ -12,6 +21,7 @@ public class testPlayerMovement : MonoBehaviour
 
     [SerializeField]
     private bool canJump;
+    [SerializeField]
     private bool isJump;
     private bool canMove;
     private bool isMove;
@@ -37,6 +47,8 @@ public class testPlayerMovement : MonoBehaviour
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
+        walkPreState = State.Left;
+        walkCurState = State.Left;
 
         if (gameObject.tag == "player1")
             testType = 1;
@@ -104,19 +116,36 @@ public class testPlayerMovement : MonoBehaviour
         if (canJump && isJump)
             isJump = false;
 
+        jellySprite.SetAnimBool("isJump", !canJump);
+
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
+    }
+
+    void SetState()
+    {
+        if (testGetKeyHMove == 1)
+            walkCurState = State.Right;
+        else if (testGetKeyHMove == -1)
+            walkCurState = State.Left;
+
+        if (walkCurState != walkPreState)
+        {
+            playerLeft = !playerLeft;
+            jellySprite.SetFlipHorizontal(!playerLeft);
+            walkPreState = walkCurState;
+        }
     }
 
     void FixedUpdate()
     {
         if (GetKeyJump && canJump)
         {
-            isJump = true;
             Jump();
         }
 
         if (!playerStick.isStick &&!playerStick.isPop && isMove){
             SetFollowMove(false);
+        if (!playerStick.isStick && !playerStick.isPop)
             Move();
         }
         else if(playerStick.isStick && isMove)
@@ -129,6 +158,13 @@ public class testPlayerMovement : MonoBehaviour
     void Move()
     {
         // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
+        SetState();
+
+        if (testGetKeyHMove != 0 && canJump)
+            jellySprite.SetAnimBool("isWalk", true);
+        else
+            jellySprite.SetAnimBool("isWalk", false);
+
         jellySprite.AddVelocity(new Vector2(testGetKeyHMove * moveSpeed, 0.0f));
     }
     void Pull()
@@ -140,6 +176,7 @@ public class testPlayerMovement : MonoBehaviour
     void Jump()
     {
         canJump = false;
+        isJump = true;
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
     }
 

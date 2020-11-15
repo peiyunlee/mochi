@@ -18,16 +18,18 @@ public class testPlayerFloorDetect : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         // if (other.gameObject.tag == "ground" && other.gameObject.tag != parents.tag)
-        if (other.gameObject.tag != parents.tag)
+        if (other.gameObject.tag != parents.tag && other.gameObject.tag!="wall")
         {
+            Debug.Log("Stayfloor");
             m_isOnFloor = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag != parents.tag)
+        if (other.gameObject.tag != parents.tag && other.gameObject.tag!="wall")
         {
+            Debug.Log("Exitfloor");
             m_isOnFloor = false;
         }
     }

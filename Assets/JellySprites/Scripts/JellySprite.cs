@@ -198,6 +198,8 @@ public abstract class JellySprite : MonoBehaviour
 
     //我輩黏了
     public bool sticked = false;
+    //Animation Controller
+    public Animator playAnim;
 
     public bool notFreeze = false;
 
@@ -583,6 +585,11 @@ public abstract class JellySprite : MonoBehaviour
     /// Check if the sprite is valid
     /// </summary>
     protected abstract bool IsSpriteValid();
+
+    /// <summary>
+    /// Check if the sprite is change
+    /// </summary>
+    protected abstract bool IsSpriteChange();
 
     /// <summary>
     /// Raises the destroy event.
@@ -1207,6 +1214,7 @@ public abstract class JellySprite : MonoBehaviour
     {
         float width = spriteBounds.size.x * m_SpriteScale.x;
         float height = spriteBounds.size.y * m_SpriteScale.y;
+
 
         // Work out how many nodes we need in each direction
         float nodeDistance = Mathf.Min(width, height) / m_VertexDensity;
@@ -2009,7 +2017,6 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
-
                     if (!stickItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
@@ -2082,7 +2089,7 @@ public abstract class JellySprite : MonoBehaviour
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                // referencePoint.SetKinematic(false);
             }
         }
     }
@@ -2321,25 +2328,44 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
     /// <summary>
-    /// Add a force at a given position to every reference point
+    /// Reset centralPoint position for animation
     /// </summary>
-    public void AddForceAtPosition(Vector2 force, Vector2 position)
+    public void ResetCentralPos(Vector3 position)
     {
-        if (m_ReferencePoints != null)
+        if (CentralPoint != null)
         {
-            foreach (ReferencePoint referencePoint in m_ReferencePoints)
-            {
-                if (referencePoint.Body2D)
-                {
-                    referencePoint.Body2D.AddForceAtPosition(force, position);
-                }
-
-                if (referencePoint.Body3D)
-                {
-                    referencePoint.Body3D.AddForceAtPosition(force, position);
-                }
-            }
+            CentralPoint.Body2D.MovePosition(CentralPoint.transform.position + position);
         }
+    }
+
+    /// <summary>
+    /// Set Animation
+    /// </summary>
+
+    public void SetAnimation()
+    {
+        if (IsSpriteValid())
+        {
+            if (IsSpriteChange())
+            {
+                InitVertices(GetSpriteBounds());
+                InitMesh();
+                InitMaterial();
+            }
+
+        }
+
+    }
+
+    public void SetAnimMirror(string name, bool value)
+    {
+        // playAnim.an
+    }
+
+    public void SetAnimBool(string name, bool value)
+    {
+        playAnim = GetComponent<Animator>();
+        playAnim.SetBool(name, value);
     }
 
     /// <summary>
@@ -2680,6 +2706,7 @@ public abstract class JellySprite : MonoBehaviour
             }
 
             // Apply our rigid body movements to the rendered mesh
+            SetAnimation();
             UpdateMesh();
             UpdateAttachPoints();
         }
