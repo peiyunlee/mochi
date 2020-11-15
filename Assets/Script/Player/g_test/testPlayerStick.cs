@@ -72,6 +72,7 @@ public class testPlayerStick : MonoBehaviour
             if (canStick && !m_isStick)
             {
                 m_isStick = true;
+                jellySprite.SetAnimBool("isWalk", false);
             }
             else if (m_isStick)
             {

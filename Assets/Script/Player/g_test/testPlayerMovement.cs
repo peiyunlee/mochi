@@ -12,7 +12,7 @@ public class testPlayerMovement : MonoBehaviour
     };
     State walkPreState;
     State walkCurState;
-    bool playerLeft=true;
+    bool playerLeft = true;
     public float moveSpeed;
     public float jumpSpeed;
 
@@ -108,7 +108,6 @@ public class testPlayerMovement : MonoBehaviour
         if (canJump && isJump)
             isJump = false;
 
-
         jellySprite.SetAnimBool("isJump", !canJump);
 
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
@@ -123,7 +122,7 @@ public class testPlayerMovement : MonoBehaviour
 
         if (walkCurState != walkPreState)
         {
-            playerLeft=!playerLeft;
+            playerLeft = !playerLeft;
             jellySprite.SetFlipHorizontal(!playerLeft);
             walkPreState = walkCurState;
         }
@@ -146,10 +145,12 @@ public class testPlayerMovement : MonoBehaviour
     {
         // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
         SetState();
-        if (testGetKeyHMove != 0)
+
+        if (testGetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
             jellySprite.SetAnimBool("isWalk", false);
+
         jellySprite.AddVelocity(new Vector2(testGetKeyHMove * moveSpeed, 0.0f));
     }
     void Pull()
