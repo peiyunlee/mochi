@@ -48,6 +48,8 @@ public class testPlayerStick : MonoBehaviour
     bool isTouchGround;  //有碰到Item
     bool isPointAttachGround;  //有碰到Ground
 
+    bool isStickRocket;
+
     //
     [SerializeField]
     public bool isPop;  //有碰到Ground
@@ -115,6 +117,10 @@ public class testPlayerStick : MonoBehaviour
     private void ItemToStick()
     {
         stickItemList = jellySprite.SetItemStick();
+
+        isStickRocket = jellySprite.isStickRocket;
+
+        RocketStick();
 
         if (isTouchWall && isPointAttachWall)
             jellySprite.SetWallStick();
@@ -209,5 +215,10 @@ public class testPlayerStick : MonoBehaviour
         ResetItemNotStick();
 
         ResetPlayersNotStick();
+    }
+
+    void RocketStick()
+    {
+        LevelController.instance.SetRocketStick(this.gameObject.tag, isStickRocket);
     }
 }
