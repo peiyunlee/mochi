@@ -6,30 +6,32 @@ public class Rocket : MonoBehaviour
 {
 
     LevelController levelController;
-    int stickCount;
+
+    [SerializeField]
+    List<string> stickPlayer;
 
     void Start()
     {
         levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
-        stickCount = 0;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void SetPlayerStick(string player, bool set)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+        if (!stickPlayer.Contains(player) && set)
         {
-            stickCount++;
-			if(stickCount == GameManager.instance.playerCount)
-            	levelController.GameFinish();
+            stickPlayer.Add(player);
         }
+        else if (stickPlayer.Contains(player) && !set)
+        {
+            stickPlayer.Remove(player);
+        }
+
+        if (stickPlayer.Count == GameManager.instance.playerCount)
+            RocketGo();
     }
 
-
-    void OnTriggerExit2D(Collider2D other)
+    void RocketGo()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
-        {
-            stickCount--;
-        }
+        levelController.GameFinish();
     }
 }
