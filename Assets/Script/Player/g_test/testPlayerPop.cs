@@ -14,6 +14,8 @@ public class testPlayerPop : MonoBehaviour
     float popTime;
 
     public bool getKeyPop;
+
+    public bool TimesUp;
     public bool canTurn;
 
     void Start()
@@ -23,6 +25,7 @@ public class testPlayerPop : MonoBehaviour
         playerMovement = gameObject.GetComponent<testPlayerMovement>();
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         canPop = false;
+        TimesUp = false;
     }
 
     // Update is called once per frame
@@ -36,6 +39,8 @@ public class testPlayerPop : MonoBehaviour
         {
             //讓對方轉
             canTurn = true;
+            jellySprite.SetAnimBool("isPop", true);
+            Debug.Log("pop");
             jellySprite.SetPlayerRot(playerStick.stickPlayerList);
         }
 
@@ -59,9 +64,11 @@ public class testPlayerPop : MonoBehaviour
 
         Turn();
 
-        if (getKeyPop)
+        if (getKeyPop || TimesUp)
         {
+            TimesUp = false;
             getKeyPop = false;
+            jellySprite.SetAnimBool("isPop", false);
             Pop();
         }
         // Debug.Log(this.tag + ":" + jellySprite.sticked);
@@ -100,7 +107,7 @@ public class testPlayerPop : MonoBehaviour
 
     void Pop()
     {
-        if (playerStick.stickItemList.Count > 0)
+        if (playerStick.stickItemList != null && playerStick.stickItemList.Count > 0)
         {
             List<GameObject> stickItemList = playerStick.stickItemList;
             playerStick.ResetItemNotStick();
