@@ -17,7 +17,6 @@ TagManager:
   - floorDetect
   - stickDetect
   - RotateItem
-  - Rocket
   layers:
   - Default
   - TransparentFX

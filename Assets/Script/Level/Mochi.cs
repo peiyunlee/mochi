@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mochi : MonoBehaviour
-{
+public class Mochi : MonoBehaviour {
 
-    bool isAte;
+	LevelController levelController;
+
+    void Start()
+    {
+        levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player") && !isAte)
+		Debug.Log("mochi");
+        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
         {
-            Debug.Log("mochi");
-            LevelController.instance.AddMochi();
-            isAte = true;
+            levelController.AddMochi();
             Destroy(this.gameObject);
         }
     }

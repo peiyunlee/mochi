@@ -6,63 +6,52 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
-    static public LevelController instance;
     public List<GameObject> playerPrefab = new List<GameObject>(4);
-
-    [SerializeField]
-    int radishCount;
+    
+	[SerializeField]
+	int radishCount;
 
     public int mochiTotalCount;
 
     int mochiCount;
 
     bool mochiAllGet;
+    public bool isReady;
 
-    public Text mochiText;
-    public Text radishText;
+	public Text mochiText;
+	public Text radishText;
 
-    public GameObject option;
-
-    public GameObject rocketObjet;
-
-    Rocket rocket;
+	public GameObject option;
 
     // Use this for initialization
     void Start()
     {
-        instance = this;
         for (int i = 0; i < GameManager.instance.playerCount; i++)
             playerPrefab[i].SetActive(true);
 
         radishCount = 0;
         mochiCount = 0;
         mochiAllGet = false;
-
-        mochiText.text = mochiCount + " / " + mochiTotalCount;
-        radishText.text = radishCount + "";
-
-        rocket = rocketObjet.GetComponent<Rocket>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ShowOption();
-        }
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			ShowOption();
+		}
     }
 
     public void AddRadish()
     {
         radishCount++;
-        radishText.text = radishCount + "";
+		radishText.text = radishCount + "";
     }
 
     public void AddMochi()
     {
         mochiCount++;
-        mochiText.text = mochiCount + " / " + mochiTotalCount;
+		mochiText.text = mochiCount + " / " + mochiTotalCount;
         if (mochiCount == mochiTotalCount)
             mochiAllGet = true;
     }
@@ -73,30 +62,26 @@ public class LevelController : MonoBehaviour
         {
             int next = SceneManager.GetActiveScene().buildIndex + 1;
             SceneController.instance.LoadNextScene(next);
-            Debug.Log("FINISH");
         }
     }
 
     public void ReturnToMenu()
     {
-        SceneController.instance.LoadNextScene("Menu");
-        //儲存進度
+		SceneController.instance.LoadNextScene("Menu");
+		//儲存進度
     }
 
     public void GameReturn()
     {
-        Time.timeScale = 1;
-        option.SetActive(false);
+		Time.timeScale = 1;
+		option.SetActive(false);
     }
 
     public void ShowOption()
     {
-        Time.timeScale = 0;
-        option.SetActive(true);
+		Time.timeScale = 0;
+		option.SetActive(true);
     }
 
-    public void SetRocketStick(string player, bool set)
-    {
-        rocket.SetPlayerStick(player, set);
-    }
+
 }

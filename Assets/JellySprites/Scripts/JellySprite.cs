@@ -203,8 +203,6 @@ public abstract class JellySprite : MonoBehaviour
 
     public bool notFreeze = false;
 
-    public bool isStickRocket = false;
-
     #endregion
 
     #region PUBLIC_CLASSES
@@ -2039,18 +2037,11 @@ public abstract class JellySprite : MonoBehaviour
     {
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
-
-            if (isTouch > 3)
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
             {
-                if (isTouch == 5)
+                if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch == 5)
                 {
                     notFreeze = false;
-                }
-
-                if (isTouch == 6)
-                {
-                    isStickRocket = false;
                 }
 
                 referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
@@ -2063,15 +2054,8 @@ public abstract class JellySprite : MonoBehaviour
     {
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
-            if (isTouch > 3)
-            {
-                if (isTouch == 6)
-                {
-                    isStickRocket = true;
-                }
+            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
                 return true;
-            }
         }
         return false;
     }
@@ -2244,7 +2228,7 @@ public abstract class JellySprite : MonoBehaviour
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.enabled = false;
-
+            
             thePlayer.GetComponent<UnityJellySprite>().sticked = false;
 
             Debug.Log("resettheplayer" + thePlayer);

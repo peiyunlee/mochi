@@ -5,16 +5,19 @@ using UnityEngine;
 public class Radish : MonoBehaviour
 {
 
+    LevelController levelController;
 
-    bool isAte;
+    void Start()
+    {
+        levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player") && !isAte)
+		Debug.Log("radish");
+        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
         {
-            Debug.Log("radish");
-            isAte = true;
-            LevelController.instance.AddRadish();
+            levelController.AddRadish();
             Destroy(this.gameObject);
         }
     }
