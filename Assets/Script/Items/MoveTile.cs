@@ -104,24 +104,5 @@ public class MoveTile : MonoBehaviour
         }
     }
 
-    //讓角色跟著移動
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
-        {
-            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
-            testPlayerMovement.followTarget = this.gameObject.GetComponent<Rigidbody2D>();
-            testPlayerMovement.isFollow = true;
-        }
-    }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
-        {
-            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
-            testPlayerMovement.followTarget = null;
-            testPlayerMovement.isFollow = false;
-        }
-    }
 }

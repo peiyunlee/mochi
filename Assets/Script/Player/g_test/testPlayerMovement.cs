@@ -34,7 +34,7 @@ public class testPlayerMovement : MonoBehaviour
 
     public int testType;
 
-
+    public string playerColor;
 
     void Start()
     {
