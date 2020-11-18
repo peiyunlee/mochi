@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mochi : MonoBehaviour
 {
+
     bool isAte;
 
     void OnTriggerEnter2D(Collider2D other)

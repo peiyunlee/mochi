@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Radish : MonoBehaviour
 {
+
+
     bool isAte;
 
     void OnTriggerEnter2D(Collider2D other)

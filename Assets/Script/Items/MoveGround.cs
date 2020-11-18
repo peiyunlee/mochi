@@ -93,7 +93,7 @@ public class MoveGround : MonoBehaviour
             if (other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject != null)
             {
                 GameObject player = other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject;
-                if (player.GetComponent<PlayerStick>().stickItemList.Contains(this.gameObject))
+                if (player.GetComponent<testPlayerStick>().stickItemList.Contains(this.gameObject))
                 {
                     Invoke("SetCanMove", waitSec);
                     needMochi = false;
