@@ -776,6 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popForce: 20
   getKeyPop: 0
+  TimesUp: 0
   canTurn: 0
 --- !u!114 &275696992
 MonoBehaviour:
@@ -1279,6 +1280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popForce: 0
   getKeyPop: 0
+  TimesUp: 0
   canTurn: 0
 --- !u!114 &379998049
 MonoBehaviour:
@@ -3518,7 +3520,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1119820434}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5236f2a2621159845a06c2f87e962e6f, type: 2}
   m_CullingMode: 0
@@ -3586,6 +3588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popForce: 20
   getKeyPop: 0
+  TimesUp: 0
   canTurn: 0
 --- !u!114 &1119820439
 MonoBehaviour:
@@ -3827,6 +3830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popForce: 20
   getKeyPop: 0
+  TimesUp: 0
   canTurn: 0
 --- !u!114 &1123374915
 MonoBehaviour:
@@ -11104,6 +11108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popForce: 20
   getKeyPop: 0
+  TimesUp: 0
   canTurn: 0
 --- !u!114 &1278065539
 MonoBehaviour:
