@@ -5,11 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MultipleTargetCamera : MonoBehaviour
 {
-
-    //farthest offset -10/-3/-15
-    //center offset 11/7/-15
-
-
     public List<Transform> targets;
     public Vector3 offset;
     public float smoothTime = .5f;

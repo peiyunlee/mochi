@@ -109,7 +109,7 @@ public class MoveTile : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
         {
-            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
+            PlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<PlayerMovement>();
             testPlayerMovement.followTarget = this.gameObject.GetComponent<Rigidbody2D>();
             testPlayerMovement.isFollow = true;
         }
@@ -119,7 +119,7 @@ public class MoveTile : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
         {
-            testPlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<testPlayerMovement>();
+            PlayerMovement testPlayerMovement = other.gameObject.GetComponentInParent<PlayerMovement>();
             testPlayerMovement.followTarget = null;
             testPlayerMovement.isFollow = false;
         }
