@@ -13,6 +13,11 @@ TagManager:
   - joint
   - YELLOW
   - player5
+  - Item
+  - floorDetect
+  - stickDetect
+  - RotateItem
+  - Rocket
   layers:
   - Default
   - TransparentFX
@@ -27,11 +32,11 @@ TagManager:
   - blue
   - green
   - gray
-  - 
-  - 
-  - 
-  - 
-  - 
+  - FirstCam
+  - SecondCam
+  - ThirdCam
+  - player
+  - thing
   - 
   - 
   - 
@@ -68,9 +73,15 @@ TagManager:
   - name: Player
     uniqueID: 3377062863
     locked: 0
+  - name: face
+    uniqueID: 3815814191
+    locked: 0
   - name: yellow
     uniqueID: 4227026241
     locked: 0
   - name: red
     uniqueID: 552751973
+    locked: 0
+  - name: UI
+    uniqueID: 1808291247
     locked: 0

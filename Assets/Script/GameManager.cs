@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public string currentLevel = "Level1-1";
+    public int playerCount = 1;
     void Awake()
     {
         //轉換場景不會被刪除
@@ -14,10 +16,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
-    void Start()
+
+    public void SetCurrentLevel(string levelName)
     {
+        currentLevel = levelName;
     }
-    void Update()
+
+    public void SetPlayerCount(int count)
     {
+        playerCount = count;
     }
 }
