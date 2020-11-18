@@ -107,6 +107,7 @@ MonoBehaviour:
   needMochi: 1
   moveSpeed: {x: -0.05, y: 0, z: 0}
   waitSec: 1
+  tile: {fileID: 0}
 --- !u!212 &212797467700165568
 SpriteRenderer:
   m_ObjectHideFlags: 1
