@@ -35,9 +35,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4162751837712340}
+  - component: {fileID: 114494364507452290}
   - component: {fileID: 50420917047263808}
-  - component: {fileID: 114073328893652290}
-  - component: {fileID: 60449319501792508}
+  - component: {fileID: 70489795218418002}
+  - component: {fileID: 254580889140758294}
   m_Layer: 16
   m_Name: stickDetect
   m_TagString: player1
@@ -59,15 +60,13 @@ GameObject:
   - component: {fileID: 114776657087782702}
   - component: {fileID: 114126424324672384}
   - component: {fileID: 114820946459761400}
-  - component: {fileID: 50581701664794120}
-  - component: {fileID: 95384686765244926}
   m_Layer: 16
   m_Name: Player1 (1)
   m_TagString: player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1576705235144172
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1474401365958956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.4, y: 0.15, z: 0}
+  m_LocalPosition: {x: 5.31, y: -2.29, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 4347204487844378}
@@ -253,92 +252,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!50 &50581701664794120
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474401365958956}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &60449319501792508
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1279573238279932}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.66, y: 2.12}
-    newSize: {x: 2.25, y: 1.81}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.1568189, y: -0.6301397}
-      - {x: 1.2135077, y: -0.5267602}
-      - {x: 1.2772107, y: -0.36164582}
-      - {x: 1.2986708, y: -0.27696908}
-      - {x: 1.3027799, y: -0.036979318}
-      - {x: 1.2978923, y: 0.01514256}
-      - {x: 1.281538, y: 0.14367759}
-      - {x: 1.2452126, y: 0.2510333}
-      - {x: 1.1215377, y: 0.4778725}
-      - {x: 0.8710265, y: 0.74103296}
-      - {x: 0.7636738, y: 0.8436775}
-      - {x: 0.53999996, y: 0.96999997}
-      - {x: 0.45999998, y: 1}
-      - {x: 0.3136754, y: 1.0405171}
-      - {x: 0.23533225, y: 1.0553342}
-      - {x: -0.0065350533, y: 1.0726446}
-      - {x: -0.21730185, y: 1.0662198}
-      - {x: -0.24088383, y: 1.0635912}
-      - {x: -0.25, y: 1.06}
-      - {x: -0.38959265, y: 1.0182917}
-      - {x: -0.57683945, y: 0.94471097}
-      - {x: -0.7031536, y: 0.8831543}
-      - {x: -0.849452, y: 0.7731545}
-      - {x: -1.0591817, y: 0.5528861}
-      - {x: -1.133982, y: 0.4482442}
-      - {x: -1.2489212, y: 0.2157718}
-      - {x: -1.3087821, y: -0.07250428}
-      - {x: -1.28847, y: -0.31798065}
-      - {x: -1.2425137, y: -0.47325194}
-      - {x: -1.1470509, y: -0.6303793}
-      - {x: -1.0534477, y: -0.73506355}
-      - {x: -0.9468937, y: -0.82069635}
-      - {x: -0.8478141, y: -0.8950633}
-      - {x: -0.8041239, y: -0.9256327}
-      - {x: -0.7267475, y: -0.95864177}
-      - {x: -0.7047105, y: -0.9694308}
-      - {x: -0.6823349, y: -0.97794294}
-      - {x: -0.44126272, y: -1.0447156}
-      - {x: 0.28455257, y: -1.0533798}
-      - {x: 0.59097767, y: -1.0032403}
-      - {x: 0.85721254, y: -0.8964807}
-      - {x: 0.9968829, y: -0.7966894}
 --- !u!61 &61567482200799232
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -364,43 +277,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7029717, y: 0.15758395}
   m_EdgeRadius: 0
---- !u!95 &95384686765244926
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474401365958956}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c7224cdfa1d70934c86bcff7038ce11f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114073328893652290
-MonoBehaviour:
+--- !u!70 &70489795218418002
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1279573238279932}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 623db415003741740bf105e7cd459d46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchPlayerList: []
-  isTouchWall: 0
-  touchItemList: []
-  playerList:
-  - {fileID: 1474401365958956}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.25, y: 1.95}
+  m_Direction: 1
 --- !u!114 &114126424324672384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -412,14 +303,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c4e25989592c74e86e1210ab6fc680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor: 
-  moveSpeed: 3.5
-  jumpSpeed: 320
+  moveSpeed: 4
+  jumpSpeed: 350
   pullForce: 20
   canJump: 0
   testType: 0
-  isFollow: 0
-  followTarget: {fileID: 0}
+--- !u!114 &114494364507452290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279573238279932}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  getIsOnFloor: 0
+  m_isStick: 0
+  canStick: 0
+  isAttachItem: 0
+  stickItemList: []
+  isAttachPlayer: 0
+  stickPlayerList: []
+  isAttachWall: 0
 --- !u!114 &114776657087782702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,8 +339,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popForce: 10
-  getKeyPop: 0
-  canTurn: 0
 --- !u!114 &114803212924578986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,19 +363,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stickDetect: {fileID: 0}
   getIsOnFloor: 0
   m_isStick: 0
   canStick: 0
-  isPointAttachItem: 0
+  isAttachItem: 0
   stickItemList: []
-  pointAttachPlayerList: []
+  isAttachPlayer: 0
   stickPlayerList: []
-  touchPlayerList: []
-  isTouchWall: 0
-  isPointAttachWall: 0
-  isTouchGround: 0
-  isPop: 0
+  isAttachWall: 0
 --- !u!114 &114884324956027448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -528,7 +428,7 @@ MonoBehaviour:
   m_GridColumns: 4
   m_GridRows: 4
   m_DampingRatio: 2
-  m_SoftBodyScale: {x: 1.1, y: 0.9}
+  m_SoftBodyScale: {x: 1.25, y: 0.9}
   m_SoftBodyRotation: 0
   m_SoftBodyOffset: {x: -0, y: -0}
   m_CentralBodyOffset: {x: -0, y: -0}
@@ -543,11 +443,8 @@ MonoBehaviour:
   - {fileID: 4864034794020068}
   - {fileID: 4840403063824000}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_SpriteMesh: {fileID: 0}
   m_ReferencePointParent: {fileID: 0}
   haveTouch: 0
-  sticked: 0
-  notFreeze: 0
   m_Sprite: {fileID: 21300000, guid: b308a5eb011edd04c954c51de9e38201, type: 3}
 --- !u!212 &212304486062413620
 SpriteRenderer:
@@ -641,3 +538,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!254 &254580889140758294
+RelativeJoint2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279573238279932}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_MaxForce: 10000
+  m_MaxTorque: 10000
+  m_CorrectionScale: 0.3
+  m_AutoConfigureOffset: 1
+  m_LinearOffset: {x: 1.3300002, y: -0.01999998}
+  m_AngularOffset: 0

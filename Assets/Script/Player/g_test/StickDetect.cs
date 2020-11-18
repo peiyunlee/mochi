@@ -39,7 +39,8 @@ public class StickDetect : MonoBehaviour
             }
             else if (other.gameObject.tag == "wall")
             {
-				isTouchWall = true;
+                Debug.Log("enter wall");
+                isTouchWall = true;
             }
             
         }
@@ -64,7 +65,12 @@ public class StickDetect : MonoBehaviour
             }
             else if (other.gameObject.tag == "wall")
             {
-				isTouchWall = false;
+                Debug.Log("exit wall");
+                isTouchWall = false;
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("thing"))
+            {
+                // Debug.Log("exit thing");
             }
         }
     }

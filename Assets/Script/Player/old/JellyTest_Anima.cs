@@ -1457,7 +1457,12 @@ public abstract class JellyTest_Anima : MonoBehaviour
                 InitMaterial();
                 m_SpriteMesh.RecalculateBounds();
                 m_SpriteMesh.RecalculateNormals();
-                UpdateTextureCoords();
+                if (m_ReferencePoints != null)
+                {
+                    CalculateInitialOffsets();
+                    CalculateWeightingValues();
+                }
+                // UpdateTextureCoords();
                 // InitMesh();
             }
 
