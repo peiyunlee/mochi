@@ -71,9 +71,9 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("left")) { testGetKeyHMove = -1; isMove = true; }
             else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) { testGetKeyHMove = 0; isMove = false; }
 
-            if (Input.GetKeyDown("up")) { testGetKeyHMove = 1; isMove = true; }
-            else if (Input.GetKeyDown("down")) { testGetKeyHMove = -1; isMove = true; }
-            else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) { testGetKeyHMove = 0; isMove = false; }
+            if (Input.GetKeyDown("up")) { testGetKeyVMove = 1; isMove = true; }
+            else if (Input.GetKeyDown("down")) { testGetKeyVMove = -1; isMove = true; }
+            else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) { testGetKeyVMove = 0; isMove = false; }
         }
 
         else if (testType == 2)
@@ -84,9 +84,9 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("a")) { testGetKeyHMove = -1; isMove = true; }
             else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) { testGetKeyHMove = 0; isMove = false; }
 
-            if (Input.GetKeyDown("w")) { testGetKeyHMove = 1; isMove = true; }
-            else if (Input.GetKeyDown("s")) { testGetKeyHMove = -1; isMove = true; }
-            else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) { testGetKeyHMove = 0; isMove = false; }
+            if (Input.GetKeyDown("w")) { testGetKeyVMove = 1; isMove = true; }
+            else if (Input.GetKeyDown("s")) { testGetKeyVMove = -1; isMove = true; }
+            else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) { testGetKeyVMove = 0; isMove = false; }
         }
 
         else if (testType == 3)
@@ -143,14 +143,16 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (!playerStick.isStick &&!playerStick.isPop && isMove){
+        if (!playerStick.isStick && !playerStick.isPop && isMove && !isFollow)
+        {
             SetFollowMove(false);
-        if (!playerStick.isStick && !playerStick.isPop)
+            if (!playerStick.isStick && !playerStick.isPop)
             Move();
         }
-        else if(playerStick.isStick && isMove)
+        else if (playerStick.isStick && isMove)
             Pull();
-        else if(!isMove && isFollow){
+        else if (!isMove && isFollow)
+        {
             SetFollowMove(true);
         }
 
@@ -219,7 +221,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Die(){
+    public void Die()
+    {
 
     }
 }
