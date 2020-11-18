@@ -38,10 +38,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool notFreeze;
 
-    public bool isFollow;
-
-    public Rigidbody2D followTarget;
-
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
@@ -57,8 +53,6 @@ public class PlayerMovement : MonoBehaviour
         else if (gameObject.tag == "player3")
             testType = 3;
         else testType = 4;
-
-        followTarget = null;
     }
 
     void Update()
@@ -113,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
         canJump = playerFloorDetect.isOnFloor;
 
+        //已經落地
         if (canJump && isJump)
             isJump = false;
 
@@ -143,23 +138,14 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (!playerStick.isStick && !playerStick.isPop && isMove && !isFollow)
-        {
-            SetFollowMove(false);
-            if (!playerStick.isStick && !playerStick.isPop)
+        if (!playerStick.isStick && !playerStick.isPop)
             Move();
-        }
         else if (playerStick.isStick && isMove)
             Pull();
-        else if (!isMove && isFollow)
-        {
-            SetFollowMove(true);
-        }
-
     }
+
     void Move()
     {
-        // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
         SetState();
 
         if (testGetKeyHMove != 0 && canJump)
@@ -171,7 +157,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Pull()
     {
-        // jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * pullForce, 0.0f));
         jellySprite.AddForce(new Vector2(testGetKeyHMove * pullForce, testGetKeyVMove * pullForce));
     }
 
@@ -184,11 +169,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
-        // jellySprite.AddVelocity(slop * popForce, false);
         jellySprite.AddForce(slop * popForce * 30.0f);
-        // jellySprite.AddForce(slop * popForce * 40.0f);
-        // jellySprite.AddRelativeForce(slop * popForce * 40.0f);
-        // jellySprite.MovePosition(slop * 2.0f);
     }
 
     void ResetRotation()
@@ -202,22 +183,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 jellySprite.ResetSelfRot();
             }
-        }
-    }
-
-    public void SetFollowMove(bool set)
-    {
-        FixedJoint2D f = jellySprite.CentralPoint.GameObject.GetComponent<FixedJoint2D>();
-        if (set)
-        {
-            f.connectedBody = followTarget.GetComponent<Rigidbody2D>();
-            f.enabled = true;
-        }
-        else
-        {
-            f.connectedBody = null;
-            f.enabled = false;
-            isFollow = false;
         }
     }
 
