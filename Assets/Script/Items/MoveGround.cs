@@ -90,13 +90,18 @@ public class MoveGround : MonoBehaviour
         // 判斷有沒有腳色黏上來
         if (other.gameObject.layer == LayerMask.NameToLayer("player"))
         {
+            Debug.Log(other.gameObject.name);
             if (other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject != null)
             {
                 GameObject player = other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject;
-                if (player.GetComponent<testPlayerStick>().stickItemList.Contains(this.gameObject))
+                List<GameObject> stickItemList = player.GetComponent<testPlayerStick>().stickItemList;
+                if (player != null && stickItemList != null)
                 {
-                    Invoke("SetCanMove", waitSec);
-                    needMochi = false;
+                    if (stickItemList.Contains(this.gameObject))
+                    {
+                        Invoke("SetCanMove", waitSec);
+                        needMochi = false;
+                    }
                 }
             }
 
