@@ -7794,16 +7794,6 @@ Prefab:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
-    - target: {fileID: 114558921897111996, guid: d156e0033329f47458d2ec4e45a9425f,
-        type: 2}
-      propertyPath: moveSpeed
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114558921897111996, guid: d156e0033329f47458d2ec4e45a9425f,
-        type: 2}
-      propertyPath: jumpSpeed
-      value: 325
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
   m_IsPrefabAsset: 0
