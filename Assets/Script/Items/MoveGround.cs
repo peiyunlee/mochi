@@ -77,7 +77,7 @@ public class MoveGround : MonoBehaviour
         canMove = true;
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (needMochi)
         {
@@ -85,16 +85,16 @@ public class MoveGround : MonoBehaviour
         }
     }
 
-    void MochiDetect(Collision2D other)
+    void MochiDetect(Collider2D other)
     {
         // 判斷有沒有腳色黏上來
-        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
         {
-            if (other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject != null)
+            GameObject player = other.gameObject.GetComponentInParent<PlayerMovement>().gameObject;
+            if (player != null)
             {
-                GameObject player = other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject;
                 List<GameObject> stickItemList = player.GetComponent<PlayerStick>().stickItemList;
-                if (player != null && stickItemList != null)
+                if (stickItemList != null)
                 {
                     if (stickItemList.Contains(this.gameObject))
                     {

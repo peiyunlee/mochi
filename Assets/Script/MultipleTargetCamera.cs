@@ -63,11 +63,6 @@ public class MultipleTargetCamera : MonoBehaviour
         Vector3 centerPoint = GetCenterPoint();
 
         Vector3 newPostion = centerPoint + offset;
-
-
-        float greatestDistance = m_bounds.size.x > m_bounds.size.y ? m_bounds.size.x : m_bounds.size.y;
-
-        float p = Mathf.Lerp(14.5f, 64.5f, greatestDistance / zoomLimiter);
         
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothTime);
     }

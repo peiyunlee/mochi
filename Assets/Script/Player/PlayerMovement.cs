@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿// #define JOYSTICK 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,8 +28,15 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove;
     private UnityJellySprite jellySprite;
     private bool GetKeyJump;
+
+#if !JOYSTICK
     private int testGetKeyHMove;
     private int testGetKeyVMove;
+#else
+    private float testGetKeyHMove;
+    private float testGetKeyVMove;
+#endif
+
 
     PlayerStick playerStick;
 
@@ -46,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         walkPreState = State.Left;
         walkCurState = State.Left;
 
+#if !JOYSTICK
         if (gameObject.tag == "player1")
             testType = 1;
         else if (gameObject.tag == "player2")
@@ -53,13 +64,15 @@ public class PlayerMovement : MonoBehaviour
         else if (gameObject.tag == "player3")
             testType = 3;
         else testType = 4;
+#endif
     }
 
     void Update()
     {
+#if !JOYSTICK
         if (testType == 1)
         {
-            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("z");
+            GetKeyJump = Input.GetKeyDown("z");
 
             if (Input.GetKeyDown("right")) testGetKeyHMove = 1;
             else if (Input.GetKeyDown("left")) testGetKeyHMove = -1;
@@ -69,10 +82,9 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("down")) testGetKeyVMove = -1;
             else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) testGetKeyVMove = 0;
         }
-
         else if (testType == 2)
         {
-            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag) || Input.GetKeyDown("f");
+            GetKeyJump = Input.GetKeyDown("f");
 
             if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
             else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
@@ -82,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
             else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
         }
-
         else if (testType == 3)
         {
             GetKeyJump = Input.GetKeyDown("4");
@@ -92,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("1")) testGetKeyHMove = -1;
             else if (Input.GetKeyUp("3") || Input.GetKeyUp("1")) testGetKeyHMove = 0;
         }
-
         else if (testType == 4)
         {
             GetKeyJump = Input.GetKeyDown("k");
@@ -102,6 +112,12 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetKeyDown("j")) testGetKeyHMove = -1;
             else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
         }
+#else
+        GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
+        testGetKeyHMove = Input.GetAxisRaw("Horizontal_" + this.tag);
+        testGetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
+#endif
+
 
         ResetRotation();
 
@@ -145,7 +161,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Move()
     {
-        // jellySprite.AddVelocity(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * moveSpeed, 0.0f));
         SetState();
 
         if (testGetKeyHMove != 0 && canJump)
@@ -157,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Pull()
     {
-        // jellySprite.AddForce(new Vector2(Input.GetAxisRaw("Horizontal_" + this.tag) * pullForce, 0.0f));
         jellySprite.AddForce(new Vector2(testGetKeyHMove * pullForce, testGetKeyVMove * pullForce));
     }
 
@@ -176,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
     void ResetRotation()
     {
         // if (!jellySprite.notFreeze)
-            jellySprite.FreezePlayerRot();
+        jellySprite.FreezePlayerRot();
 
         if (jellySprite.CentralPoint.transform.rotation.z != 0)
         {

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 61205095487646120}
   - component: {fileID: 114019115090213204}
   - component: {fileID: 50941513003448264}
+  - component: {fileID: 114434684466827778}
   - component: {fileID: 70890516056395814}
   m_Layer: 16
   m_Name: floorDetect
@@ -124,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1964309741336514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2400017, y: 0.07000017, z: 0}
+  m_LocalPosition: {x: 35.6, y: 4.7, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 4485937630136230}
@@ -366,6 +367,18 @@ MonoBehaviour:
   isTouchGround: 0
   isPointAttachGround: 0
   isPop: 0
+--- !u!114 &114434684466827778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1974061911098706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0efd50947415184586f5d6ef27d7a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerColor: 0
 --- !u!114 &114544709244751072
 MonoBehaviour:
   m_ObjectHideFlags: 1

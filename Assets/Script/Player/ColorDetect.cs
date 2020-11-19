@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class ColorDetect : MonoBehaviour
 {
+    [SerializeField]
     int playerColor;
+
+    PlayerMovement playerMovement;
 
     void Start()
     {
-        string playerColor_s = gameObject.GetComponentInParent<PlayerMovement>().playerColor;
+        playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
+        string playerColor_s = playerMovement.playerColor;
         switch (playerColor_s)
         {
             case "red":
@@ -31,12 +35,11 @@ public class ColorDetect : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.gameObject.layer != LayerMask.NameToLayer("player"))
+        if (other.gameObject.layer != LayerMask.NameToLayer("player"))
         {
             if (other.gameObject.layer != playerColor && (other.gameObject.layer <= 11 &&　other.gameObject.layer >= 8))
             {
-                //Die();
-                Debug.Log(this.gameObject.tag + "die");
+                playerMovement.Die();
             }
         }
     }

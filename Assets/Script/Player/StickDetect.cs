@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StickDetect : MonoBehaviour
 {
-    PlayerStick playerStick;
 
     public List<GameObject> touchPlayerList = new List<GameObject>();  //碰到的角色
     public bool isTouchWall = false;
@@ -15,7 +14,6 @@ public class StickDetect : MonoBehaviour
 
     void Start()
     {
-        playerStick = GetComponentInParent<PlayerStick>();
         foreach (var player in playerList)
         {
             touchPlayerList.Add(player);
@@ -33,13 +31,11 @@ public class StickDetect : MonoBehaviour
                     if (!touchPlayerList.Contains(touchPlayer))
                     {
                         touchPlayerList.Add(touchPlayer);
-                        // Debug.Log("enter" + touchPlayer);
                     }
                 }
             }
             else if (other.gameObject.tag == "wall")
             {
-                Debug.Log("enter wall");
                 isTouchWall = true;
             }
             
