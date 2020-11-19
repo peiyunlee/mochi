@@ -71,50 +71,5 @@ public class CircleGround : MonoBehaviour
 
         rbList[index].MoveRotation(deg * 57.5f);
     }
-
-    // void RotateRigibody()
-    // {
-    //     deg += rotateDeg * Time.deltaTime;
-
-    //     if (rotateDeg < 0)
-    //     {
-    //         if (deg <= -360)
-    //             deg += 360;
-    //     }
-    //     else
-    //     {
-    //         if (deg >= 360)
-    //             deg -= 360;
-    //     }
-
-    //     rb.MoveRotation(deg);
-    // }
-
-
-    // void RotateTile()
-    // {
-    //     //tile式移動
-    //     deg += rotateDeg;
-    //     if (rotateDeg >= 360)
-    //         deg = 0;
-    //     foreach (var tileVec in tileList)
-    //     {
-    //         tile = tilemap.GetTile(tileVec);
-    //         matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, deg), Vector3.one);
-    //         tilemap.SetTransformMatrix(tileVec, Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, deg), Vector3.one) * matrix);
-    //     }
-    // }
-
-    // void RotateTransform(int index)
-    // {
-    //     {
-    //         deg += rotateAngle * Time.deltaTime;
-
-    //         float x = r * Mathf.Cos(deg + eachDeg * index) + h;
-    //         float y = r * Mathf.Sin(deg + eachDeg * index) + k;
-
-    //         childList[index].transform.position = new Vector2(x, y);
-    //     }
-    // }
 }
 

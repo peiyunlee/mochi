@@ -25,7 +25,10 @@ public class JellySpriteReferencePoint : MonoBehaviour
         PLAYER,
         GROUND,
         WALL,
-        THING,
+        THING, 
+        ROTATETHING,
+
+        ROCKET,
     }
 
     public GameObject attachItem;
@@ -82,7 +85,7 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 }
                 else if (
                 (collision.gameObject.layer == LayerMask.NameToLayer("player") &&
-                 attachItem == collision.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject) )//&& !attachItem.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled
+                 attachItem == collision.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject))//&& !attachItem.GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled
                 {
                     isTouch = 0;
                     attachItem = null;
@@ -115,6 +118,14 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 if (collision.gameObject.tag == "Item")
                 {
                     isTouch = (int)TOUCHTYPE.THING;
+                }
+                else if (collision.gameObject.tag == "RotateItem")
+                {
+                    isTouch = (int)TOUCHTYPE.ROTATETHING;
+                }
+                else if (collision.gameObject.tag == "Rocket")
+                {
+                    isTouch = (int)TOUCHTYPE.ROCKET;
                 }
                 else if (collision.gameObject.tag == "ground")
                 {

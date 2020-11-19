@@ -197,6 +197,11 @@ Prefab:
       propertyPath: rocketObjet
       value: 
       objectReference: {fileID: 1062841297}
+    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
+        type: 2}
+      propertyPath: mochiTotalCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c29f9940962e64bbf9d8abe85837f3, type: 2}
   m_IsPrefabAsset: 0
@@ -7388,11 +7393,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.33
+      value: 45.4
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 18.79
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7760,11 +7765,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.11
+      value: 41.96
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.29
+      value: 15.8
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7976,14 +7981,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
-    newSize: {x: 2.25, y: 1.81}
+    oldSize: {x: 2.16, y: 2.16}
+    newSize: {x: 1.02, y: 1.02}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8}
+  m_Size: {x: 2.16, y: 2.16}
   m_EdgeRadius: 0
 --- !u!50 &1062841299
 Rigidbody2D:
@@ -8040,15 +8045,15 @@ SpriteRenderer:
   m_SortingLayerID: -1041066461
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b36d1e0716b11e54b9f49d645026cb29, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d21fc6b1042db3a459dd76c7b5cfd417, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.25, y: 1.81}
+  m_Size: {x: 1.02, y: 1.02}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1062841301
@@ -8058,8 +8063,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1062841297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.31, y: 15.5, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalPosition: {x: 48.25, y: 15.76, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 18

@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string playerColor;
 
+    bool notFreeze;
+
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
@@ -168,16 +170,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
-        // jellySprite.AddVelocity(slop * popForce, false);
         jellySprite.AddForce(slop * popForce * 30.0f);
-        // jellySprite.AddForce(slop * popForce * 40.0f);
-        // jellySprite.AddRelativeForce(slop * popForce * 40.0f);
-        // jellySprite.MovePosition(slop * 2.0f);
     }
 
     void ResetRotation()
     {
-        jellySprite.FreezePlayerRot();
+        // if (!jellySprite.notFreeze)
+            jellySprite.FreezePlayerRot();
 
         if (jellySprite.CentralPoint.transform.rotation.z != 0)
         {
