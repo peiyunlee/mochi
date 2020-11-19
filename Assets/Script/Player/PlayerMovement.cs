@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
-
+        Debug.Log(playerColor + "Die");
     }
 }
 

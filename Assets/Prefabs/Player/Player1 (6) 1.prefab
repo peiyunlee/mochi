@@ -124,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1964309741336514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 34.85, y: 4.08, z: 0}
+  m_LocalPosition: {x: -2.2400017, y: 0.07000017, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 4485937630136230}
@@ -443,6 +443,7 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  isStickRocket: 0
   m_Sprite: {fileID: 21300000, guid: 350848c42d95606428f0da56cb2fb665, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!114 &114558921897111996
@@ -462,7 +463,7 @@ MonoBehaviour:
   canJump: 0
   isJump: 0
   testType: 1
-  playerColor: 
+  playerColor: red
 --- !u!114 &114559350658325666
 MonoBehaviour:
   m_ObjectHideFlags: 1
