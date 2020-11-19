@@ -8,7 +8,7 @@ public class ColorDetect : MonoBehaviour
 
     void Start()
     {
-        string playerColor_s = gameObject.GetComponentInParent<testPlayerMovement>().playerColor;
+        string playerColor_s = gameObject.GetComponentInParent<PlayerMovement>().playerColor;
         switch (playerColor_s)
         {
             case "red":

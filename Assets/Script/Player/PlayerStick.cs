@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testPlayerStick : MonoBehaviour
+public class PlayerStick : MonoBehaviour
 {
 
-    testPlayerMovement testPlayerMovement;
+    PlayerMovement testPlayerMovement;
     UnityJellySprite jellySprite;
     public StickDetect stickDetect;
 
@@ -60,7 +60,7 @@ public class testPlayerStick : MonoBehaviour
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
-        testPlayerMovement = gameObject.GetComponent<testPlayerMovement>();
+        testPlayerMovement = gameObject.GetComponent<PlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         isPop = false;
     }
@@ -173,7 +173,7 @@ public class testPlayerStick : MonoBehaviour
         {
             foreach (var pointAttachPlayer in pointAttachPlayerList)
             {
-                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<testPlayerStick>().isPop)
+                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<PlayerStick>().isPop)
                 {
                     stickPlayerList.Add(pointAttachPlayer);
                 }

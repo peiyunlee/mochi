@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testPlayerPop : MonoBehaviour
+public class PlayerPop : MonoBehaviour
 {
     public float popForce;
-    testPlayerStick playerStick;
-    testPlayerMovement playerMovement;
+    PlayerStick playerStick;
+    PlayerMovement playerMovement;
     private UnityJellySprite jellySprite;
 
     bool canPop;    //可以彈的情況：按黏才可以彈
@@ -21,8 +21,8 @@ public class testPlayerPop : MonoBehaviour
     void Start()
     {
         // playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
-        playerStick = gameObject.GetComponent<testPlayerStick>();
-        playerMovement = gameObject.GetComponent<testPlayerMovement>();
+        playerStick = gameObject.GetComponent<PlayerStick>();
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         canPop = false;
         TimesUp = false;
@@ -127,7 +127,7 @@ public class testPlayerPop : MonoBehaviour
             List<GameObject> withPlayerList = new List<GameObject>();
             foreach (var player in stickPlayerList)
             {
-                bool isStick = player.GetComponent<testPlayerStick>().isStick;
+                bool isStick = player.GetComponent<PlayerStick>().isStick;
                 if (!isStick) //可以單獨彈出去的player
                 {
                     popPlayerList.Add(player);
@@ -177,10 +177,10 @@ public class testPlayerPop : MonoBehaviour
 
     void PopPlayer(GameObject player)
     {
-        player.GetComponent<testPlayerStick>().isPop = true;
+        player.GetComponent<PlayerStick>().isPop = true;
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
-        player.GetComponent<testPlayerMovement>().Pop(slop, popForce);
+        player.GetComponent<PlayerMovement>().Pop(slop, popForce);
     }
 
     // void PopWithPlayer(Vector2 slop)
@@ -191,10 +191,10 @@ public class testPlayerPop : MonoBehaviour
     void PopWithPlayer(GameObject player)
     {
         playerStick.isPop = true;
-        player.GetComponent<testPlayerStick>().isPop = true;
+        player.GetComponent<PlayerStick>().isPop = true;
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
         // player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
-        player.GetComponent<testPlayerMovement>().Pop(slop, popForce * 2f);
+        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
     }
 }

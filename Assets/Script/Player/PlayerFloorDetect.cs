@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testPlayerFloorDetect : MonoBehaviour
+public class PlayerFloorDetect : MonoBehaviour
 {
 
     public bool isOnFloor { get { return m_isOnFloor; } }

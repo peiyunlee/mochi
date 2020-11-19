@@ -94,7 +94,7 @@ public class MoveGround : MonoBehaviour
             if (other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject != null)
             {
                 GameObject player = other.gameObject.GetComponent<JellySpriteReferencePoint>().ParentJellySprite.gameObject;
-                List<GameObject> stickItemList = player.GetComponent<testPlayerStick>().stickItemList;
+                List<GameObject> stickItemList = player.GetComponent<PlayerStick>().stickItemList;
                 if (player != null && stickItemList != null)
                 {
                     if (stickItemList.Contains(this.gameObject))

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testPlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     enum State
     {
@@ -28,9 +28,9 @@ public class testPlayerMovement : MonoBehaviour
     private int testGetKeyHMove;
     private int testGetKeyVMove;
 
-    testPlayerStick playerStick;
+    PlayerStick playerStick;
 
-    testPlayerFloorDetect playerFloorDetect;
+    PlayerFloorDetect playerFloorDetect;
 
     public int testType;
 
@@ -39,8 +39,8 @@ public class testPlayerMovement : MonoBehaviour
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
-        playerStick = gameObject.GetComponentInChildren<testPlayerStick>();
-        playerFloorDetect = gameObject.GetComponentInChildren<testPlayerFloorDetect>();
+        playerStick = gameObject.GetComponentInChildren<PlayerStick>();
+        playerFloorDetect = gameObject.GetComponentInChildren<PlayerFloorDetect>();
         walkPreState = State.Left;
         walkCurState = State.Left;
 

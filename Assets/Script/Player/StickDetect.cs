@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StickDetect : MonoBehaviour
 {
-    testPlayerStick playerStick;
+    PlayerStick playerStick;
 
     public List<GameObject> touchPlayerList = new List<GameObject>();  //碰到的角色
     public bool isTouchWall = false;
@@ -15,7 +15,7 @@ public class StickDetect : MonoBehaviour
 
     void Start()
     {
-        playerStick = GetComponentInParent<testPlayerStick>();
+        playerStick = GetComponentInParent<PlayerStick>();
         foreach (var player in playerList)
         {
             touchPlayerList.Add(player);
@@ -65,12 +65,7 @@ public class StickDetect : MonoBehaviour
             }
             else if (other.gameObject.tag == "wall")
             {
-                Debug.Log("exit wall");
                 isTouchWall = false;
-            }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("thing"))
-            {
-                // Debug.Log("exit thing");
             }
         }
     }

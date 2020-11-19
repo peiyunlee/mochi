@@ -27,9 +27,9 @@ public class Arrow : Item
         // }
         if (this.gameObject.layer != 12 && (this.gameObject.layer != other.gameObject.layer))
         {
-            if (other.gameObject.GetComponent<testPlayerMovement>() != null)
+            if (other.gameObject.GetComponent<PlayerMovement>() != null)
             {
-                other.gameObject.GetComponent<testPlayerMovement>().Die();
+                other.gameObject.GetComponent<PlayerMovement>().Die();
             }
 
         }
