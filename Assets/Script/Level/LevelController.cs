@@ -69,11 +69,12 @@ public class LevelController : MonoBehaviour
 
     public void GameFinish()
     {
+        Debug.Log(mochiCount);
+        Debug.Log(mochiTotalCount);
         if (mochiAllGet)
         {
             int next = SceneManager.GetActiveScene().buildIndex + 1;
             SceneController.instance.LoadNextScene(next);
-            Debug.Log("FINISH");
         }
     }
 

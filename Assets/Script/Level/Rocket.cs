@@ -20,6 +20,7 @@ public class Rocket : MonoBehaviour
         if (!stickPlayer.Contains(player) && set)
         {
             stickPlayer.Add(player);
+            Debug.Log("ADD");
         }
         else if (stickPlayer.Contains(player) && !set)
         {

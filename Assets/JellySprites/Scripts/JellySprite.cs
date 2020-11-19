@@ -201,6 +201,10 @@ public abstract class JellySprite : MonoBehaviour
     //Animation Controller
     public Animator playAnim;
 
+    // public bool notFreeze = false;
+
+    public bool isStickRocket = false;
+
     #endregion
 
     #region PUBLIC_CLASSES
@@ -2007,7 +2011,9 @@ public abstract class JellySprite : MonoBehaviour
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
             // > wall
-            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
+
+            int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
+            if (isTouch > 3)
             {
                 referencePoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
                 GameObject attachItem = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem;
@@ -2019,6 +2025,12 @@ public abstract class JellySprite : MonoBehaviour
                     if (!stickItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
+                    }
+
+                    if (isTouch == 5)
+                    {
+                        // notFreeze = true;
+                        // CentralPoint.Body2D.freezeRotation = false;
                     }
                 }
             }
@@ -2032,10 +2044,24 @@ public abstract class JellySprite : MonoBehaviour
         {
             if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
             {
-                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
-                referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
-                referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
-                // referencePoint.SetKinematic(false);
+                int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
+
+                if (isTouch > 3)
+                {
+                    if (isTouch == 5)
+                    {
+                        // notFreeze = false;
+                    }
+
+                    if (isTouch == 6)
+                    {
+                        isStickRocket = false;
+                    }
+
+                    referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+                    referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+                    referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+                }
             }
         }
     }
@@ -2043,8 +2069,15 @@ public abstract class JellySprite : MonoBehaviour
     {
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
-            if (referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch > 3)
+            int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
+            if (isTouch > 3)
+            {
+                if (isTouch == 6)
+                {
+                    isStickRocket = true;
+                }
                 return true;
+            }
         }
         return false;
     }
