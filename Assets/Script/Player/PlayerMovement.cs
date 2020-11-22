@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 #endif
 
 
+    public int GetKey{ get { return testGetKeyVMove; } }
+
     PlayerStick playerStick;
 
     PlayerFloorDetect playerFloorDetect;
