@@ -1,4 +1,4 @@
-﻿// #define JOYSTICK 
+﻿// #define JOYSTICK
 
 using System.Collections;
 using System.Collections.Generic;
@@ -189,8 +189,8 @@ public class PlayerMovement : MonoBehaviour
 
     void ResetRotation()
     {
-        // if (!jellySprite.notFreeze)
-        jellySprite.FreezePlayerRot();
+        if (!jellySprite.notFreeze)
+            jellySprite.FreezePlayerRot();
 
         if (jellySprite.CentralPoint.transform.rotation.z != 0)
         {

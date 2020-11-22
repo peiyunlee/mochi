@@ -11,7 +11,6 @@ public class Mochi : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && !isAte)
         {
-            Debug.Log("mochi");
             LevelController.instance.AddMochi();
             isAte = true;
             Destroy(this.gameObject);

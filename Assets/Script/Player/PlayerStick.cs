@@ -1,5 +1,5 @@
 ﻿// #define JOYSTICK
-// #define HOLDSTICK
+#define HOLDSTICK
 
 using System.Collections;
 using System.Collections.Generic;
@@ -69,6 +69,7 @@ public class PlayerStick : MonoBehaviour
         testPlayerMovement = gameObject.GetComponent<PlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         isPop = false;
+        jellySprite.notFreeze = false;
     }
     void Update()
     {
@@ -167,7 +168,6 @@ public class PlayerStick : MonoBehaviour
         if (getIsOnFloor || isPointAttachGround)
         {
             jellySprite.SetFloorStick();
-            // Debug.Log("attach ground");
         }
     }
 

@@ -201,7 +201,7 @@ public abstract class JellySprite : MonoBehaviour
     //Animation Controller
     public Animator playAnim;
 
-    // public bool notFreeze = false;
+    public bool notFreeze;
 
     public bool isStickRocket = false;
 
@@ -2029,8 +2029,8 @@ public abstract class JellySprite : MonoBehaviour
 
                     if (isTouch == 5)
                     {
-                        // notFreeze = true;
-                        // CentralPoint.Body2D.freezeRotation = false;
+                        notFreeze = true;
+                        CentralPoint.Body2D.freezeRotation = false;
                     }
                 }
             }
@@ -2050,7 +2050,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     if (isTouch == 5)
                     {
-                        // notFreeze = false;
+                        notFreeze = false;
                     }
 
                     if (isTouch == 6)
@@ -2095,7 +2095,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    // referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2139,7 +2139,7 @@ public abstract class JellySprite : MonoBehaviour
                 {
                     point.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     point.GetComponent<HingeJoint2D>().enabled = true;
-                    referencePoint.SetKinematic(true);
+                    // referencePoint.SetKinematic(true);
                 }
             }
         }
@@ -2156,7 +2156,7 @@ public abstract class JellySprite : MonoBehaviour
                 point.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                 point.GetComponent<JellySpriteReferencePoint>().attachItem = null;
                 point.GetComponent<HingeJoint2D>().enabled = false;
-                referencePoint.SetKinematic(false);
+                // referencePoint.SetKinematic(false);
 
             }
         }

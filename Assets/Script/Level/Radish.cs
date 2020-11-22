@@ -12,7 +12,6 @@ public class Radish : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && !isAte)
         {
-            Debug.Log("radish");
             isAte = true;
             LevelController.instance.AddRadish();
             Destroy(this.gameObject);

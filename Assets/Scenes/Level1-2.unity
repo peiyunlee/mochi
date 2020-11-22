@@ -248,6 +248,14 @@ Prefab:
       propertyPath: popForce
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
   m_IsPrefabAsset: 0
@@ -445,6 +453,26 @@ Prefab:
         type: 2}
       propertyPath: popForce
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114558921897111996, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: playerColor
+      value: blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544709244751072, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544709244751072, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.33720446
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544709244751072, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
