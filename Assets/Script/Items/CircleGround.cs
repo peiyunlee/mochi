@@ -18,24 +18,29 @@ public class CircleGround : MonoBehaviour
     List<Transform> transList;
     public List<Rigidbody2D> rbList;
 
-    float eachDeg;
+    float eachAngle;
 
 
-    float deg;
+    float angle;
+
+    public float m;
 
     void Start()
     {
-        deg = 0;
+        angle = 0;
         rotateAngle = (Mathf.PI / 180) * rotateDeg;
 
-        eachDeg = 2f * Mathf.PI / childList.Count;
+        eachAngle = 2f * Mathf.PI / childList.Count;
+
+        float eachDeg = 360 / childList.Count;
 
         int index = 0;
         foreach (var item in childList)
         {
-            float x = r * Mathf.Cos(eachDeg * index) + h;
-            float y = r * Mathf.Sin(eachDeg * index) + k;
+            float x = r * Mathf.Cos(eachAngle * index) + h;
+            float y = r * Mathf.Sin(eachAngle * index) + k;
             childList[index].transform.position = new Vector2(x, y);
+            childList[index].transform.Rotate(new Vector3(0, 0, eachDeg * index));
             index++;
         }
 
@@ -49,8 +54,9 @@ public class CircleGround : MonoBehaviour
         {
             Rotate(i);
         }
+        angle += rotateAngle * Time.deltaTime;
 
-        sprite.transform.Rotate(new Vector3(0, 0, rotateDeg * 5.0f * Time.deltaTime));
+        sprite.transform.Rotate(new Vector3(0, 0, rotateDeg * Time.deltaTime));
     }
 
     void Rotate(int index)
@@ -62,14 +68,17 @@ public class CircleGround : MonoBehaviour
 
     void MoveRigibody(int index)
     {
-        deg += rotateAngle * Time.deltaTime;
+        angle += rotateAngle * Time.deltaTime;
 
-        float x = r * Mathf.Cos(deg + eachDeg * index) + h;
-        float y = r * Mathf.Sin(deg + eachDeg * index) + k;
+        float x = r * Mathf.Cos(eachAngle * index + angle) + h;
+        float y = r * Mathf.Sin(eachAngle * index + angle) + k;
 
         rbList[index].MovePosition(new Vector2(x, y));
 
-        rbList[index].MoveRotation(deg * 57.5f);
+        rbList[index].MoveRotation(angle * m);
+
+        angle -= rotateAngle * Time.deltaTime;
+
     }
 }
 
