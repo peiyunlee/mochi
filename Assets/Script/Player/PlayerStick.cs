@@ -1,5 +1,5 @@
 ﻿// #define JOYSTICK
-#define HOLDSTICK
+// #define HOLDSTICK
 
 using System.Collections;
 using System.Collections.Generic;
@@ -135,7 +135,6 @@ public class PlayerStick : MonoBehaviour
 
         AttachDetect();
 
-
         if (isTouchWall || isPointAttachGround)
         {
             if (isPop)
@@ -160,7 +159,7 @@ public class PlayerStick : MonoBehaviour
 
         isStickRocket = jellySprite.isStickRocket;
 
-        RocketStick();
+        // RocketStick();
 
         if (isTouchWall && isPointAttachWall)
             jellySprite.SetWallStick();
