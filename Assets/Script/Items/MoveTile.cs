@@ -39,7 +39,6 @@ public class MoveTile : MonoBehaviour
         {
             SetStart();
         }
-        Debug.Log("PARENT");
     }
 
     public void SetCanMove()
