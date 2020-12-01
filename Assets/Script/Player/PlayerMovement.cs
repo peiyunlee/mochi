@@ -56,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string playerType;
 
+    int playerColor;
+
     bool notFreeze;
 
     ColorDetect colorDetect;
@@ -73,18 +75,23 @@ public class PlayerMovement : MonoBehaviour
         {
             case "red":
                 colorDetect.playerColor = 8;
+                playerColor = 8;
                 break;
             case "blue":
                 colorDetect.playerColor = 10;
+                playerColor = 10;
                 break;
             case "green":
                 colorDetect.playerColor = 11;
+                playerColor = 11;
                 break;
             case "yellow":
                 colorDetect.playerColor = 9;
+                playerColor = 9;
                 break;
             default:
                 colorDetect.playerColor = 0;
+                playerColor = 0;
                 break;
         }
 
@@ -240,19 +247,19 @@ public class PlayerMovement : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Vector2 newPos;
-		newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
-		jellySprite.SetPosition(DetectPoint(newPos), true);
+        newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
+        jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
+        // jellySprite.SetPosition(DetectPoint(newPos), true);
         this.gameObject.SetActive(true);
     }
 
-    
+
     Vector2 DetectPoint(Vector2 point)
     {
         bool result = false;
         Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
         hit = Physics2D.Raycast(point, slop);
         result = hit.collider;
-        Debug.Log(hit.collider);
         Collider2D hc = hit.collider;
 
         if (result)
@@ -267,11 +274,46 @@ public class PlayerMovement : MonoBehaviour
                 currentVector = Vector2.zero;
                 return point;
             }
-            else 
+            else
             {
                 currentVector = point;
                 return DetectPoint(point + Vector2.right);
             }
+        }
+
+    }
+
+    Vector2 DetectPoint_Ground(Vector2 point)
+    {
+        bool result = false;
+        Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
+        hit = Physics2D.Raycast(point, slop);
+        result = hit.collider;
+
+        if (result)
+        {
+            GameObject hg = hit.collider.gameObject;
+            if (hg.tag == "ground" && hg.layer == playerColor)
+            {
+                currentVector = point;
+                return DetectPoint(point + Vector2.up);
+            }
+            else
+            {
+                currentVector = point;
+                return DetectPoint(point + Vector2.right);
+            }
+        }
+        else
+        {
+            if (point == currentVector + Vector2.up)
+            {
+                currentVector = Vector2.zero;
+                return point;
+            }
+
+            currentVector = point;
+            return DetectPoint(point + Vector2.down);
         }
 
     }
