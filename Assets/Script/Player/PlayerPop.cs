@@ -74,7 +74,7 @@ public class PlayerPop : MonoBehaviour
 
     void FixedUpdate()
     {
-
+        
         Turn();
 
         if (getKeyPop || TimesUp)
@@ -90,6 +90,7 @@ public class PlayerPop : MonoBehaviour
     {
         if (canTurn)
         {
+            jellySprite.isTurn = true;
             //按彈時unfreeze對方的rotation
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
@@ -97,13 +98,13 @@ public class PlayerPop : MonoBehaviour
                 foreach (var player in stickPlayerList)
                 {
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
-                    if (GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled)
-                        GetComponent<UnityJellySprite>().CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
                 }
             }
+            jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
         }
         else if (playerStick.isStick && !canTurn)
         {
+            jellySprite.isTurn = false;
             //黏住的時候&&沒有按彈時freeze對方的rotation
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
@@ -172,7 +173,8 @@ public class PlayerPop : MonoBehaviour
                     slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
                     PopWithPlayer(player);
                 }
-                // playerMovement.Pop(slop * 1.5f, popForce);
+
+
                 //重設黏
                 playerStick.ResetNotStick_PopWithPlayer();
             }
@@ -207,6 +209,8 @@ public class PlayerPop : MonoBehaviour
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
         // player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
+        // player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
         player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
+        playerMovement.Pop(slop, popForce * 2f);
     }
 }

@@ -165,12 +165,14 @@ public class PlayerMovement : MonoBehaviour
 
         canJump = playerFloorDetect.isOnFloor;
 
-        if (canJump && isJump)
+        if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
             isJump = false;
 
         jellySprite.SetAnimBool("isJump", !canJump);
 
         playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
+
+        SetState();
     }
 
     void SetState()
@@ -192,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GetKeyJump && canJump)
         {
+            Debug.Log("jump");
             Jump();
         }
 
@@ -203,7 +206,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Move()
     {
-        SetState();
 
         if (testGetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);

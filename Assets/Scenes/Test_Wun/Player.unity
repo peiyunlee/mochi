@@ -462,6 +462,9 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  notFreeze: 0
+  isStickRocket: 0
+  isTurn: 0
   m_Sprite: {fileID: 21300000, guid: b308a5eb011edd04c954c51de9e38201, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!23 &275696993
@@ -967,6 +970,9 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  notFreeze: 0
+  isStickRocket: 0
+  isTurn: 0
   m_Sprite: {fileID: 21300000, guid: b308a5eb011edd04c954c51de9e38201, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!23 &379998050
@@ -1452,6 +1458,9 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  notFreeze: 0
+  isStickRocket: 0
+  isTurn: 0
   m_Sprite: {fileID: 21300000, guid: c618d4f7c25da794090d5be35bb8edf1, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!95 &662112504
@@ -1584,6 +1593,10 @@ Prefab:
       objectReference: {fileID: 902199390}
     - target: {fileID: 4863995292253162, guid: cc6dbd194190eb8489b2ae6a5dd72c56, type: 2}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637156820419708, guid: cc6dbd194190eb8489b2ae6a5dd72c56, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2144,7 +2157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &902199391
 Rigidbody2D:
   serializedVersion: 4
@@ -2555,7 +2568,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 976090363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.99, y: 14.75, z: -0.5}
+  m_LocalPosition: {x: 38.1, y: 5.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1181382389}
@@ -2936,8 +2949,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c4e25989592c74e86e1210ab6fc680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  jumpSpeed: 350
+  moveSpeed: 3.5
+  jumpSpeed: 320
   pullForce: 10
   canJump: 0
   isJump: 0
@@ -3023,7 +3036,7 @@ MonoBehaviour:
   m_CentralBodyOffset: {x: -0, y: -0}
   m_SpriteScale: {x: 1, y: 1}
   m_2DMode: 1
-  m_AttachNeighbors: 0
+  m_AttachNeighbors: 1
   m_FlipX: 0
   m_FlipY: 0
   m_SpriteRotation: 0
@@ -3037,6 +3050,9 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  notFreeze: 0
+  isStickRocket: 0
+  isTurn: 0
   m_Sprite: {fileID: 21300000, guid: 350848c42d95606428f0da56cb2fb665, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!23 &1123374916
@@ -3091,7 +3107,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1123374910}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.15, y: 12.94, z: 0}
+  m_LocalPosition: {x: -3.22, y: 0.14, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 342464469}
@@ -3485,6 +3501,9 @@ MonoBehaviour:
   haveTouch: 0
   sticked: 0
   playAnim: {fileID: 0}
+  notFreeze: 0
+  isStickRocket: 0
+  isTurn: 0
   m_Sprite: {fileID: 21300000, guid: b308a5eb011edd04c954c51de9e38201, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!23 &1278065540
@@ -4993,11 +5012,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 22.54
+      value: -0.83000183
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 12.94
+      value: 0.14000034
       objectReference: {fileID: 0}
     - target: {fileID: 4167149544067690, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5041,6 +5060,16 @@ Prefab:
     - target: {fileID: 1964309741336514, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
       propertyPath: m_Name
       value: Player1 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544709244751072, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: m_AttachNeighbors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95805966789749694, guid: d156e0033329f47458d2ec4e45a9425f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d156e0033329f47458d2ec4e45a9425f, type: 2}
