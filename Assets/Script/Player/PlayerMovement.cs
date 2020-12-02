@@ -7,6 +7,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    public Camera cam;
+    public float camX, camY;
+
+    Vector2 currentVector;
+
+    RaycastHit2D hit;
+
     enum State
     {
         Left,
@@ -38,23 +46,54 @@ public class PlayerMovement : MonoBehaviour
 #endif
 
 
+    public int GetKey { get { return testGetKeyVMove; } }
+
     PlayerStick playerStick;
 
     PlayerFloorDetect playerFloorDetect;
 
     public int testType;
 
-    public string playerColor;
+    public string playerType;
+
+    int playerColor;
 
     bool notFreeze;
+
+    ColorDetect colorDetect;
 
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
         playerStick = gameObject.GetComponentInChildren<PlayerStick>();
         playerFloorDetect = gameObject.GetComponentInChildren<PlayerFloorDetect>();
+        colorDetect = gameObject.GetComponentInChildren<ColorDetect>();
         walkPreState = State.Left;
         walkCurState = State.Left;
+
+        switch (playerType)
+        {
+            case "red":
+                colorDetect.playerColor = 8;
+                playerColor = 8;
+                break;
+            case "blue":
+                colorDetect.playerColor = 10;
+                playerColor = 10;
+                break;
+            case "green":
+                colorDetect.playerColor = 11;
+                playerColor = 11;
+                break;
+            case "yellow":
+                colorDetect.playerColor = 9;
+                playerColor = 9;
+                break;
+            default:
+                colorDetect.playerColor = 0;
+                playerColor = 0;
+                break;
+        }
 
 #if !JOYSTICK
         if (gameObject.tag == "player1")
@@ -65,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
             testType = 3;
         else testType = 4;
 #endif
+
+        cam = Camera.main;
     }
 
     void Update()
@@ -118,6 +159,7 @@ public class PlayerMovement : MonoBehaviour
         testGetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
 #endif
 
+        if (Input.GetKeyDown("t")) Die();
 
         ResetRotation();
 
@@ -204,7 +246,77 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log(playerColor + "Die");
+        this.gameObject.SetActive(false);
+        Vector2 newPos;
+        newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
+        jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
+        // jellySprite.SetPosition(DetectPoint(newPos), true);
+        this.gameObject.SetActive(true);
+    }
+
+
+    Vector2 DetectPoint(Vector2 point)
+    {
+        bool result = false;
+        Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
+        hit = Physics2D.Raycast(point, slop);
+        result = hit.collider;
+        Collider2D hc = hit.collider;
+
+        if (result)
+        {
+            currentVector = point;
+            return DetectPoint(point + Vector2.up);
+        }
+        else
+        {
+            if (point == currentVector + Vector2.right)
+            {
+                currentVector = Vector2.zero;
+                return point;
+            }
+            else
+            {
+                currentVector = point;
+                return DetectPoint(point + Vector2.right);
+            }
+        }
+
+    }
+
+    Vector2 DetectPoint_Ground(Vector2 point)
+    {
+        bool result = false;
+        Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
+        hit = Physics2D.Raycast(point, slop);
+        result = hit.collider;
+
+        if (result)
+        {
+            GameObject hg = hit.collider.gameObject;
+            if (hg.tag == "ground" && hg.layer == playerColor)
+            {
+                currentVector = point;
+                return DetectPoint(point + Vector2.up);
+            }
+            else
+            {
+                currentVector = point;
+                return DetectPoint(point + Vector2.right);
+            }
+        }
+        else
+        {
+            if (point == currentVector + Vector2.up)
+            {
+                currentVector = Vector2.zero;
+                return point;
+            }
+
+            currentVector = point;
+            return DetectPoint(point + Vector2.down);
+        }
+
     }
 }
 

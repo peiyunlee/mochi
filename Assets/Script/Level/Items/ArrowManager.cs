@@ -9,7 +9,7 @@ public class ArrowManager : MonoBehaviour
 
     private bool[] isStart;
 	private bool isClosed;
-	private Button btnScript;
+	// private Button btnScript;
 
     private int shootIdx;
 
@@ -19,7 +19,7 @@ public class ArrowManager : MonoBehaviour
 
     void Start()
     {
-		btnScript = btn.GetComponent<Button>();
+		// btnScript = btn.GetComponent<Button>();
 		isStart = new bool[arrow.Length];
 		for (int i = 0; i < isStart.Length; i++)
 		{
@@ -33,10 +33,10 @@ public class ArrowManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(btnScript.isClicked && !isClosed){
-			CancelInvoke("Shoot");
-			Action();
-		}
+		// if(btnScript.isClicked && !isClosed){
+		// 	CancelInvoke("Shoot");
+		// 	Action();
+		// }
 		for (int i = 0; i < isStart.Length; i++)
 		{
 			if(isStart[i])

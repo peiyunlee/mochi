@@ -18,6 +18,7 @@ TagManager:
   - stickDetect
   - RotateItem
   - Rocket
+  - die
   layers:
   - Default
   - TransparentFX
@@ -37,8 +38,8 @@ TagManager:
   - ThirdCam
   - player
   - thing
-  - 
-  - 
+  - die
+  - background
   - 
   - 
   - 

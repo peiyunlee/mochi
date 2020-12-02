@@ -18,10 +18,10 @@ public class MoveTile : MonoBehaviour
 
     Vector3 translate;
 
-    Transform trans;
-    Rigidbody2D rb;
+    protected Transform trans;
+    protected Rigidbody2D rb;
 
-    Vector2 newPos;
+    protected Vector2 newPos;
 
     public bool selfStart;
 
@@ -31,6 +31,7 @@ public class MoveTile : MonoBehaviour
 
     void Start()
     {
+        
         trans = this.gameObject.GetComponent<Transform>();
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
@@ -40,53 +41,7 @@ public class MoveTile : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (canMove)
-        {
-            Move();
-        }
-    }
-
-    void Move()
-    {
-        Vector3 pos = trans.position;
-
-        if (trans.position.x < minVec.x || trans.position.y < minVec.y)
-        {
-            moveSpeed = -moveSpeed;
-            canMove = false;
-            if (!isContinue)
-            {
-                if (isMax)
-                    Invoke("SetCanMove", minStopSec);
-            }
-            else
-                Invoke("SetCanMove", minStopSec);
-
-
-        }
-
-        else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
-        {
-            moveSpeed = -moveSpeed;
-            canMove = false;
-            if (!isContinue)
-            {
-                if (!isMax)
-                    Invoke("SetCanMove", minStopSec);
-            }
-            else
-                Invoke("SetCanMove", minStopSec);
-        }
-
-        newPos = pos + moveSpeed;
-
-        rb.MovePosition(newPos);
-
-    }
-
-    void SetCanMove()
+    public void SetCanMove()
     {
         canMove = true;
     }

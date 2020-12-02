@@ -23,7 +23,7 @@ public class MoveGround : MonoBehaviour
 
     public GameObject tile;
 
-    MoveTile moveTile;
+    NormalTile moveTile;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class MoveGround : MonoBehaviour
 
         if (tile != null)
         {
-            moveTile = tile.GetComponent<MoveTile>();
+            moveTile = tile.GetComponent<NormalTile>();
         }
     }
 
@@ -77,7 +77,7 @@ public class MoveGround : MonoBehaviour
         canMove = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (needMochi)
         {
