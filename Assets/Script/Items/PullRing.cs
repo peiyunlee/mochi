@@ -31,7 +31,7 @@ public class PullRing : MonoBehaviour
         middleRb = middle.GetComponent<Rigidbody2D>();
         middleJoint = middle.GetComponent<RelativeJoint2D>();
 
-        // plateRb = plate.GetComponent<Rigidbody2D>();
+        plateRb = plate.GetComponent<Rigidbody2D>();
 
         middleJoint.maxForce = maxForce;
         middleJoint.maxTorque = maxTorque;
@@ -47,7 +47,7 @@ public class PullRing : MonoBehaviour
         {
             
             middleRb.isKinematic=false;
-            // Move();
+            Move();
         }
 
 
@@ -68,7 +68,7 @@ public class PullRing : MonoBehaviour
         {
             middleRb.position = endPos;
             middleRb.isKinematic = true;
-            // plateRb.velocity = new Vector2(0.0f, 0.0f);
+            plateRb.velocity = new Vector2(0.0f, 0.0f);
             isStop = true;
         }
 

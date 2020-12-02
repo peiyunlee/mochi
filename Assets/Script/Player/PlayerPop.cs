@@ -210,7 +210,7 @@ public class PlayerPop : MonoBehaviour
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
         // player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
         // player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
-        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
-        playerMovement.Pop(slop, popForce * 2f);
+        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 1.5f);
+        playerMovement.Pop(slop, popForce * 1.5f);
     }
 }
