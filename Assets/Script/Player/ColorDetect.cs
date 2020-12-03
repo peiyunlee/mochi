@@ -15,11 +15,14 @@ public class ColorDetect : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("player"))
+        if (!playerMovement.isDead)
         {
-            if ((other.gameObject.layer != playerColor && (other.gameObject.layer <= 11 &&　other.gameObject.layer >= 8)) || other.gameObject.tag == "die")
+            if (other.gameObject.layer != LayerMask.NameToLayer("player"))
             {
-                playerMovement.Die();
+                if ((other.gameObject.layer != playerColor && (other.gameObject.layer <= 11 && other.gameObject.layer >= 8)) || other.gameObject.tag == "die")
+                {
+                    playerMovement.Die();
+                }
             }
         }
     }

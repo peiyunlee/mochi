@@ -415,6 +415,7 @@ MonoBehaviour:
   isJump: 0
   testType: 2
   playerType: blue
+  isDead: 0
 --- !u!114 &114391489844961470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -518,7 +519,7 @@ MonoBehaviour:
   m_CentralBodyOffset: {x: -0, y: -0}
   m_SpriteScale: {x: 1, y: 1}
   m_2DMode: 1
-  m_AttachNeighbors: 0
+  m_AttachNeighbors: 1
   m_FlipX: 0
   m_FlipY: 0
   m_SpriteRotation: 0

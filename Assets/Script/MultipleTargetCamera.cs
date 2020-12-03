@@ -48,7 +48,9 @@ public class MultipleTargetCamera : MonoBehaviour
 
     void LateUpdate()
     {
+        // cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
 
+        
         if (targets.Count == 0)
             return;
 

@@ -76,7 +76,7 @@ public class PlayerPop : MonoBehaviour
     {
         
         Turn();
-
+        
         if (getKeyPop || TimesUp)
         {
             TimesUp = false;
@@ -205,6 +205,6 @@ public class PlayerPop : MonoBehaviour
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
 
         player.GetComponent<PlayerMovement>().Pop(slop, popForce * 1f);
-        playerMovement.Pop(slop, popForce * 0.75f);
+        playerMovement.Pop(slop, popForce * 1f);
     }
 }

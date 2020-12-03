@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     ColorDetect colorDetect;
 
+    public bool isDead;
+
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
@@ -106,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
 #endif
 
         cam = Camera.main;
+
+        isDead = false;
     }
 
     void Update()
@@ -159,8 +163,6 @@ public class PlayerMovement : MonoBehaviour
         testGetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
 #endif
 
-        if (Input.GetKeyDown("t")) Die();
-
         ResetRotation();
 
         canJump = playerFloorDetect.isOnFloor;
@@ -192,15 +194,18 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (GetKeyJump && canJump)
+        if (!isDead)
         {
-            Jump();
-        }
+            if (GetKeyJump && canJump)
+            {
+                Jump();
+            }
 
-        if (!playerStick.isStick && !playerStick.isPop)
-            Move();
-        else
-            Pull();
+            if (!playerStick.isStick && !playerStick.isPop)
+                Move();
+            else
+                Pull();
+        }
 
     }
     void Move()
@@ -246,12 +251,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
+        isDead = true;
+        Die_Anim();
+        Invoke("Die_Invincible", 0);
+    }
+
+    void Die_Anim()
+    {
+
+    }
+
+    void Die_Invincible()
+    {
         this.gameObject.SetActive(false);
         Vector2 newPos;
         newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
         jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
-        // jellySprite.SetPosition(DetectPoint(newPos), true);
+        // newPos = new Vector2(-3.42f,-0.03f);
+        // jellySprite.SetPosition(newPos, true);
         this.gameObject.SetActive(true);
+        isDead = false;
     }
 
 
@@ -270,7 +289,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (point == currentVector + Vector2.right)
+            if (point == currentVector + Vector2.left)
             {
                 currentVector = Vector2.zero;
                 return point;
@@ -278,7 +297,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 currentVector = point;
-                return DetectPoint(point + Vector2.right);
+                return DetectPoint(point + Vector2.left);
             }
         }
 
@@ -294,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
         if (result)
         {
             GameObject hg = hit.collider.gameObject;
-            if (hg.tag == "ground" && hg.layer == playerColor)
+            if (hg.tag == "ground")  //&& hg.layer == playerColor
             {
                 currentVector = point;
                 return DetectPoint(point + Vector2.up);
