@@ -194,7 +194,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GetKeyJump && canJump)
         {
-            Debug.Log("jump");
             Jump();
         }
 
