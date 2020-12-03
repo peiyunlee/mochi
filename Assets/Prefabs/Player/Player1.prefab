@@ -138,7 +138,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.59, y: 14, z: 0}
+  m_LocalPosition: {x: 11.04, y: 0.4, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4498225790585558}
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_VertexDensity: 10
   m_SphereRadius: 0.25
   m_DistanceExponent: 2
-  m_Stiffness: 4
+  m_Stiffness: 6
   m_Mass: 1
   m_LockRotation: 1
   m_GravityScale: 1
@@ -472,13 +472,13 @@ MonoBehaviour:
   m_GridColumns: 4
   m_GridRows: 4
   m_DampingRatio: 2
-  m_SoftBodyScale: {x: 1.1, y: 0.86}
+  m_SoftBodyScale: {x: 1.1, y: 0.78}
   m_SoftBodyRotation: 0
-  m_SoftBodyOffset: {x: -0, y: -0}
+  m_SoftBodyOffset: {x: -0, y: 0}
   m_CentralBodyOffset: {x: -0, y: -0}
   m_SpriteScale: {x: 1, y: 1}
   m_2DMode: 1
-  m_AttachNeighbors: 0
+  m_AttachNeighbors: 1
   m_FlipX: 0
   m_FlipY: 0
   m_SpriteRotation: 0
