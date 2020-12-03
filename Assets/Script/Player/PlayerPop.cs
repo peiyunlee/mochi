@@ -79,6 +79,7 @@ public class PlayerPop : MonoBehaviour
         
         if (getKeyPop || TimesUp)
         {
+            canTurn=false;
             TimesUp = false;
             getKeyPop = false;
             jellySprite.SetAnimBool("isPop", false);
@@ -112,7 +113,7 @@ public class PlayerPop : MonoBehaviour
                 foreach (var player in stickPlayerList)
                 {
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
-
+                    
                 }
             }
         }
