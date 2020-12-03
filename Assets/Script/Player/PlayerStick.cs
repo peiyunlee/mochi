@@ -60,7 +60,7 @@ public class PlayerStick : MonoBehaviour
 
     //
     [SerializeField]
-    public bool isPop;  //有碰到Ground
+    public bool isPop; 
     //
 
     void Start()

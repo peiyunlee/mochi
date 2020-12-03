@@ -164,7 +164,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1293580545180984}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 26.5, y: 14, z: 0}
+  m_LocalPosition: {x: 51.67, y: -0.12, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4606701192627304}
@@ -414,7 +414,7 @@ MonoBehaviour:
   canJump: 0
   isJump: 0
   testType: 2
-  playerType: 
+  playerType: blue
 --- !u!114 &114391489844961470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -623,7 +623,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.29, y: 0.34}
+  m_Size: {x: 0.84, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

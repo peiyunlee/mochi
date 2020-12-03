@@ -165,16 +165,15 @@ public class PlayerPop : MonoBehaviour
                 //重設黏
                 playerStick.ResetFloorStick();
                 playerStick.ResetWallStick();
-                Vector2 slop = Vector2.zero;
+                // Vector2 slop = Vector2.zero;
                 foreach (var player in withPlayerList)
                 {
-                    Vector2 slop_p = player.transform.position - this.gameObject.transform.position;
-                    slop += slop_p;
-                    slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
+                    // Vector2 slop_p = player.transform.position - this.gameObject.transform.position;
+                    // slop += slop_p;
+                    // slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
                     PopWithPlayer(player);
                 }
-
-
+                
                 //重設黏
                 playerStick.ResetNotStick_PopWithPlayer();
             }
@@ -197,20 +196,15 @@ public class PlayerPop : MonoBehaviour
         player.GetComponent<PlayerMovement>().Pop(slop, popForce);
     }
 
-    // void PopWithPlayer(Vector2 slop)
-    // {
-    //     // playerMovement.Pop(slop * 2.5f, popForce * 0.5f);
-    // }
-
     void PopWithPlayer(GameObject player)
     {
         playerStick.isPop = true;
         player.GetComponent<PlayerStick>().isPop = true;
+
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
-        // player.GetComponent<testPlayerMovement>().Pop(slop * 1.5f, popForce * 0.25f);
-        // player.GetComponent<PlayerMovement>().Pop(slop, popForce * 2f);
-        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 1.5f);
-        playerMovement.Pop(slop, popForce * 1.5f);
+
+        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 1f);
+        playerMovement.Pop(slop, popForce * 0.75f);
     }
 }
