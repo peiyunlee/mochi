@@ -80,7 +80,7 @@ public class PlayerPop : MonoBehaviour
         if (getKeyPop || TimesUp)
         {
             canTurn=false;
-            jellySprite.isTurn = false;
+            // jellySprite.isTurn = false;
             TimesUp = false;
             getKeyPop = false;
             jellySprite.SetAnimBool("isPop", false);

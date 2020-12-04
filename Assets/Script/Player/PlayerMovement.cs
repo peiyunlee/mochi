@@ -1,4 +1,5 @@
 ﻿// #define JOYSTICK
+// #define TEST_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -40,13 +41,14 @@ public class PlayerMovement : MonoBehaviour
 #if !JOYSTICK
     private int testGetKeyHMove;
     private int testGetKeyVMove;
+
+    public int GetKey { get { return testGetKeyVMove; } }
 #else
     private float testGetKeyHMove;
     private float testGetKeyVMove;
+
+    public float GetKey { get { return testGetKeyVMove; } }
 #endif
-
-
-    public int GetKey { get { return testGetKeyVMove; } }
 
     PlayerStick playerStick;
 
@@ -109,7 +111,10 @@ public class PlayerMovement : MonoBehaviour
 
         cam = Camera.main;
 
+#if TEST_DIE
         isDead = false;
+#endif
+
     }
 
     void Update()
@@ -251,9 +256,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
-        isDead = true;
-        Die_Anim();
-        Invoke("Die_Invincible", 0);
+        #if TEST_DIE
+            isDead = true;
+            Die_Anim();
+            Invoke("Die_Invincible", 0);
+        #endif
     }
 
     void Die_Anim()

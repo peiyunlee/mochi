@@ -2215,7 +2215,7 @@ public abstract class JellySprite : MonoBehaviour
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
-            if(!player.GetComponent<UnityJellySprite>().isTurn)
+            // if(!player.GetComponent<UnityJellySprite>().isTurn)
                 hingeJoint2D.enabled = true;
 
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();

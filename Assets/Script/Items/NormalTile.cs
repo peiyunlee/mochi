@@ -34,8 +34,7 @@ public class NormalTile : MoveTile
         }
 
         newPos = pos + moveSpeed;
-
-        trans.position = newPos;
+        
         rb.MovePosition(newPos);
     }
 }
