@@ -80,6 +80,7 @@ public class PlayerPop : MonoBehaviour
         if (getKeyPop || TimesUp)
         {
             canTurn=false;
+            jellySprite.isTurn = false;
             TimesUp = false;
             getKeyPop = false;
             jellySprite.SetAnimBool("isPop", false);
@@ -100,12 +101,12 @@ public class PlayerPop : MonoBehaviour
                 {
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                 }
+                jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
             }
-            jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+            
         }
         else if (playerStick.isStick && !canTurn)
         {
-            jellySprite.isTurn = false;
             //黏住的時候&&沒有按彈時freeze對方的rotation
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
@@ -113,7 +114,6 @@ public class PlayerPop : MonoBehaviour
                 foreach (var player in stickPlayerList)
                 {
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = true;
-                    
                 }
             }
         }
