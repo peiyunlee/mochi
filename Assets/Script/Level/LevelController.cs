@@ -69,8 +69,6 @@ public class LevelController : MonoBehaviour
 
     public void GameFinish()
     {
-        Debug.Log(mochiCount);
-        Debug.Log(mochiTotalCount);
         if (mochiAllGet)
         {
             int next = SceneManager.GetActiveScene().buildIndex + 1;
@@ -96,7 +94,7 @@ public class LevelController : MonoBehaviour
         option.SetActive(true);
     }
 
-    public void SetRocketStick(string player, bool set)
+    public void SetRocketStick(GameObject player, bool set)
     {
         rocket.SetPlayerStick(player, set);
     }

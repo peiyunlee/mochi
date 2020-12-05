@@ -1,5 +1,5 @@
 ﻿// #define JOYSTICK
-// #define TEST_DIE
+#define TEST_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     public string playerType;
 
-    int playerColor;
+    public int playerColor;
 
     bool notFreeze;
 
@@ -272,10 +272,10 @@ public class PlayerMovement : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Vector2 newPos;
-        newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
-        jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
-        // newPos = new Vector2(-3.42f,-0.03f);
-        // jellySprite.SetPosition(newPos, true);
+        // newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
+        // jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
+        newPos = new Vector2(-3.42f,-0.03f);
+        jellySprite.SetPosition(newPos, true);
         this.gameObject.SetActive(true);
         isDead = false;
     }

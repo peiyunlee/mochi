@@ -59,11 +59,11 @@ TagManager:
   - name: background
     uniqueID: 1585745263
     locked: 0
-  - name: Item
-    uniqueID: 3253900835
-    locked: 0
   - name: map
     uniqueID: 3807862541
+    locked: 0
+  - name: Item
+    uniqueID: 3253900835
     locked: 0
   - name: LineRenderer
     uniqueID: 3907206669

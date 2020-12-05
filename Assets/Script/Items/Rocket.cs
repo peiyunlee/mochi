@@ -8,14 +8,19 @@ public class Rocket : MonoBehaviour
     LevelController levelController;
 
     [SerializeField]
-    List<string> stickPlayer;
+    List<GameObject> stickPlayer;
+
+    [SerializeField]
+    public List<GameObject> playerSprite;
+    public Animator rocketAnim;
+
 
     void Start()
     {
         levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
     }
 
-    public void SetPlayerStick(string player, bool set)
+    public void SetPlayerStick(GameObject player, bool set)
     {
         if (!stickPlayer.Contains(player) && set)
         {
@@ -31,6 +36,20 @@ public class Rocket : MonoBehaviour
     }
 
     void RocketGo()
+    {
+        int index = 0;
+        foreach (var player in stickPlayer)
+        {
+            playerSprite[index].SetActive(true);
+            playerSprite[index].transform.position = player.transform.position;
+            player.SetActive(false);
+            index ++;
+        }
+        rocketAnim.SetTrigger("start");
+        Invoke("NextScene", 3);
+    }
+
+    void NextScene()
     {
         levelController.GameFinish();
     }

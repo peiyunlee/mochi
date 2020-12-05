@@ -6,10 +6,6 @@ using UnityEngine;
 public class MultipleTargetCamera : MonoBehaviour
 {
 
-    //farthest offset -10/-3/-15
-    //center offset 11/7/-15
-
-
     public List<Transform> targets;
     public Vector3 offset;
     public float smoothTime = .5f;
@@ -25,8 +21,9 @@ public class MultipleTargetCamera : MonoBehaviour
     private Camera cam;
     private Bounds m_bounds;
 
-
     public static MultipleTargetCamera Instance { get; private set; }
+
+    public float s1,s2;
 
     private void Awake()
     {
@@ -48,9 +45,6 @@ public class MultipleTargetCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        // cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
-
-        
         if (targets.Count == 0)
             return;
 
@@ -61,11 +55,39 @@ public class MultipleTargetCamera : MonoBehaviour
 
     void Move()
     {
-
         Vector3 centerPoint = GetCenterPoint();
 
-        Vector3 newPostion = centerPoint + offset;
+        Vector2 cPos = cam.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         
+        if (centerPoint.x < min.x)
+        {
+            centerPoint.x = min.x;
+        }
+        else if (centerPoint.x > max.x){
+            centerPoint.x = max.x;
+        }
+        
+        if (centerPoint.y < min.y)
+        {
+            centerPoint.y = min.y;
+        }
+        else if (centerPoint.y > max.y){
+            centerPoint.y = max.y;
+        }
+
+        float s = s1;
+
+        if(centerPoint.y > max.y - 5.0f){
+            s = s1;
+        }
+        else if(centerPoint.y < min.y + 5.0f){
+            s = s2;
+        }
+
+        offset.y = Mathf.Lerp(s, 0, m_bounds.size.y / 10.0f);
+
+        Vector3 newPostion = centerPoint + offset;
+
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothTime);
     }
 

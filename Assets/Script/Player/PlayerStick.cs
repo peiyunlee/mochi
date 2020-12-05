@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerStick : MonoBehaviour
 {
 
-    PlayerMovement testPlayerMovement;
+    PlayerMovement playerMovement;
     UnityJellySprite jellySprite;
     public StickDetect stickDetect;
 
@@ -60,13 +60,13 @@ public class PlayerStick : MonoBehaviour
 
     //
     [SerializeField]
-    public bool isPop; 
+    public bool isPop;
     //
 
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
-        testPlayerMovement = gameObject.GetComponent<PlayerMovement>();
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         isPop = false;
         jellySprite.notFreeze = false;
@@ -74,7 +74,7 @@ public class PlayerStick : MonoBehaviour
     void Update()
     {
 #if !JOYSTICK && !HOLDSTICK
-        if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
+        if ((Input.GetKeyDown("x") && playerMovement.testType == 1) || (Input.GetKeyDown("g") && playerMovement.testType == 2) || (Input.GetKeyDown("o") && playerMovement.testType == 4) || (Input.GetKeyDown("5") && playerMovement.testType == 3))
         {
             if (canStick && !m_isStick)
             {
@@ -159,7 +159,7 @@ public class PlayerStick : MonoBehaviour
 
         isStickRocket = jellySprite.isStickRocket;
 
-        // RocketStick();
+        RocketStick();
 
         if (isTouchWall && isPointAttachWall)
             jellySprite.SetWallStick();
@@ -258,7 +258,7 @@ public class PlayerStick : MonoBehaviour
 
     void RocketStick()
     {
-        LevelController.instance.SetRocketStick(this.gameObject.tag, isStickRocket);
+        LevelController.instance.SetRocketStick(this.gameObject, isStickRocket);
     }
 
     void AttachDetect()
