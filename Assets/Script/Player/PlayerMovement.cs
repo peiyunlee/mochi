@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private float testGetKeyVMove;
 
     public float GetKey { get { return testGetKeyVMove; } }
+    
 #endif
 
     PlayerStick playerStick;
@@ -82,16 +83,16 @@ public class PlayerMovement : MonoBehaviour
                 playerColor = 8;
                 break;
             case "blue":
-                colorDetect.playerColor = 10;
-                playerColor = 10;
+                colorDetect.playerColor = 9;
+                playerColor = 9;
                 break;
             case "green":
                 colorDetect.playerColor = 11;
                 playerColor = 11;
                 break;
             case "yellow":
-                colorDetect.playerColor = 9;
-                playerColor = 9;
+                colorDetect.playerColor = 10;
+                playerColor = 10;
                 break;
             default:
                 colorDetect.playerColor = 0;
@@ -119,67 +120,74 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!isDead)
+        {
+
 #if !JOYSTICK
-        if (testType == 1)
-        {
-            GetKeyJump = Input.GetKeyDown("z");
+            if (testType == 1)
+            {
+                GetKeyJump = Input.GetKeyDown("z");
 
-            if (Input.GetKeyDown("right")) testGetKeyHMove = 1;
-            else if (Input.GetKeyDown("left")) testGetKeyHMove = -1;
-            else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyHMove = 0;
+                if (Input.GetKeyDown("right")) testGetKeyHMove = 1;
+                else if (Input.GetKeyDown("left")) testGetKeyHMove = -1;
+                else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyHMove = 0;
 
-            if (Input.GetKeyDown("up")) testGetKeyVMove = 1;
-            else if (Input.GetKeyDown("down")) testGetKeyVMove = -1;
-            else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) testGetKeyVMove = 0;
-        }
-        else if (testType == 2)
-        {
-            GetKeyJump = Input.GetKeyDown("f");
+                if (Input.GetKeyDown("up")) testGetKeyVMove = 1;
+                else if (Input.GetKeyDown("down")) testGetKeyVMove = -1;
+                else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) testGetKeyVMove = 0;
+            }
+            else if (testType == 2)
+            {
+                GetKeyJump = Input.GetKeyDown("f");
 
-            if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
-            else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
-            else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyHMove = 0;
+                if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
+                else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
+                else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyHMove = 0;
 
-            if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
-            else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
-            else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
-        }
-        else if (testType == 3)
-        {
-            GetKeyJump = Input.GetKeyDown("4");
-
-
-            if (Input.GetKeyDown("3")) testGetKeyHMove = 1;
-            else if (Input.GetKeyDown("1")) testGetKeyHMove = -1;
-            else if (Input.GetKeyUp("3") || Input.GetKeyUp("1")) testGetKeyHMove = 0;
-        }
-        else if (testType == 4)
-        {
-            GetKeyJump = Input.GetKeyDown("k");
+                if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
+                else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
+                else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
+            }
+            else if (testType == 3)
+            {
+                GetKeyJump = Input.GetKeyDown("4");
 
 
-            if (Input.GetKeyDown("l")) testGetKeyHMove = 1;
-            else if (Input.GetKeyDown("j")) testGetKeyHMove = -1;
-            else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
-        }
+                if (Input.GetKeyDown("3")) testGetKeyHMove = 1;
+                else if (Input.GetKeyDown("1")) testGetKeyHMove = -1;
+                else if (Input.GetKeyUp("3") || Input.GetKeyUp("1")) testGetKeyHMove = 0;
+            }
+            else if (testType == 4)
+            {
+                GetKeyJump = Input.GetKeyDown("k");
+
+
+                if (Input.GetKeyDown("l")) testGetKeyHMove = 1;
+                else if (Input.GetKeyDown("j")) testGetKeyHMove = -1;
+                else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
+            }
 #else
         GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
         testGetKeyHMove = Input.GetAxisRaw("Horizontal_" + this.tag);
         testGetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
 #endif
 
-        ResetRotation();
+            ResetRotation();
 
-        canJump = playerFloorDetect.isOnFloor;
+            canJump = playerFloorDetect.isOnFloor;
 
-        if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
-            isJump = false;
+            if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
+                isJump = false;
 
-        jellySprite.SetAnimBool("isJump", !canJump);
+            jellySprite.SetAnimBool("isJump", !canJump);
 
-        playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
+            playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
 
-        SetState();
+            SetState();
+        }
+        else{
+            canJump = false;
+        }
     }
 
     void SetState()
@@ -256,11 +264,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
-        #if TEST_DIE
-            isDead = true;
-            Die_Anim();
-            Invoke("Die_Invincible", 0);
-        #endif
+#if TEST_DIE
+        isDead = true;
+        Die_Anim();
+        Invoke("Die_Invincible", 0);
+#endif
     }
 
     void Die_Anim()
@@ -274,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 newPos;
         // newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
         // jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
-        newPos = new Vector2(-3.42f,-0.03f);
+        newPos = new Vector2(-3.42f, -0.03f);
         jellySprite.SetPosition(newPos, true);
         this.gameObject.SetActive(true);
         isDead = false;

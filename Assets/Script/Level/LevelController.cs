@@ -94,8 +94,8 @@ public class LevelController : MonoBehaviour
         option.SetActive(true);
     }
 
-    public void SetRocketStick(GameObject player, bool set)
+    public void SetRocketStick(GameObject player, bool set,int color)
     {
-        rocket.SetPlayerStick(player, set);
+        rocket.SetPlayerStick(player, set,color);
     }
 }
