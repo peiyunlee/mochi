@@ -86,18 +86,19 @@ public class CircleGround : MonoBehaviour
         angle -= rotateAngle * Time.deltaTime;
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
-        {
-            GameObject player = other.gameObject.GetComponentInParent<PlayerMovement>().gameObject;
-            if (player != null)
-            {
-                Vector2 slop = pre - next;
-                player.GetComponent<UnityJellySprite>().AddVelocity(slop*15.0f, false);
-            }
+    //跳上去跟著轉
+    // void OnTriggerStay2D(Collider2D other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
+    //     {
+    //         GameObject player = other.gameObject.GetComponentInParent<PlayerMovement>().gameObject;
+    //         if (player != null)
+    //         {
+    //             Vector2 slop = pre - next;
+    //             player.GetComponent<UnityJellySprite>().AddVelocity(slop*15.0f, false);
+    //         }
 
-        }
-    }
+    //     }
+    // }
 }
 

@@ -14,6 +14,8 @@ public class Billboard : MonoBehaviour
 
     public GameObject billboard;
 
+    public GameObject draw;
+
     public bool isActive;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -40,6 +42,7 @@ public class Billboard : MonoBehaviour
         if (!isActive)
         {
             billboard.SetActive(true);
+            draw.SetActive(true);
 			Invoke("SetActive",0.05f);
         }
     }
@@ -49,6 +52,7 @@ public class Billboard : MonoBehaviour
         if (isActive)
         {
             billboard.SetActive(false);
+            draw.SetActive(false);
             isActive = false;
         }
     }
