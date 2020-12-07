@@ -153,8 +153,18 @@ public class PlayerStick : MonoBehaviour
                 PlayerToStick();
             }
         }
-        else{
+        else
+        {
+
+            m_isStick = false;
+            jellySprite.SetAnimBool("isWalk", false);
             ResetNotStick_Normal();
+
+            isPop = false;
+
+            jellySprite.SetAnimBool("isStick", false);
+
+            canStick = false;
         }
     }
 
@@ -164,7 +174,7 @@ public class PlayerStick : MonoBehaviour
 
         isStickRocket = jellySprite.isStickRocket;
 
-        if(isStickRocket)
+        if (isStickRocket)
             RocketStick();
 
         if (isTouchWall && isPointAttachWall)

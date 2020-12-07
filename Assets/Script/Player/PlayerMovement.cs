@@ -67,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isDead;
 
+    public bool isInvincible;
+
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
@@ -185,8 +187,26 @@ public class PlayerMovement : MonoBehaviour
 
             SetState();
         }
-        else{
+        else
+        {
             canJump = false;
+
+#if !JOYSTICK
+            GetKeyJump = false;
+            testGetKeyHMove = 0;
+            testGetKeyVMove = 0;
+#else
+            GetKeyJump = false;
+            testGetKeyHMove = 0;
+            testGetKeyVMove = 0;
+#endif
+            ResetRotation();
+
+            jellySprite.SetAnimBool("isJump", false);
+
+            playerStick.getIsOnFloor = false;
+
+            //setstate
         }
     }
 
@@ -262,13 +282,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    bool isding;
     public void Die()
     {
+        if (!isDead)
+        {
 #if TEST_DIE
-        isDead = true;
-        Die_Anim();
-        Invoke("Die_Invincible", 0);
+            isDead = true;
+            Die_Anim();
+            Invoke("Rebirth", 2);
 #endif
+        }
     }
 
     void Die_Anim()
@@ -276,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void Die_Invincible()
+    void Rebirth()
     {
         this.gameObject.SetActive(false);
         Vector2 newPos;
@@ -284,9 +308,23 @@ public class PlayerMovement : MonoBehaviour
         // jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
         newPos = new Vector2(-3.42f, -0.03f);
         jellySprite.SetPosition(newPos, true);
-        this.gameObject.SetActive(true);
+
         isDead = false;
+        Die_Invincible();
+
+        this.gameObject.SetActive(true);
+        
+        Invoke("Die_Not_Invincible", 2);
     }
+
+    void Die_Invincible(){
+        isInvincible = true;
+    }
+
+    void Die_Not_Invincible(){
+        isInvincible = false;
+    }
+    
 
 
     Vector2 DetectPoint(Vector2 point)

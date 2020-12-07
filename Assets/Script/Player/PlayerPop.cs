@@ -75,6 +75,12 @@ public class PlayerPop : MonoBehaviour
         else
         {
             canPop = false;
+            
+            canTurn = false;
+            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+
+            jellySprite.SetAnimBool("isPop", false);
+            getKeyPop = false;
         }
 
     }
