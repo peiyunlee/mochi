@@ -205,7 +205,7 @@ public abstract class JellySprite : MonoBehaviour
 
     public bool isStickRocket = false;
     //正在轉
-    public bool isTurn=false;
+    public bool isTurn = false;
 
     #endregion
 
@@ -2037,7 +2037,7 @@ public abstract class JellySprite : MonoBehaviour
                     else
                         CentralPoint.Body2D.freezeRotation = true;
                 }
-                
+
             }
         }
         return stickItemList;
@@ -2215,9 +2215,10 @@ public abstract class JellySprite : MonoBehaviour
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
-            // if(!player.GetComponent<UnityJellySprite>().isTurn)
+            // if (!player.GetComponent<UnityJellySprite>().isTurn)
                 hingeJoint2D.enabled = true;
-
+            player.GetComponent<UnityJellySprite>().m_Stiffness = 4;
+            player.GetComponent<UnityJellySprite>().UpdateJoints();
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             // fixedJoint2D.enabled = true;
@@ -2238,8 +2239,10 @@ public abstract class JellySprite : MonoBehaviour
             player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
-            hingeJoint2D.anchor = new Vector2(0,0);
+            hingeJoint2D.anchor = new Vector2(0, 0);
             hingeJoint2D.enabled = false;
+            player.GetComponent<UnityJellySprite>().m_Stiffness = 6;
+            player.GetComponent<UnityJellySprite>().UpdateJoints();
 
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
@@ -2333,7 +2336,7 @@ public abstract class JellySprite : MonoBehaviour
     {
         if (!sticked)
         {
-            float angle = Vector2.SignedAngle(Vector2.up, new Vector2(0,1));
+            float angle = Vector2.SignedAngle(Vector2.up, new Vector2(0, 1));
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
             CentralPoint.transform.rotation = Quaternion.RotateTowards(CentralPoint.transform.rotation, rotation, 25.0f);
         }
@@ -2348,7 +2351,7 @@ public abstract class JellySprite : MonoBehaviour
             if (attachPlayer != null)
             {
                 Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 50.0f);
+                attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 70.0f);
                 if (CentralPoint.Body2D.rotation < 1.0f && CentralPoint.Body2D.rotation > -1.0f)
                 {
                     CentralPoint.Body2D.rotation = 0;

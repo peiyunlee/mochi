@@ -1,4 +1,4 @@
-﻿// #define JOYSTICK
+﻿#define JOYSTICK
 
 using System.Collections;
 using System.Collections.Generic;
@@ -74,12 +74,12 @@ public class PlayerPop : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+
         Turn();
-        
+
         if (getKeyPop || TimesUp)
         {
-            canTurn=false;
+            canTurn = false;
             // jellySprite.isTurn = false;
             TimesUp = false;
             getKeyPop = false;
@@ -99,11 +99,15 @@ public class PlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
+                    // Debug.DrawLine(this.gameObject.transform.position, player.gameObject.transform.position, Color.blue);
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+                    player.GetComponent<PlayerStick>().ResetFloorStick();
+                    player.GetComponent<PlayerStick>().ResetWallStick();
                 }
                 jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
+
             }
-            
+
         }
         else if (playerStick.isStick && !canTurn)
         {
@@ -174,7 +178,7 @@ public class PlayerPop : MonoBehaviour
                     // slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
                     PopWithPlayer(player);
                 }
-                
+
                 //重設黏
                 playerStick.ResetNotStick_PopWithPlayer();
             }
@@ -194,6 +198,7 @@ public class PlayerPop : MonoBehaviour
         player.GetComponent<PlayerStick>().isPop = true;
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
+
         player.GetComponent<PlayerMovement>().Pop(slop, popForce);
     }
 
@@ -205,7 +210,7 @@ public class PlayerPop : MonoBehaviour
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
 
-        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 1f);
-        playerMovement.Pop(slop, popForce * 1f);
+        player.GetComponent<PlayerMovement>().Pop(slop, popForce * 0.9f);
+        playerMovement.Pop(slop, popForce * 0.9f);
     }
 }

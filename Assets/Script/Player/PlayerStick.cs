@@ -1,4 +1,4 @@
-﻿// #define JOYSTICK
+﻿#define JOYSTICK
 // #define HOLDSTICK
 
 using System.Collections;
