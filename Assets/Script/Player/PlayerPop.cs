@@ -31,29 +31,31 @@ public class PlayerPop : MonoBehaviour
 
     void Update()
     {
+        if (!playerMovement.isDead)
+        {
 
-        canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
+            canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
 
 #if !JOYSTICK
-        if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
-        {
-            //讓對方轉
-            canTurn = true;
-            jellySprite.SetAnimBool("isPop", true);
-            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
-        }
-        // if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
-        // {
-        //     //讓對方轉
-        //     canTurn = false;
-        //     jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-        // }
-        if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
-        {
-            canTurn = false;
-            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-            getKeyPop = true;
-        }
+            if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
+            {
+                //讓對方轉
+                canTurn = true;
+                jellySprite.SetAnimBool("isPop", true);
+                jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+            }
+            // if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
+            // {
+            //     //讓對方轉
+            //     canTurn = false;
+            //     jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+            // }
+            if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
+            {
+                canTurn = false;
+                jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+                getKeyPop = true;
+            }
 #else
         if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
         {
@@ -69,22 +71,29 @@ public class PlayerPop : MonoBehaviour
             getKeyPop = true;
         }
 #endif
+        }
+        else
+        {
+            canPop = false;
+        }
 
     }
 
     void FixedUpdate()
     {
-
-        Turn();
-
-        if (getKeyPop || TimesUp)
+        if (!playerMovement.isDead)
         {
-            canTurn = false;
-            // jellySprite.isTurn = false;
-            TimesUp = false;
-            getKeyPop = false;
-            jellySprite.SetAnimBool("isPop", false);
-            Pop();
+            Turn();
+
+            if (getKeyPop || TimesUp)
+            {
+                canTurn = false;
+                // jellySprite.isTurn = false;
+                TimesUp = false;
+                getKeyPop = false;
+                jellySprite.SetAnimBool("isPop", false);
+                Pop();
+            }
         }
     }
 

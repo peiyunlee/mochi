@@ -25,6 +25,8 @@ public class CircleGround : MonoBehaviour
 
     public float m;
 
+    Vector2 pre, next;
+
     void Start()
     {
         angle = 0;
@@ -68,17 +70,35 @@ public class CircleGround : MonoBehaviour
 
     void MoveRigibody(int index)
     {
+        next = pre;
+
         angle += rotateAngle * Time.deltaTime;
 
         float x = r * Mathf.Cos(eachAngle * index + angle) + h;
         float y = r * Mathf.Sin(eachAngle * index + angle) + k;
 
-        rbList[index].MovePosition(new Vector2(x, y));
+        pre = new Vector2(x, y);
+
+        rbList[index].MovePosition(pre);
 
         rbList[index].MoveRotation(angle * m);
 
         angle -= rotateAngle * Time.deltaTime;
-
     }
+
+    //跳上去跟著轉
+    // void OnTriggerStay2D(Collider2D other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
+    //     {
+    //         GameObject player = other.gameObject.GetComponentInParent<PlayerMovement>().gameObject;
+    //         if (player != null)
+    //         {
+    //             Vector2 slop = pre - next;
+    //             player.GetComponent<UnityJellySprite>().AddVelocity(slop*15.0f, false);
+    //         }
+
+    //     }
+    // }
 }
 

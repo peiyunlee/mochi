@@ -19,6 +19,7 @@ TagManager:
   - RotateItem
   - Rocket
   - die
+  - Billboard
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - 
   - 
   - red
-  - yellow
   - blue
+  - yellow
   - green
   - gray
   - FirstCam
@@ -64,6 +65,9 @@ TagManager:
     locked: 0
   - name: map
     uniqueID: 3807862541
+    locked: 0
+  - name: Rocket
+    uniqueID: 1182433371
     locked: 0
   - name: LineRenderer
     uniqueID: 3907206669

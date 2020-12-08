@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerStick : MonoBehaviour
 {
 
-    PlayerMovement testPlayerMovement;
+    PlayerMovement playerMovement;
     UnityJellySprite jellySprite;
     public StickDetect stickDetect;
 
@@ -38,8 +38,8 @@ public class PlayerStick : MonoBehaviour
     [SerializeField]
     public List<GameObject> stickPlayerList = new List<GameObject>();  //黏住的角色
 
-    [SerializeField]
-    public List<GameObject> touchPlayerList;  //黏住的角色
+    // [SerializeField]
+    // public List<GameObject> touchPlayerList;  //黏住的角色
 
 
     [SerializeField]
@@ -60,32 +60,34 @@ public class PlayerStick : MonoBehaviour
 
     //
     [SerializeField]
-    public bool isPop; 
+    public bool isPop;
     //
 
     void Start()
     {
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
-        testPlayerMovement = gameObject.GetComponent<PlayerMovement>();
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         isPop = false;
         jellySprite.notFreeze = false;
     }
     void Update()
     {
-#if !JOYSTICK && !HOLDSTICK
-        if ((Input.GetKeyDown("x") && testPlayerMovement.testType == 1) || (Input.GetKeyDown("g") && testPlayerMovement.testType == 2) || (Input.GetKeyDown("o") && testPlayerMovement.testType == 4) || (Input.GetKeyDown("5") && testPlayerMovement.testType == 3))
+        if (!playerMovement.isDead)
         {
-            if (canStick && !m_isStick)
+#if !JOYSTICK && !HOLDSTICK
+            if ((Input.GetKeyDown("x") && playerMovement.testType == 1) || (Input.GetKeyDown("g") && playerMovement.testType == 2) || (Input.GetKeyDown("o") && playerMovement.testType == 4) || (Input.GetKeyDown("5") && playerMovement.testType == 3))
             {
-                m_isStick = true;
-                jellySprite.SetAnimBool("isWalk", false);
+                if (canStick && !m_isStick)
+                {
+                    m_isStick = true;
+                    jellySprite.SetAnimBool("isWalk", false);
+                }
+                else if (m_isStick)
+                {
+                    ResetNotStick_Normal();
+                }
             }
-            else if (m_isStick)
-            {
-                ResetNotStick_Normal();
-            }
-        }
 #elif JOYSTICK && !HOLDSTICK
         if (Input.GetButtonDown("Stick_" + this.tag))
         {
@@ -131,25 +133,28 @@ public class PlayerStick : MonoBehaviour
         }
 #endif
 
-        jellySprite.SetAnimBool("isStick", m_isStick);
+            AttachDetect();
 
-        AttachDetect();
-
-        if (isTouchWall || isPointAttachGround)
-        {
-            if (isPop)
+            if (isTouchWall || isPointAttachGround)
             {
-                isPop = false;
+                if (isPop)
+                {
+                    isPop = false;
+                }
             }
 
+            jellySprite.SetAnimBool("isStick", m_isStick);
+
+            CanStick();
+
+            if (m_isStick)
+            {
+                ItemToStick();
+                PlayerToStick();
+            }
         }
-
-        CanStick();
-
-        if (m_isStick)
-        {
-            ItemToStick();
-            PlayerToStick();
+        else{
+            ResetNotStick_Normal();
         }
     }
 
@@ -159,7 +164,8 @@ public class PlayerStick : MonoBehaviour
 
         isStickRocket = jellySprite.isStickRocket;
 
-        // RocketStick();
+        if(isStickRocket)
+            RocketStick();
 
         if (isTouchWall && isPointAttachWall)
             jellySprite.SetWallStick();
@@ -189,11 +195,11 @@ public class PlayerStick : MonoBehaviour
 
     private void PlayerToStick()
     {
-        if (touchPlayerList != null && pointAttachPlayerList != null)
+        if (pointAttachPlayerList != null)
         {
             foreach (var pointAttachPlayer in pointAttachPlayerList)
             {
-                if (touchPlayerList.Contains(pointAttachPlayer) && !stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<PlayerStick>().isPop)
+                if (!stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<PlayerStick>().isPop)
                 {
                     stickPlayerList.Add(pointAttachPlayer);
                 }
@@ -258,14 +264,14 @@ public class PlayerStick : MonoBehaviour
 
     void RocketStick()
     {
-        LevelController.instance.SetRocketStick(this.gameObject.tag, isStickRocket);
+        LevelController.instance.SetRocketStick(this.gameObject, isStickRocket, playerMovement.playerColor);
     }
 
     void AttachDetect()
     {
         isPointAttachItem = jellySprite.GetIsItemAttach();
 
-        touchPlayerList = stickDetect.touchPlayerList;
+        // touchPlayerList = stickDetect.touchPlayerList;
 
         pointAttachPlayerList = jellySprite.GetPlayersAttach();
 
@@ -278,7 +284,7 @@ public class PlayerStick : MonoBehaviour
 
     void CanStick()
     {
-        if (((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && isTouchWall) || (pointAttachPlayerList.Count != 0 && touchPlayerList.Count != 0) || isPointAttachItem))
+        if (((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && isTouchWall) || pointAttachPlayerList.Count != 0 || isPointAttachItem))
         {
             canStick = true;
         }
