@@ -1,5 +1,5 @@
-﻿// #define JOYSTICK
-#define TEST_DIE
+﻿#define JOYSTICK
+// #define TEST_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -250,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Pull()
     {
-        jellySprite.AddForce(new Vector2(testGetKeyHMove * pullForce, testGetKeyVMove * pullForce));
+        jellySprite.AddForce(new Vector2(testGetKeyHMove * pullForce * 1.5f, testGetKeyVMove * pullForce * 2.0f));
     }
 
     void Jump()

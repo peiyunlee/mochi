@@ -138,7 +138,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.04, y: 0.4, z: 0}
+  m_LocalPosition: {x: 49.51, y: 0.05, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4498225790585558}
@@ -262,13 +262,13 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1712275595829610}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.022338986, y: 0.0018391609}
+  m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -279,7 +279,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.6594474, y: 2.1035142}
+  m_Size: {x: 2, y: 0.3}
   m_EdgeRadius: 0
 --- !u!70 &70359232182403796
 CapsuleCollider2D:
@@ -287,7 +287,7 @@ CapsuleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1712275595829610}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -318,7 +318,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5236f2a2621159845a06c2f87e962e6f, type: 2}
   m_CullingMode: 0
@@ -415,6 +415,7 @@ MonoBehaviour:
   isJump: 0
   testType: 1
   playerType: 
+  isDead: 0
 --- !u!114 &114819239757075786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,9 +473,9 @@ MonoBehaviour:
   m_GridColumns: 4
   m_GridRows: 4
   m_DampingRatio: 2
-  m_SoftBodyScale: {x: 1.1, y: 0.78}
+  m_SoftBodyScale: {x: 1.1, y: 0.75}
   m_SoftBodyRotation: 0
-  m_SoftBodyOffset: {x: -0, y: 0}
+  m_SoftBodyOffset: {x: -0, y: -0}
   m_CentralBodyOffset: {x: -0, y: -0}
   m_SpriteScale: {x: 1, y: 1}
   m_2DMode: 1

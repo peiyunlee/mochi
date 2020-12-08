@@ -29,7 +29,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2
+        time: 3
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -48,21 +48,21 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 6d002385a5032cd4a8784ace52956e87, type: 3}
-    - time: 0.26666668
+    - time: 0.4
       value: {fileID: 21300000, guid: 09fe850a4330db641b3b59ce074193b5, type: 3}
-    - time: 0.5
+    - time: 0.75
       value: {fileID: 21300000, guid: 16d7cd6cb701d914796abce25061ae9f, type: 3}
-    - time: 0.73333335
+    - time: 1.1
       value: {fileID: 21300000, guid: 42e81fd2f85a5344b95df30641ca1f00, type: 3}
-    - time: 1
-      value: {fileID: 21300000, guid: af5eaa4689c6e6a4badd61ac0f574267, type: 3}
-    - time: 1.2666667
-      value: {fileID: 21300000, guid: aab4ba59dce3c2b42a7aca56c10e1a6c, type: 3}
     - time: 1.5
+      value: {fileID: 21300000, guid: af5eaa4689c6e6a4badd61ac0f574267, type: 3}
+    - time: 1.9
+      value: {fileID: 21300000, guid: aab4ba59dce3c2b42a7aca56c10e1a6c, type: 3}
+    - time: 2.25
       value: {fileID: 21300000, guid: bf2363ad921d5714dbef9978402e4112, type: 3}
-    - time: 1.7333333
+    - time: 2.6
       value: {fileID: 21300000, guid: 87ca5e532ed330341940c8c18065106c, type: 3}
-    - time: 2
+    - time: 3
       value: {fileID: 21300000, guid: 1b6229ff36b9cf844850f20e3bade0e5, type: 3}
     attribute: m_Sprite
     path: 
@@ -71,21 +71,21 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 5b3b593a52521534384a35ea06cad903, type: 3}
-    - time: 0.26666668
+    - time: 0.4
       value: {fileID: 21300000, guid: 57f50f5180b9a5547822de58c4435b26, type: 3}
-    - time: 0.5
+    - time: 0.75
       value: {fileID: 21300000, guid: f028566b5ea39934bb9038554f0eeea2, type: 3}
-    - time: 0.73333335
+    - time: 1.1
       value: {fileID: 21300000, guid: 09fd303ae3054714f82da07c0c91ab67, type: 3}
-    - time: 1
-      value: {fileID: 21300000, guid: eb2418ce4a331dc4d9c7f5388c8b9525, type: 3}
-    - time: 1.2666667
-      value: {fileID: 21300000, guid: 3108655a0cd1d0547a775e0559061808, type: 3}
     - time: 1.5
+      value: {fileID: 21300000, guid: eb2418ce4a331dc4d9c7f5388c8b9525, type: 3}
+    - time: 1.9
+      value: {fileID: 21300000, guid: 3108655a0cd1d0547a775e0559061808, type: 3}
+    - time: 2.25
       value: {fileID: 21300000, guid: 1c3df042593290d45a0a205d2bb7a403, type: 3}
-    - time: 1.7333333
+    - time: 2.6
       value: {fileID: 21300000, guid: 47f66cf39f0add94896366779f06cf79, type: 3}
-    - time: 2
+    - time: 3
       value: {fileID: 21300000, guid: aa4501a7723788f4c8f2fbc1f8a3855e, type: 3}
     attribute: m_Sprite
     path: eye
@@ -143,7 +143,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.0166667
+    m_StopTime: 3.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -172,7 +172,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2
+        time: 3
         value: 1
         inSlope: Infinity
         outSlope: Infinity
