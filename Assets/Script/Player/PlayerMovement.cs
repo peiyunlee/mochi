@@ -9,9 +9,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public Camera cam;
-    public float camX, camY;
-
     Vector2 currentVector;
 
     RaycastHit2D hit;
@@ -112,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         else testType = 4;
 #endif
 
-        cam = Camera.main;
+
 
 #if TEST_DIE
         isDead = false;
@@ -327,68 +324,6 @@ public class PlayerMovement : MonoBehaviour
     
 
 
-    Vector2 DetectPoint(Vector2 point)
-    {
-        bool result = false;
-        Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
-        hit = Physics2D.Raycast(point, slop);
-        result = hit.collider;
-        Collider2D hc = hit.collider;
 
-        if (result)
-        {
-            currentVector = point;
-            return DetectPoint(point + Vector2.up);
-        }
-        else
-        {
-            if (point == currentVector + Vector2.left)
-            {
-                currentVector = Vector2.zero;
-                return point;
-            }
-            else
-            {
-                currentVector = point;
-                return DetectPoint(point + Vector2.left);
-            }
-        }
-
-    }
-
-    Vector2 DetectPoint_Ground(Vector2 point)
-    {
-        bool result = false;
-        Vector3 slop = new Vector3(point.x, point.y, -10) - new Vector3(point.x, point.y, 10);
-        hit = Physics2D.Raycast(point, slop);
-        result = hit.collider;
-
-        if (result)
-        {
-            GameObject hg = hit.collider.gameObject;
-            if (hg.tag == "ground")  //&& hg.layer == playerColor
-            {
-                currentVector = point;
-                return DetectPoint(point + Vector2.up);
-            }
-            else
-            {
-                currentVector = point;
-                return DetectPoint(point + Vector2.right);
-            }
-        }
-        else
-        {
-            if (point == currentVector + Vector2.up)
-            {
-                currentVector = Vector2.zero;
-                return point;
-            }
-
-            currentVector = point;
-            return DetectPoint(point + Vector2.down);
-        }
-
-    }
 }
 
