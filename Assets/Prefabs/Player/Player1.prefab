@@ -51,10 +51,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4876908589825510}
-  - component: {fileID: 114120056761670698}
   - component: {fileID: 50838567225070644}
   - component: {fileID: 70501842568836854}
-  - component: {fileID: 254111397784985584}
   - component: {fileID: 114841889511573990}
   m_Layer: 16
   m_Name: stickDetect
@@ -75,7 +73,6 @@ GameObject:
   - component: {fileID: 114007458747081682}
   - component: {fileID: 50357506347844368}
   - component: {fileID: 114493550878829580}
-  - component: {fileID: 70359232182403796}
   m_Layer: 16
   m_Name: floorDetect
   m_TagString: player1
@@ -138,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 49.51, y: 0.05, z: 0}
+  m_LocalPosition: {x: 29.63, y: 11.93, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4498225790585558}
@@ -207,7 +204,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -917904433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
 --- !u!33 &33431123881234132
 MeshFilter:
@@ -281,21 +278,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.3}
   m_EdgeRadius: 0
---- !u!70 &70359232182403796
-CapsuleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1712275595829610}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.008244217, y: -0.0000009675928}
-  m_Size: {x: 2.599628, y: 2.1543808}
-  m_Direction: 1
 --- !u!70 &70501842568836854
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -308,8 +290,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2.25, y: 1.95}
+  m_Offset: {x: 0.0014014242, y: -0.0031783585}
+  m_Size: {x: 2.6763768, y: 2.1086597}
   m_Direction: 1
 --- !u!95 &95971610045901936
 Animator:
@@ -342,31 +324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isOnFloor: 0
   parents: {fileID: 1979534757646786}
---- !u!114 &114120056761670698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598193602765822}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stickDetect: {fileID: 0}
-  getIsOnFloor: 0
-  m_isStick: 0
-  canStick: 0
-  isPointAttachItem: 0
-  stickItemList: []
-  pointAttachPlayerList: []
-  stickPlayerList: []
-  touchPlayerList: []
-  isTouchWall: 0
-  isPointAttachWall: 0
-  isTouchGround: 0
-  isPointAttachGround: 0
-  isPop: 0
 --- !u!114 &114493550878829580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -405,17 +362,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c4e25989592c74e86e1210ab6fc680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  camX: 0
-  camY: 0
-  moveSpeed: 3.5
+  moveSpeed: 3.75
   jumpSpeed: 325
   pullForce: 10
   canJump: 0
   isJump: 0
   testType: 1
-  playerType: 
+  playerType: red
+  playerColor: 0
   isDead: 0
+  isInvincible: 0
 --- !u!114 &114819239757075786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -532,7 +488,6 @@ MonoBehaviour:
   stickItemList: []
   pointAttachPlayerList: []
   stickPlayerList: []
-  touchPlayerList: []
   isTouchWall: 0
   isPointAttachWall: 0
   isTouchGround: 0
@@ -571,7 +526,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479153105
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bff83e5403b5218499691b7c5143571f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -617,7 +572,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479153105
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8e15649106c4c5b4caf7f1461b1d33e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -630,21 +585,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!254 &254111397784985584
-RelativeJoint2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598193602765822}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_MaxForce: 10000
-  m_MaxTorque: 10000
-  m_CorrectionScale: 0.3
-  m_AutoConfigureOffset: 1
-  m_LinearOffset: {x: 1.3300002, y: -0.01999998}
-  m_AngularOffset: 0

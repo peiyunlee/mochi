@@ -43,7 +43,7 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(true);
             draw.SetActive(true);
-			Invoke("SetActive",0.05f);
+            Invoke("SetActive", 0.05f);
         }
     }
 
@@ -54,12 +54,13 @@ public class Billboard : MonoBehaviour
             billboard.SetActive(false);
             draw.SetActive(false);
             isActive = false;
+            GameManager.instance.StartGame();
         }
     }
 
     void Update()
     {
-        if (isActive)
+        if (GameManager.instance.isPause)
         {
 #if JOYSTICK
             if (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2"))
@@ -78,5 +79,6 @@ public class Billboard : MonoBehaviour
     void SetActive()
     {
         isActive = true;
+        GameManager.instance.PauseGame();
     }
 }

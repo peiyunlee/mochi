@@ -1,5 +1,4 @@
-﻿#define JOYSTICK
-// #define TEST_DIE
+﻿#define TEST_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,10 +8,22 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    Vector2 currentVector;
+    //PlayerColor
 
-    RaycastHit2D hit;
+    public string playerType;
 
+    public int playerColor;
+
+
+    //PlayerScript
+    private UnityJellySprite jellySprite;
+    PlayerStick playerStick;
+    PlayerFloorDetect playerFloorDetect;
+    ColorDetect colorDetect;
+
+    InputSystem inputSystem;
+
+    //anim
     enum State
     {
         Left,
@@ -22,45 +33,22 @@ public class PlayerMovement : MonoBehaviour
     State walkPreState;
     State walkCurState;
     bool playerLeft = true;
+
+    //move or pull
     public float moveSpeed;
-    public float jumpSpeed;
+    private bool canMove;
 
     public float pullForce;
 
+    //jump
+
     [SerializeField]
+    public float jumpSpeed;
     private bool canJump;
     [SerializeField]
     private bool isJump;
-    private bool canMove;
-    private UnityJellySprite jellySprite;
-    private bool GetKeyJump;
 
-#if !JOYSTICK
-    private int testGetKeyHMove;
-    private int testGetKeyVMove;
-
-    public int GetKey { get { return testGetKeyVMove; } }
-#else
-    private float testGetKeyHMove;
-    private float testGetKeyVMove;
-
-    public float GetKey { get { return testGetKeyVMove; } }
-    
-#endif
-
-    PlayerStick playerStick;
-
-    PlayerFloorDetect playerFloorDetect;
-
-    public int testType;
-
-    public string playerType;
-
-    public int playerColor;
-
-    bool notFreeze;
-
-    ColorDetect colorDetect;
+    //DEAD
 
     public bool isDead;
 
@@ -69,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         jellySprite = GetComponent<UnityJellySprite>();
-        playerStick = gameObject.GetComponentInChildren<PlayerStick>();
+        playerStick = gameObject.GetComponent<PlayerStick>();
+        inputSystem = GetComponent<InputSystem>();
         playerFloorDetect = gameObject.GetComponentInChildren<PlayerFloorDetect>();
         colorDetect = gameObject.GetComponentInChildren<ColorDetect>();
         walkPreState = State.Left;
@@ -99,18 +88,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-#if !JOYSTICK
-        if (gameObject.tag == "player1")
-            testType = 1;
-        else if (gameObject.tag == "player2")
-            testType = 2;
-        else if (gameObject.tag == "player3")
-            testType = 3;
-        else testType = 4;
-#endif
-
-
-
 #if TEST_DIE
         isDead = false;
 #endif
@@ -119,99 +96,32 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!isDead)
+        if (!GameManager.instance.isPause)
         {
-
-#if !JOYSTICK
-            if (testType == 1)
+            if (!isDead)
             {
-                GetKeyJump = Input.GetKeyDown("z");
+                //**
+                ResetRotation();
+                //
 
-                if (Input.GetKeyDown("right")) testGetKeyHMove = 1;
-                else if (Input.GetKeyDown("left")) testGetKeyHMove = -1;
-                else if (Input.GetKeyUp("right") || Input.GetKeyUp("left")) testGetKeyHMove = 0;
+                JumpDetect();
 
-                if (Input.GetKeyDown("up")) testGetKeyVMove = 1;
-                else if (Input.GetKeyDown("down")) testGetKeyVMove = -1;
-                else if (Input.GetKeyUp("up") || Input.GetKeyUp("down")) testGetKeyVMove = 0;
+                jellySprite.SetAnimBool("isJump", !canJump);
+
+                SetState();
             }
-            else if (testType == 2)
+            else
             {
-                GetKeyJump = Input.GetKeyDown("f");
-
-                if (Input.GetKeyDown("d")) testGetKeyHMove = 1;
-                else if (Input.GetKeyDown("a")) testGetKeyHMove = -1;
-                else if (Input.GetKeyUp("d") || Input.GetKeyUp("a")) testGetKeyHMove = 0;
-
-                if (Input.GetKeyDown("w")) testGetKeyVMove = 1;
-                else if (Input.GetKeyDown("s")) testGetKeyVMove = -1;
-                else if (Input.GetKeyUp("w") || Input.GetKeyUp("s")) testGetKeyVMove = 0;
+                DieReset();
             }
-            else if (testType == 3)
-            {
-                GetKeyJump = Input.GetKeyDown("4");
-
-
-                if (Input.GetKeyDown("3")) testGetKeyHMove = 1;
-                else if (Input.GetKeyDown("1")) testGetKeyHMove = -1;
-                else if (Input.GetKeyUp("3") || Input.GetKeyUp("1")) testGetKeyHMove = 0;
-            }
-            else if (testType == 4)
-            {
-                GetKeyJump = Input.GetKeyDown("k");
-
-
-                if (Input.GetKeyDown("l")) testGetKeyHMove = 1;
-                else if (Input.GetKeyDown("j")) testGetKeyHMove = -1;
-                else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) testGetKeyHMove = 0;
-            }
-#else
-        GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
-        testGetKeyHMove = Input.GetAxisRaw("Horizontal_" + this.tag);
-        testGetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
-#endif
-
-            ResetRotation();
-
-            canJump = playerFloorDetect.isOnFloor;
-
-            if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
-                isJump = false;
-
-            jellySprite.SetAnimBool("isJump", !canJump);
-
-            playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
-
-            SetState();
-        }
-        else
-        {
-            canJump = false;
-
-#if !JOYSTICK
-            GetKeyJump = false;
-            testGetKeyHMove = 0;
-            testGetKeyVMove = 0;
-#else
-            GetKeyJump = false;
-            testGetKeyHMove = 0;
-            testGetKeyVMove = 0;
-#endif
-            ResetRotation();
-
-            jellySprite.SetAnimBool("isJump", false);
-
-            playerStick.getIsOnFloor = false;
-
-            //setstate
         }
     }
 
     void SetState()
     {
-        if (testGetKeyHMove == 1)
+        if (inputSystem.GetKeyHMove == 1)
             walkCurState = State.Right;
-        else if (testGetKeyHMove == -1)
+        else if (inputSystem.GetKeyHMove == -1)
             walkCurState = State.Left;
 
         if (walkCurState != walkPreState)
@@ -222,11 +132,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void DieReset()
+    {
+        canJump = false;
+
+        inputSystem.GetKeyJump = false;
+        inputSystem.GetKeyHMove = 0;
+        inputSystem.GetKeyVMove = 0;
+
+        ResetRotation();
+
+        jellySprite.SetAnimBool("isJump", false);
+
+        playerStick.getIsOnFloor = false;
+
+        //setstate
+    }
     void FixedUpdate()
     {
         if (!isDead)
         {
-            if (GetKeyJump && canJump)
+            if (inputSystem.GetKeyJump && canJump)
             {
                 Jump();
             }
@@ -241,18 +167,28 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
 
-        if (testGetKeyHMove != 0 && canJump)
+        if (inputSystem.GetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
             jellySprite.SetAnimBool("isWalk", false);
 
-        jellySprite.AddVelocity(new Vector2(testGetKeyHMove * moveSpeed, 0.0f));
+        jellySprite.AddVelocity(new Vector2(inputSystem.GetKeyHMove * moveSpeed, 0.0f));
+
     }
     void Pull()
     {
-        jellySprite.AddForce(new Vector2(testGetKeyHMove * pullForce * 1.5f, testGetKeyVMove * pullForce * 2.0f));
+        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.0f));
     }
 
+    void JumpDetect()
+    {
+        canJump = playerFloorDetect.isOnFloor;
+
+        if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
+            isJump = false;
+
+        playerStick.getIsOnFloor = playerFloorDetect.isOnFloor;
+    }
     void Jump()
     {
         canJump = false;
@@ -279,7 +215,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool isding;
     public void Die()
     {
         if (!isDead)
@@ -310,18 +245,20 @@ public class PlayerMovement : MonoBehaviour
         Die_Invincible();
 
         this.gameObject.SetActive(true);
-        
+
         Invoke("Die_Not_Invincible", 2);
     }
 
-    void Die_Invincible(){
+    void Die_Invincible()
+    {
         isInvincible = true;
     }
 
-    void Die_Not_Invincible(){
+    void Die_Not_Invincible()
+    {
         isInvincible = false;
     }
-    
+
 
 
 

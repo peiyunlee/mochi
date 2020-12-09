@@ -2006,7 +2006,7 @@ public abstract class JellySprite : MonoBehaviour
     /// Set isTrigger to every reference point
     /// </summary>
 
-    public List<GameObject> SetItemStick()
+    public List<GameObject> SetItemStick(List<GameObject> touchItemList)
     {
         List<GameObject> stickItemList = new List<GameObject>();
 
@@ -2024,7 +2024,7 @@ public abstract class JellySprite : MonoBehaviour
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
                     // referencePoint.SetKinematic(true);
-                    if (!stickItemList.Contains(attachItem))
+                    if (!stickItemList.Contains(attachItem) && touchItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
                     }
@@ -2270,11 +2270,7 @@ public abstract class JellySprite : MonoBehaviour
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.enabled = false;
             thePlayer.GetComponent<UnityJellySprite>().sticked = false;
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
-            // fixedJoint2D.connectedBody = null;
-            // fixedJoint2D.enabled = false;
-
-            Debug.Log("resettheplayer" + thePlayer);
+            
 
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {

@@ -8,7 +8,9 @@ public class StickDetect : MonoBehaviour
 {
 
     public List<GameObject> touchPlayerList = new List<GameObject>();  //碰到的角色
-    public bool isTouchWall = false;
+    public bool isTouchWall;
+
+    public bool isTouchPlayer;
     public List<GameObject> touchItemList = new List<GameObject>();  //碰到的物體
 
     //TEST
@@ -16,17 +18,35 @@ public class StickDetect : MonoBehaviour
 
     bool getKeyConfirm;
 
+    bool detect;
+
     void Start()
     {
-        foreach (var player in playerList)
-        {
-            touchPlayerList.Add(player);
-        }
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Billboard")
+        DetectBillboard(other.gameObject);
+
+        DetectTouchWall(other.gameObject, true);
+
+        DetectTouchItem(other.gameObject, true);
+
+        DetectTouchPlayer(other.gameObject, true);
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        DetectTouchWall(other.gameObject, false);
+
+        DetectTouchItem(other.gameObject, false);
+
+        DetectTouchPlayer(other.gameObject, false);
+    }
+
+    void DetectBillboard(GameObject other)
+    {
+        if (other.tag == "Billboard")
         {
 #if JOYSTICK
             getKeyConfirm = Input.GetButtonDown("AButton_" + this.tag);
@@ -34,12 +54,75 @@ public class StickDetect : MonoBehaviour
             getKeyConfirm = Input.GetKeyDown("b");
 #endif
 
-            if (getKeyConfirm && !other.gameObject.GetComponent<Billboard>().isActive)
+            if (getKeyConfirm && !other.GetComponent<Billboard>().isActive)
             {
-                other.gameObject.GetComponent<Billboard>().Show();
+                other.GetComponent<Billboard>().Show();
                 getKeyConfirm = false;
             }
         }
+    }
 
+    void DetectTouchPlayer(GameObject other, bool trigger)
+    {
+
+        if (trigger)
+        {
+            if (other.tag != this.tag && other.layer == LayerMask.NameToLayer("player") && other.name == "stickDetect")
+            {
+                isTouchPlayer = true;
+            }
+        }
+        else
+        {
+            if (other.tag != this.tag && other.layer == LayerMask.NameToLayer("player") && other.name == "stickDetect")
+            {
+                isTouchPlayer = false;
+            }
+        }
+    }
+
+    void DetectTouchItem(GameObject other, bool trigger)
+    {
+        if (trigger)
+        {
+            if (other.tag == "Item" && !touchItemList.Contains(other))
+            {
+                touchItemList.Add(other);
+            }
+        }
+        else
+        {
+            if (touchItemList.Contains(other))
+            {
+                touchItemList.Remove(other);
+            }
+        }
+    }
+
+    void DetectTouchWall(GameObject other, bool trigger)
+    {
+        if (trigger)
+        {
+            if (other.tag == "wall")
+            {
+                isTouchWall = true;
+            }
+        }
+        else
+        {
+            isTouchWall = false;
+        }
+    }
+
+    public void SetDetect(bool set)
+    {
+        detect = set;
+    }
+
+    void ResetDetect()
+    {
+        isTouchWall = false;
+        touchItemList.Clear();
+        isTouchPlayer = false;
     }
 }
