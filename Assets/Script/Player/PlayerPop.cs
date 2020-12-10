@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerPop : MonoBehaviour
 {
     public float popForce;
+    StickDetect stickDetect;
     PlayerStick playerStick;
     PlayerMovement playerMovement;
     private UnityJellySprite jellySprite;
@@ -26,6 +27,7 @@ public class PlayerPop : MonoBehaviour
         playerStick = gameObject.GetComponent<PlayerStick>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
+        stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         canPop = false;
         TimesUp = false;
     }
@@ -36,7 +38,7 @@ public class PlayerPop : MonoBehaviour
         {
             if (!playerMovement.isDead)
             {
-                canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
+                canPop = playerStick.isStick && (playerStick.getIsOnFloor || stickDetect.isTouchWall);
             }
             else
             {
@@ -65,12 +67,13 @@ public class PlayerPop : MonoBehaviour
     {
         if (!playerMovement.isDead)
         {
+            //**
             Turn();
+            //
 
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
-                // jellySprite.isTurn = false;
                 TimesUp = false;
                 getKeyPop = false;
                 jellySprite.SetAnimBool("isPop", false);

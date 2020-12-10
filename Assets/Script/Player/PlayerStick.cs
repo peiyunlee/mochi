@@ -26,8 +26,8 @@ public class PlayerStick : MonoBehaviour
     public bool canStick;  //有碰到東西可以黏
 
 
-    [SerializeField]
-    private bool isPointAttachItem;  //有碰到Item
+    // [SerializeField]
+    // private bool isPointAttachItem;  //有碰到Item
 
     [SerializeField]
     public List<GameObject> stickItemList;  //黏住的角色
@@ -43,8 +43,8 @@ public class PlayerStick : MonoBehaviour
 
 
 
-    [SerializeField]
-    public bool isPointAttachWall;  //有碰到wall
+    // [SerializeField]
+    // public bool isPointAttachWall;  //有碰到wall
 
 
     [SerializeField]
@@ -137,7 +137,7 @@ public class PlayerStick : MonoBehaviour
         if (isStickRocket)
             RocketStick();
 
-        if (stickDetect.isTouchWall && isPointAttachWall)
+        if (stickDetect.isTouchWall)
             jellySprite.SetWallStick();
 
         if (getIsOnFloor || isPointAttachGround)
@@ -239,18 +239,16 @@ public class PlayerStick : MonoBehaviour
 
     void AttachDetect()
     {
-        isPointAttachItem = jellySprite.GetIsItemAttach();
-
         pointAttachPlayerList = jellySprite.GetPlayersAttach();
 
-        isPointAttachWall = jellySprite.GetIsWallAttach();
+        // isPointAttachWall = jellySprite.GetIsWallAttach();
 
         isPointAttachGround = jellySprite.GetIsFloorAttach();
     }
 
     void CanStick()
     {
-        if (((getIsOnFloor || isPointAttachGround) || (isPointAttachWall && stickDetect.isTouchWall) || pointAttachPlayerList.Count != 0 || (isPointAttachItem && stickDetect.touchItemList.Count != 0)))
+        if (((getIsOnFloor || isPointAttachGround) || (stickDetect.isTouchWall) || pointAttachPlayerList.Count != 0 || (stickDetect.touchItemList.Count != 0)))
         {
             canStick = true;
         }
