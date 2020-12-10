@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isDead;
 
-    // public bool isInvincible;
+    public bool isInvincible;
 
     void Start()
     {
@@ -217,6 +217,8 @@ public class PlayerMovement : MonoBehaviour
 #if TEST_DIE
             isDead = true;
 
+            Invoke("Die_Invincible", 0.05f);
+
             jellySprite.SetAnimBool("isDead", isDead);
 
             Invoke("Rebirth", 2);
@@ -242,9 +244,9 @@ public class PlayerMovement : MonoBehaviour
 
         this.gameObject.SetActive(true);
 
-        // Die_Invincible(); //無敵狀態
+        Die_Invincible(); //無敵狀態
 
-        // Invoke("Die_Not_Invincible", 2);  //無敵狀態兩秒再取消
+        Invoke("Die_Not_Invincible", 0.5f);  //無敵狀態0.5秒再取消
     }
     void PlayerDeadReset()
     {
@@ -270,15 +272,15 @@ public class PlayerMovement : MonoBehaviour
         jellySprite.ResetSelfRot();
     }
 
-    // void Die_Invincible()
-    // {
-    //     isInvincible = true;
-    // }
+    void Die_Invincible()
+    {
+        isInvincible = true;
+    }
 
-    // void Die_Not_Invincible()
-    // {
-    //     isInvincible = false;
-    // }
+    void Die_Not_Invincible()
+    {
+        isInvincible = false;
+    }
 
 
 
