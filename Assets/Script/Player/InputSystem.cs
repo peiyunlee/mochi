@@ -1,4 +1,5 @@
 ﻿#define JOYSTICK
+// #define HOLDSTICK
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,9 @@ public class InputSystem : MonoBehaviour
     public float GetKeyVMove;
 
 #endif
+
+    //billboard
+    public bool getKeyConfirm;
 
     PlayerPop playerPop;
 
@@ -52,6 +56,17 @@ public class InputSystem : MonoBehaviour
         MovementInput();
         PopInput();
         StickInput();
+        Other();
+    }
+
+    void Other()
+    {
+#if JOYSTICK
+        getKeyConfirm = Input.GetButtonDown("AButton_" + this.tag);
+#else
+        getKeyConfirm = Input.GetKeyDown("b");
+#endif
+
     }
 
     void MovementInput()
@@ -100,9 +115,9 @@ public class InputSystem : MonoBehaviour
             else if (Input.GetKeyUp("l") || Input.GetKeyUp("j")) GetKeyHMove = 0;
         }
 #else
-            GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
-            GetKeyHMove = Input.GetAxisRaw("Horizontal_" + this.tag);
-            GetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
+        GetKeyJump = Input.GetButtonDown("Jump_" + this.tag);
+        GetKeyHMove = Input.GetAxisRaw("Horizontal_" + this.tag);
+        GetKeyVMove = Input.GetAxisRaw("Vertical_" + this.tag);
 #endif
 
     }
@@ -141,13 +156,13 @@ public class InputSystem : MonoBehaviour
                 playerStick.ResetStick();
         }
 #elif JOYSTICK && !HOLDSTICK
-            if (Input.GetButtonDown("Stick_" + this.tag))
-            {
-            if(playerStick.canStick && !playerStick.m_isStick)
+        if (Input.GetButtonDown("Stick_" + this.tag))
+        {
+            if (playerStick.canStick && !playerStick.m_isStick)
                 playerStick.SetStick();
-            else if(playerStick.m_isStick)
+            else if (playerStick.m_isStick)
                 playerStick.ResetStick();
-            }
+        }
 #elif !JOYSTICK && HOLDSTICK
         if ((Input.GetKeyDown("x") && testtestType == 1) || (Input.GetKeyDown("g") && testtestType == 2) || (Input.GetKeyDown("o") && testtestType == 4) || (Input.GetKeyDown("5") && testtestType == 3))
         {

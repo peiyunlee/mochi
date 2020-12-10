@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class StickDetect : MonoBehaviour
 {
-
-    public List<GameObject> touchPlayerList = new List<GameObject>();  //碰到的角色
+    InputSystem inputSystem;
     public bool isTouchWall;
 
     public bool isTouchPlayer;
@@ -22,6 +21,7 @@ public class StickDetect : MonoBehaviour
 
     void Start()
     {
+        inputSystem = GetComponentInParent<InputSystem>();
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -48,13 +48,7 @@ public class StickDetect : MonoBehaviour
     {
         if (other.tag == "Billboard")
         {
-#if JOYSTICK
-            getKeyConfirm = Input.GetButtonDown("AButton_" + this.tag);
-#else
-            getKeyConfirm = Input.GetKeyDown("b");
-#endif
-
-            if (getKeyConfirm && !other.GetComponent<Billboard>().isActive)
+            if (inputSystem.getKeyConfirm && !other.GetComponent<Billboard>().isActive)
             {
                 other.GetComponent<Billboard>().Show();
                 getKeyConfirm = false;

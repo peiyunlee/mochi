@@ -15,7 +15,7 @@ public class ColorDetect : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!playerMovement.isDead && !playerMovement.isInvincible)
+        if (!playerMovement.isDead)
         {
             if (other.gameObject.layer != LayerMask.NameToLayer("player"))
             {
