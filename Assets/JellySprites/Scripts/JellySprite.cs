@@ -203,7 +203,7 @@ public abstract class JellySprite : MonoBehaviour
 
     public bool notFreeze;
 
-    public bool isStickRocket = false;
+    // public bool isStickRocket = false;
     //正在轉
     public bool isTurn = false;
 
@@ -2058,10 +2058,10 @@ public abstract class JellySprite : MonoBehaviour
                         notFreeze = false;
                     }
 
-                    if (isTouch == 6)
-                    {
-                        isStickRocket = false;
-                    }
+                    // if (isTouch == 6)
+                    // {
+                    //     isStickRocket = false;
+                    // }
 
                     referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
                     referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().attachItem = null;
@@ -2079,10 +2079,23 @@ public abstract class JellySprite : MonoBehaviour
             int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
             if (isTouch > 3)
             {
-                if (isTouch == 6)
-                {
-                    isStickRocket = true;
-                }
+                // if (isTouch == 6)
+                // {
+                //     isStickRocket = true;
+                // }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GetIsRocketAttach()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            int isTouch = referencePoint.GameObject.GetComponent<JellySpriteReferencePoint>().isTouch;
+            if (isTouch == 6)
+            {
                 return true;
             }
         }

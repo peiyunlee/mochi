@@ -51,7 +51,7 @@ public class PlayerStick : MonoBehaviour
     [SerializeField]
     private bool isPointAttachGround;  //有碰到Ground
 
-
+    [SerializeField]
     bool isStickRocket;
 
     //
@@ -122,7 +122,7 @@ public class PlayerStick : MonoBehaviour
     {
         stickItemList = jellySprite.SetItemStick(stickDetect.touchItemList);
 
-        isStickRocket = jellySprite.isStickRocket;
+        isStickRocket = jellySprite.GetIsRocketAttach();
 
         if (isStickRocket)
             RocketStick();

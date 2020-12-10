@@ -1,4 +1,4 @@
-﻿#define TEST_NOT_DIE
+﻿// #define TEST_NOT_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -98,9 +98,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isDead)
             {
-                //**
-                ResetRotation();
-                //
 
                 JumpDetect();
 
@@ -142,6 +139,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead)
         {
+            //**
+            ResetRotation();
+            //
+            
             if (inputSystem.GetKeyJump && canJump)
             {
                 Jump();

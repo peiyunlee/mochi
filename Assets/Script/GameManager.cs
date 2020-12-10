@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public int playerCount = 1;
 
     public bool isPause;
+
+    public int time;
     void Awake()
     {
         //轉換場景不會被刪除
@@ -17,6 +19,11 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        time = 0;
     }
 
     public void SetCurrentLevel(string levelName)
@@ -29,12 +36,14 @@ public class GameManager : MonoBehaviour
         playerCount = count;
     }
 
-    public void PauseGame(){
+    public void PauseGame()
+    {
         Time.timeScale = 0;
         isPause = true;
     }
 
-    public void StartGame(){
+    public void StartGame()
+    {
         Time.timeScale = 1;
         isPause = false;
     }
