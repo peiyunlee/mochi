@@ -1,4 +1,4 @@
-﻿#define JOYSTICK
+﻿// #define JOYSTICK
 // #define HOLDSTICK
 
 using System.Collections;
@@ -36,7 +36,9 @@ public class PlayerStick : MonoBehaviour
     private List<GameObject> pointAttachPlayerList;  //有碰到角色
 
     [SerializeField]
-    public List<GameObject> stickPlayerList = new List<GameObject>();  //黏住的角色
+    public List<GameObject> stickPlayerList = new List<GameObject>();  //我黏住的角色
+    [SerializeField]
+    public List<GameObject> isStickedPlayerList = new List<GameObject>();  //黏住我的角色
 
     // [SerializeField]
     // public List<GameObject> touchPlayerList;  //黏住的角色
@@ -153,7 +155,8 @@ public class PlayerStick : MonoBehaviour
                 PlayerToStick();
             }
         }
-        else{
+        else
+        {
             ResetNotStick_Normal();
         }
     }
@@ -164,7 +167,7 @@ public class PlayerStick : MonoBehaviour
 
         isStickRocket = jellySprite.isStickRocket;
 
-        if(isStickRocket)
+        if (isStickRocket)
             RocketStick();
 
         if (isTouchWall && isPointAttachWall)

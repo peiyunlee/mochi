@@ -1,4 +1,4 @@
-﻿#define JOYSTICK
+﻿// #define JOYSTICK
 
 using System.Collections;
 using System.Collections.Generic;

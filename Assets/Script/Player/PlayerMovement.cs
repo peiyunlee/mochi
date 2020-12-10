@@ -1,5 +1,5 @@
-﻿#define JOYSTICK
-// #define TEST_DIE
+﻿// #define JOYSTICK
+#define TEST_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -185,7 +185,8 @@ public class PlayerMovement : MonoBehaviour
 
             SetState();
         }
-        else{
+        else
+        {
             canJump = false;
         }
     }
@@ -245,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Pop(Vector2 slop, float popForce)
     {
+        jellySprite.AddVelocity(new Vector2(0, 0));
         jellySprite.AddForce(slop * popForce * 30.0f);
     }
 
@@ -266,19 +268,43 @@ public class PlayerMovement : MonoBehaviour
     {
 #if TEST_DIE
         isDead = true;
+
         Die_Anim();
         Invoke("Die_Invincible", 0);
 #endif
     }
+    void PlayerDeadReset()
+    {
+        if (playerStick.stickPlayerList != null)
+        {
+            foreach (var stickplayer in playerStick.stickPlayerList)
+            {
+                stickplayer.GetComponent<UnityJellySprite>().ResetPoint();
+            }
+            playerStick.ResetNotStick_Normal();
+        }
+        if (playerStick.isStickedPlayerList != null)
+        {
+            foreach (var isStickedPlayer in playerStick.isStickedPlayerList)
+            {
+                isStickedPlayer.GetComponent<PlayerStick>().ResetThePlayersNotStick(this.gameObject);
+            }
+            playerStick.isStickedPlayerList.Clear();
+        }
 
+        jellySprite.ResetPoint();
+        jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = null;
+        jellySprite.ResetSelfRot();
+    }
     void Die_Anim()
     {
-
+        jellySprite.SetAnimBool("isDead", isDead);
     }
 
     void Die_Invincible()
     {
         this.gameObject.SetActive(false);
+        PlayerDeadReset();
         Vector2 newPos;
         // newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
         // jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
@@ -286,6 +312,7 @@ public class PlayerMovement : MonoBehaviour
         jellySprite.SetPosition(newPos, true);
         this.gameObject.SetActive(true);
         isDead = false;
+        jellySprite.SetAnimBool("isDead", isDead);
     }
 
 

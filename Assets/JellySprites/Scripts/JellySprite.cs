@@ -2216,13 +2216,14 @@ public abstract class JellySprite : MonoBehaviour
             hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
             // if (!player.GetComponent<UnityJellySprite>().isTurn)
-                hingeJoint2D.enabled = true;
+            hingeJoint2D.enabled = true;
             player.GetComponent<UnityJellySprite>().m_Stiffness = 4;
             player.GetComponent<UnityJellySprite>().UpdateJoints();
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
             // fixedJoint2D.enabled = true;
-
+            if (!player.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !player.GetComponent<PlayerMovement>().isDead)
+                player.GetComponent<PlayerStick>().isStickedPlayerList.Add(this.gameObject);
             player.GetComponent<UnityJellySprite>().sticked = true;
 
             // Debug.Log("stick" + player);
@@ -2240,10 +2241,12 @@ public abstract class JellySprite : MonoBehaviour
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.anchor = new Vector2(0, 0);
+            hingeJoint2D.connectedBody = null;
             hingeJoint2D.enabled = false;
             player.GetComponent<UnityJellySprite>().m_Stiffness = 6;
             player.GetComponent<UnityJellySprite>().UpdateJoints();
-
+            if (player.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !player.GetComponent<PlayerMovement>().isDead)
+                player.GetComponent<PlayerStick>().isStickedPlayerList.Remove(this.gameObject);
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
             // fixedJoint2D.enabled = false;
@@ -2268,8 +2271,14 @@ public abstract class JellySprite : MonoBehaviour
             GameObject centralPoint = thePlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
+            hingeJoint2D.anchor = new Vector2(0, 0);
+            hingeJoint2D.connectedBody = null;
             hingeJoint2D.enabled = false;
             thePlayer.GetComponent<UnityJellySprite>().sticked = false;
+            thePlayer.GetComponent<UnityJellySprite>().m_Stiffness = 6;
+            thePlayer.GetComponent<UnityJellySprite>().UpdateJoints();
+            if (thePlayer.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !thePlayer.GetComponent<PlayerMovement>().isDead)
+                thePlayer.GetComponent<PlayerStick>().isStickedPlayerList.Remove(this.gameObject);
             // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
             // fixedJoint2D.connectedBody = null;
             // fixedJoint2D.enabled = false;
@@ -2316,7 +2325,6 @@ public abstract class JellySprite : MonoBehaviour
             }
         }
     }
-
     public void FreezePlayerRot()
     {
         if (!sticked)
@@ -2362,6 +2370,17 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
 
+    public void ResetPoint()
+    {
+        foreach (ReferencePoint referencePoint in m_ReferencePoints)
+        {
+            GameObject points = referencePoint.GameObject;
+
+            points.GetComponent<JellySpriteReferencePoint>().isTouch = 0;
+            points.GetComponent<JellySpriteReferencePoint>().attachItem = null;
+        }
+    }
+
     /// <summary>
     /// Set Animation
     /// </summary>
@@ -2380,12 +2399,6 @@ public abstract class JellySprite : MonoBehaviour
         }
 
     }
-
-    public void SetAnimMirror(string name, bool value)
-    {
-        // playAnim.an
-    }
-
     public void SetAnimBool(string name, bool value)
     {
         playAnim = GetComponent<Animator>();
