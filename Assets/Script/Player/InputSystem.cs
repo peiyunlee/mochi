@@ -158,9 +158,9 @@ public class InputSystem : MonoBehaviour
 #elif JOYSTICK && !HOLDSTICK
         if (Input.GetButtonDown("Stick_" + this.tag))
         {
-            if (playerStick.canStick && !playerStick.m_isStick)
+            if (playerStick.canStick && !playerStick.isStick)
                 playerStick.SetStick();
-            else if (playerStick.m_isStick)
+            else if (playerStick.isStick)
                 playerStick.ResetStick();
         }
 #elif !JOYSTICK && HOLDSTICK
