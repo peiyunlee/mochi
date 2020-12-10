@@ -7,11 +7,13 @@ using UnityEngine;
 public class PlayerPop : MonoBehaviour
 {
     public float popForce;
+    StickDetect stickDetect;
     PlayerStick playerStick;
     PlayerMovement playerMovement;
     private UnityJellySprite jellySprite;
+    private InputSystem inputSystem;
 
-    bool canPop;    //可以彈的情況：按黏才可以彈
+    public bool canPop;    //可以彈的情況：按黏才可以彈
 
     float popTime;
 
@@ -25,76 +27,70 @@ public class PlayerPop : MonoBehaviour
         playerStick = gameObject.GetComponent<PlayerStick>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
+        stickDetect = gameObject.GetComponentInChildren<StickDetect>();
         canPop = false;
         TimesUp = false;
     }
 
     void Update()
     {
-        if (!playerMovement.isDead)
+        if (!GameManager.instance.isPause)
         {
-
-            canPop = playerStick.isStick && (playerStick.getIsOnFloor || playerStick.isPointAttachWall);
-
-#if !JOYSTICK
-            if (((Input.GetKeyDown("c") && playerMovement.testType == 1) || (Input.GetKeyDown("h") && playerMovement.testType == 2) || (Input.GetKeyDown("6") && playerMovement.testType == 3) || (Input.GetKeyDown("p") && playerMovement.testType == 4)) && canPop)
+            if (!playerMovement.isDead)
             {
-                //讓對方轉
-                canTurn = true;
-                jellySprite.SetAnimBool("isPop", true);
-                jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+                canPop = playerStick.isStick && (playerStick.getIsOnFloor || stickDetect.isTouchWall);
             }
-            // if (((Input.GetKey("c") && playerMovement.testType == 1) || (Input.GetKey("h") && playerMovement.testType == 2) || (Input.GetKey("6") && playerMovement.testType == 3) || (Input.GetKey("p") && playerMovement.testType == 4)) && !canPop)
-            // {
-            //     //讓對方轉
-            //     canTurn = false;
-            //     jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-            // }
-            if (((Input.GetKeyUp("c") && playerMovement.testType == 1) || (Input.GetKeyUp("h") && playerMovement.testType == 2) || (Input.GetKeyUp("6") && playerMovement.testType == 3) || (Input.GetKeyUp("p") && playerMovement.testType == 4)) && canPop)
+            else
             {
-                canTurn = false;
-                jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-                getKeyPop = true;
+                DieReset();
             }
-#else
-        if (Input.GetButtonDown("Pop_" + this.tag) && canPop)
-        {
-            //讓對方轉
-            canTurn = true;
-            jellySprite.SetAnimBool("isPop", true);
-            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
-        }
-        if (Input.GetButtonUp("Pop_" + this.tag) && canPop)
-        {
-            canTurn = false;
-            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-            getKeyPop = true;
-        }
-#endif
-        }
-        else
-        {
-            canPop = false;
-        }
 
+        }
+    }
+
+    public void PopDown()
+    {
+        //讓對方轉
+        canTurn = true;
+        jellySprite.SetAnimBool("isPop", true);
+        jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+    }
+
+    public void PopUp()
+    {
+        canTurn = false;
+        jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+        getKeyPop = true;
     }
 
     void FixedUpdate()
     {
         if (!playerMovement.isDead)
         {
+            //**
             Turn();
+            //
 
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
-                // jellySprite.isTurn = false;
                 TimesUp = false;
                 getKeyPop = false;
                 jellySprite.SetAnimBool("isPop", false);
                 Pop();
             }
         }
+    }
+
+    void DieReset()
+    {
+        canPop = false;
+
+        canTurn = false;
+        jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+
+        jellySprite.SetAnimBool("isPop", false);
+        getKeyPop = false;
     }
 
     void Turn()

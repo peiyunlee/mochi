@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public string currentLevel = "Level1-1";
     public int playerCount = 1;
+
+    public bool isPause;
     void Awake()
     {
         //轉換場景不會被刪除
@@ -25,5 +27,15 @@ public class GameManager : MonoBehaviour
     public void SetPlayerCount(int count)
     {
         playerCount = count;
+    }
+
+    public void PauseGame(){
+        Time.timeScale = 0;
+        isPause = true;
+    }
+
+    public void StartGame(){
+        Time.timeScale = 1;
+        isPause = false;
     }
 }

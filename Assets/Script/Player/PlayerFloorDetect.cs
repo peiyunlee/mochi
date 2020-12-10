@@ -17,6 +17,14 @@ public class PlayerFloorDetect : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.isPause)
+        {
+            FollowGround();
+        }
+    }
+
+    private void FollowGround()
+    {
         Quaternion rotation = Quaternion.Euler(0, 0, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 50.0f);
     }
@@ -24,7 +32,7 @@ public class PlayerFloorDetect : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         // if (other.gameObject.tag == "ground" && other.gameObject.tag != parents.tag)
-        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "wall")
+        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "wall" && other.gameObject.tag != "Billboard")
         {
             m_isOnFloor = true;
         }

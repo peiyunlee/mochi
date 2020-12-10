@@ -2006,7 +2006,7 @@ public abstract class JellySprite : MonoBehaviour
     /// Set isTrigger to every reference point
     /// </summary>
 
-    public List<GameObject> SetItemStick()
+    public List<GameObject> SetItemStick(List<GameObject> touchItemList)
     {
         List<GameObject> stickItemList = new List<GameObject>();
 
@@ -2024,7 +2024,7 @@ public abstract class JellySprite : MonoBehaviour
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = attachItem.GetComponent<Rigidbody2D>();
                     referencePoint.GameObject.GetComponent<HingeJoint2D>().enabled = true;
                     // referencePoint.SetKinematic(true);
-                    if (!stickItemList.Contains(attachItem))
+                    if (!stickItemList.Contains(attachItem) && touchItemList.Contains(attachItem))
                     {
                         stickItemList.Add(attachItem);
                     }
@@ -2219,14 +2219,11 @@ public abstract class JellySprite : MonoBehaviour
             hingeJoint2D.enabled = true;
             player.GetComponent<UnityJellySprite>().m_Stiffness = 4;
             player.GetComponent<UnityJellySprite>().UpdateJoints();
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
-            // fixedJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
-            // fixedJoint2D.enabled = true;
+
             if (!player.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !player.GetComponent<PlayerMovement>().isDead)
                 player.GetComponent<PlayerStick>().isStickedPlayerList.Add(this.gameObject);
             player.GetComponent<UnityJellySprite>().sticked = true;
 
-            // Debug.Log("stick" + player);
         }
     }
 
@@ -2247,9 +2244,7 @@ public abstract class JellySprite : MonoBehaviour
             player.GetComponent<UnityJellySprite>().UpdateJoints();
             if (player.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !player.GetComponent<PlayerMovement>().isDead)
                 player.GetComponent<PlayerStick>().isStickedPlayerList.Remove(this.gameObject);
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
-            // fixedJoint2D.connectedBody = null;
-            // fixedJoint2D.enabled = false;
+
         }
 
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
@@ -2279,11 +2274,6 @@ public abstract class JellySprite : MonoBehaviour
             thePlayer.GetComponent<UnityJellySprite>().UpdateJoints();
             if (thePlayer.GetComponent<PlayerStick>().isStickedPlayerList.Contains(this.gameObject) && !thePlayer.GetComponent<PlayerMovement>().isDead)
                 thePlayer.GetComponent<PlayerStick>().isStickedPlayerList.Remove(this.gameObject);
-            // FixedJoint2D fixedJoint2D = centralPoint.GetComponent<FixedJoint2D>();
-            // fixedJoint2D.connectedBody = null;
-            // fixedJoint2D.enabled = false;
-
-            Debug.Log("resettheplayer" + thePlayer);
 
             foreach (ReferencePoint referencePoint in m_ReferencePoints)
             {
