@@ -34,7 +34,10 @@ public class LevelController : MonoBehaviour
 
     public Text timeText;
 
-    // Use this for initialization
+    //Billboard
+    public GameObject billboardObjet;
+
+
     void Start()
     {
         instance = this;
@@ -50,7 +53,7 @@ public class LevelController : MonoBehaviour
 
         rocket = rocketObjet.GetComponent<Rocket>();
 
-        timeCount = GameManager.instance.time;
+        timeCount = 0;
         InvokeRepeating("Count", 1, 0.01f);
     }
 
@@ -60,6 +63,10 @@ public class LevelController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ShowOption();
+        }
+        if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
+        {
+            billboardObjet.GetComponent<Billboard>().Hide();
         }
     }
 

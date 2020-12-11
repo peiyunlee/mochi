@@ -77,7 +77,7 @@ public class StickDetect : MonoBehaviour
     {
         if (trigger)
         {
-            if (other.tag == "Item" && !touchItemList.Contains(other))
+            if ((other.tag == "Item" || other.tag == "RotateItem") && !touchItemList.Contains(other))
             {
                 touchItemList.Add(other);
             }

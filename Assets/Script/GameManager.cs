@@ -25,6 +25,17 @@ public class GameManager : MonoBehaviour
     {
         time = 0;
     }
+    void Update()
+    {
+        if (Input.GetKeyDown("1"))
+        {
+            Restart(0);
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            Restart(1);
+        }
+    }
 
     public void SetCurrentLevel(string levelName)
     {
@@ -46,5 +57,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         isPause = false;
+    }
+
+    public void Restart(int scene)
+    {
+        SceneController.instance.LoadNextScene(scene);
     }
 }

@@ -90,6 +90,10 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
 
+        #if TEST_NOT_DIE
+            isInvincible = true
+        #endif
+
     }
 
     void Update()

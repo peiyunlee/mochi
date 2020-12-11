@@ -1,4 +1,4 @@
-﻿// #define JOYSTICK
+﻿#define JOYSTICK
 
 using System.Collections;
 using System.Collections.Generic;
@@ -44,10 +44,11 @@ public class Billboard : MonoBehaviour
             billboard.SetActive(true);
             draw.SetActive(true);
             Invoke("SetActive", 0.05f);
+            LevelController.instance.billboardObjet = this.gameObject;
         }
     }
 
-    void Hide()
+    public void Hide()
     {
         if (isActive)
         {
@@ -55,24 +56,7 @@ public class Billboard : MonoBehaviour
             draw.SetActive(false);
             isActive = false;
             GameManager.instance.StartGame();
-        }
-    }
-
-    void Update()
-    {
-        if (GameManager.instance.isPause)
-        {
-#if JOYSTICK
-            if (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2"))
-            {
-                Hide();
-            }
-#else
-            if (Input.GetKeyDown("b"))
-            {
-                Hide();
-            }
-#endif
+            LevelController.instance.billboardObjet = null;
         }
     }
 
