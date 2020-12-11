@@ -9,6 +9,9 @@ public class ButtonTile : MoveTile
 
     TileButton[] btnScript = new TileButton[2];
 
+    protected Transform trans;
+    protected Rigidbody2D rb;
+
     void Start()
     {
         btnScript[0] = btn[0].GetComponentInChildren<TileButton>();

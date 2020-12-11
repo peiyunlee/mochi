@@ -18,9 +18,6 @@ public class MoveTile : MonoBehaviour
 
     Vector3 translate;
 
-    protected Transform trans;
-    protected Rigidbody2D rb;
-
     protected Vector2 newPos;
 
     public bool selfStart;
@@ -31,9 +28,6 @@ public class MoveTile : MonoBehaviour
 
     void Start()
     {
-        
-        trans = this.gameObject.GetComponent<Transform>();
-        rb = this.gameObject.GetComponent<Rigidbody2D>();
 
         if (selfStart)
         {

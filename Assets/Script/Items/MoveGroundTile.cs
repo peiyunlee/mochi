@@ -2,13 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalTile : MoveTile
+public class MoveGroundTile : MoveTile
 {
+
+    public GameObject ground;
+
+    MoveTileGround moveGround;
 
     protected Transform trans;
     protected Rigidbody2D rb;
-    
-    void Update()
+
+	void Start()
+	{
+        
+        trans = this.gameObject.GetComponent<Transform>();
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+
+		moveGround = ground.GetComponent<MoveTileGround>();
+	}
+
+    void FixedUpdate()
     {
         if (canMove)
         {
@@ -18,10 +31,6 @@ public class NormalTile : MoveTile
 
     void Move()
     {
-        
-        trans = this.gameObject.GetComponent<Transform>();
-        rb = this.gameObject.GetComponent<Rigidbody2D>();
-        
         Vector3 pos = trans.position;
 
         if (trans.position.x < minVec.x || trans.position.y < minVec.y)
@@ -37,7 +46,10 @@ public class NormalTile : MoveTile
             moveSpeed = -moveSpeed;
             canMove = false;
             isMax = true;
-            Invoke("SetCanMove", maxStopSec);
+            if (ground != null)
+            {
+                moveGround.SetCanMove();
+            }
         }
 
         newPos = pos + moveSpeed;

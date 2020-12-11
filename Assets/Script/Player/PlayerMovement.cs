@@ -233,7 +233,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Rebirth()
     {
-        Debug.Log("clear");
         this.gameObject.SetActive(false);
 
         PlayerDeadReset();

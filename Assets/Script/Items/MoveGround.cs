@@ -18,61 +18,13 @@ public class MoveGround : MonoBehaviour
 
     public float waitSec;
 
-    Transform trans;
-    Rigidbody2D rb;
-
-    public GameObject tile;
-
-    NormalTile moveTile;
-
     void Start()
     {
-        trans = this.gameObject.GetComponent<Transform>();
-        rb = this.gameObject.GetComponent<Rigidbody2D>();
         if (needMochi)
             canMove = false;
-
-        if (tile != null)
-        {
-            moveTile = tile.GetComponent<NormalTile>();
-        }
     }
 
-    void FixedUpdate()
-    {
-        if (canMove)
-        {
-            Move();
-        }
-    }
-
-    void Move()
-    {
-        Vector3 pos = trans.position;
-
-        if (trans.position.x < minVec.x || trans.position.y < minVec.y)
-        {
-            moveSpeed = -moveSpeed;
-            canMove = false;
-            Invoke("SetCanMove", minStopSec);
-        }
-        else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
-        {
-            moveSpeed = -moveSpeed;
-            canMove = false;
-            Invoke("SetCanMove", maxStopSec);
-
-            if (tile != null)
-            {
-                moveTile.SetStart();
-            }
-        }
-
-        rb.MovePosition(pos + moveSpeed);
-
-    }
-
-    void SetCanMove()
+    public void SetCanMove()
     {
         canMove = true;
     }
