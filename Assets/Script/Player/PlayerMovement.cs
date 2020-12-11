@@ -1,4 +1,4 @@
-﻿#define TEST_DIE
+﻿// #define TEST_NOT_DIE
 
 using System.Collections;
 using System.Collections.Generic;
@@ -88,9 +88,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-#if TEST_DIE
         isDead = false;
-#endif
 
     }
 
@@ -144,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
             //**
             ResetRotation();
             //
+            
             if (inputSystem.GetKeyJump && canJump)
             {
                 Jump();
@@ -214,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead)
         {
-#if TEST_DIE
+#if !TEST_NOT_DIE
             isDead = true;
 
             jellySprite.AddVelocity(new Vector2(0, 0));

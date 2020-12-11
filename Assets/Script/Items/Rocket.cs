@@ -42,6 +42,7 @@ public class Rocket : MonoBehaviour
 
     void RocketGo()
     {
+        levelController.PauseTimer();
         int index = 0;
         foreach (var player in stickPlayer)
         {

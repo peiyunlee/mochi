@@ -183,7 +183,7 @@ public class PlayerPop : MonoBehaviour
                 }
 
                 //重設黏
-                playerStick.ResetNotStick_PopWithPlayer();
+                // playerStick.ResetNotStick_PopWithPlayer();
             }
         }
 

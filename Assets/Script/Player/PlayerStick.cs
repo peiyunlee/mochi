@@ -14,11 +14,9 @@ public class PlayerStick : MonoBehaviour
 
     public bool getIsOnFloor;
     // Use this for initialization
-    [SerializeField]
-    public bool isStick { get { return m_isStick; } }
 
     [SerializeField]
-    public bool m_isStick;  //黏的狀態
+    public bool isStick;  //黏的狀態
 
     [SerializeField]
     public bool canStick;  //有碰到東西可以黏
@@ -53,7 +51,7 @@ public class PlayerStick : MonoBehaviour
     [SerializeField]
     private bool isPointAttachGround;  //有碰到Ground
 
-
+    [SerializeField]
     bool isStickRocket;
 
     //
@@ -86,11 +84,11 @@ public class PlayerStick : MonoBehaviour
                     }
                 }
 
-                jellySprite.SetAnimBool("isStick", m_isStick);
+                jellySprite.SetAnimBool("isStick", isStick);
 
                 CanStick();
 
-                if (m_isStick)
+                if (isStick)
                 {
                     ItemToStick();
                     PlayerToStick();
@@ -106,7 +104,7 @@ public class PlayerStick : MonoBehaviour
     public void SetStick()
     {
         stickDetect.SetDetect(true);
-        m_isStick = true;
+        isStick = true;
         jellySprite.SetAnimBool("isWalk", false);
     }
 
@@ -124,7 +122,7 @@ public class PlayerStick : MonoBehaviour
     {
         stickItemList = jellySprite.SetItemStick(stickDetect.touchItemList);
 
-        isStickRocket = jellySprite.isStickRocket;
+        isStickRocket = jellySprite.GetIsRocketAttach();
 
         if (isStickRocket)
             RocketStick();
@@ -201,7 +199,7 @@ public class PlayerStick : MonoBehaviour
 
     public void ResetNotStick_Normal()
     {
-        m_isStick = false;
+        isStick = false;
 
         ResetItemNotStick();
 
@@ -214,7 +212,7 @@ public class PlayerStick : MonoBehaviour
 
     public void ResetNotStick_PopWithPlayer()
     {
-        m_isStick = false;
+        isStick = false;
 
         ResetItemNotStick();
 
