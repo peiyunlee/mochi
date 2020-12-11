@@ -100,9 +100,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isDead)
             {
-                //**
-                ResetRotation();
-                //
 
                 JumpDetect();
 
@@ -144,6 +141,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead)
         {
+            //**
+            ResetRotation();
+            //
             if (inputSystem.GetKeyJump && canJump)
             {
                 Jump();
@@ -217,9 +217,11 @@ public class PlayerMovement : MonoBehaviour
 #if TEST_DIE
             isDead = true;
 
-            Invoke("Die_Invincible", 0.05f);
+            jellySprite.AddVelocity(new Vector2(0, 0));
 
-            jellySprite.SetAnimBool("isDead", isDead);
+            jellySprite.SetAnimBool("isDead", true);
+
+            Invoke("Die_Invincible", 0.05f);
 
             Invoke("Rebirth", 2);
 #endif
@@ -228,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Rebirth()
     {
+        Debug.Log("clear");
         this.gameObject.SetActive(false);
 
         PlayerDeadReset();
@@ -242,7 +245,8 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
 
-        this.gameObject.SetActive(true);
+        jellySprite.SetAnimBool("isDead", false);
+        // this.gameObject.SetActive(true);
 
         Die_Invincible(); //無敵狀態
 
