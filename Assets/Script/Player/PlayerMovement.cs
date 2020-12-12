@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     //move or pull
     public float moveSpeed;
     private bool canMove;
-
+    public float airPullForce;
     public float pullForce;
 
     //jump
@@ -90,9 +90,9 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
 
-        #if TEST_NOT_DIE
+#if TEST_NOT_DIE
             isInvincible = true
-        #endif
+#endif
 
     }
 
@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             //**
             ResetRotation();
             //
-            
+
             if (inputSystem.GetKeyJump && canJump)
             {
                 Jump();
@@ -154,15 +154,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (!playerStick.isStick && !playerStick.isPop)
                 Move();
-            else
-                Pull();
+            else if (playerStick.isStick || playerStick.isPop)
+                StickForce();
+            if (jellySprite.isTurn)
+                TurnForce();
         }
 
     }
 
     void Move()
     {
-
         if (inputSystem.GetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
@@ -171,10 +172,20 @@ public class PlayerMovement : MonoBehaviour
         jellySprite.AddVelocity(new Vector2(inputSystem.GetKeyHMove * moveSpeed, 0.0f));
 
     }
-
-    void Pull()
+    void TurnForce()
     {
         jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.0f));
+    }
+
+    void StickForce()
+    {
+        float force;
+        if (!playerStick.isPop)
+            force = pullForce;
+        else
+            force = airPullForce;
+
+        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * force * 1.5f, 0));
     }
 
     void JumpDetect()

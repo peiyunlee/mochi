@@ -48,17 +48,23 @@ public class PlayerPop : MonoBehaviour
 
     public void PopDown()
     {
-        //讓對方轉
-        canTurn = true;
-        jellySprite.SetAnimBool("isPop", true);
-        jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+        if (canPop)//加在inputSystem裡沒有效(可以在空中連續彈)，可能是時間差導致
+        {
+            //讓對方轉
+            canTurn = true;
+            jellySprite.SetAnimBool("isPop", true);
+            jellySprite.SetPlayerRot(playerStick.stickPlayerList);
+        }
     }
 
     public void PopUp()
     {
-        canTurn = false;
-        jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
-        getKeyPop = true;
+        if (canPop)
+        {
+            canTurn = false;
+            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
+            getKeyPop = true;
+        }
     }
 
     void FixedUpdate()
@@ -68,7 +74,6 @@ public class PlayerPop : MonoBehaviour
             //**
             Turn();
             //
-
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
@@ -107,6 +112,7 @@ public class PlayerPop : MonoBehaviour
                     player.GetComponent<PlayerStick>().ResetFloorStick();
                     player.GetComponent<PlayerStick>().ResetWallStick();
                 }
+                Debug.Log(this.gameObject.tag + "turn");
                 jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
 
             }
