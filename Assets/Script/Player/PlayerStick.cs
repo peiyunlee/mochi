@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class PlayerStick : MonoBehaviour
 {
-
     PlayerMovement playerMovement;
     UnityJellySprite jellySprite;
     public StickDetect stickDetect;
 
     //
 
-    public bool getIsOnFloor;
+    public int getIsOnFloor;
     // Use this for initialization
 
     [SerializeField]
@@ -21,12 +20,17 @@ public class PlayerStick : MonoBehaviour
     [SerializeField]
     public bool canStick;  //有碰到東西可以黏
 
-
-    // [SerializeField]
-    // private bool isPointAttachItem;  //有碰到Item
+    //item
 
     [SerializeField]
-    public List<GameObject> stickItemList;  //黏住的角色
+    public List<GameObject> stickItemList;
+    public List<GameObject> touchItemList;
+    public bool isTouchItem;
+
+    //player
+    public bool isTouchPlayer;
+
+    public GameObject touchPlayer;
 
     [SerializeField]
     private List<GameObject> pointAttachPlayerList;  //有碰到角色
@@ -39,25 +43,37 @@ public class PlayerStick : MonoBehaviour
     // [SerializeField]
     // public List<GameObject> touchPlayerList;  //黏住的角色
 
+    //wall
 
+    [SerializeField]
+    public bool isTouchWall;
 
-    // [SerializeField]
-    // public bool isPointAttachWall;  //有碰到wall
+    [SerializeField]
+    public bool isAttachWall;
+
+    [SerializeField]
+    bool isStickWall;
+
+    //ground
+
+    [SerializeField]
+    public bool isTouchGround;
+
+    [SerializeField]
+    bool isStickGround;
 
     [SerializeField]
     private bool stickPlayerTouchGround;  //黏住的玩家有碰到地板
-    [SerializeField]
-    private bool isTouchGround;  //有碰到Item
 
-    [SerializeField]
-    private bool isPointAttachGround;  //有碰到Ground
+
+    //rocket
 
     [SerializeField]
     bool isStickRocket;
 
     //
     [SerializeField]
-    public bool isPop;
+    public bool isPoped;
     //
 
     void Start()
@@ -65,7 +81,7 @@ public class PlayerStick : MonoBehaviour
         jellySprite = gameObject.GetComponent<UnityJellySprite>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         stickDetect = gameObject.GetComponentInChildren<StickDetect>();
-        isPop = false;
+        isPoped = false;
         jellySprite.notFreeze = false;
     }
 
@@ -77,11 +93,11 @@ public class PlayerStick : MonoBehaviour
             {
                 AttachDetect();
 
-                if (stickDetect.isTouchWall || isPointAttachGround || stickPlayerTouchGround)
+                if (isAttachWall || isTouchGround || stickPlayerTouchGround)
                 {
-                    if (isPop)
+                    if (isPoped)
                     {
-                        isPop = false;
+                        isPoped = false;
                     }
                 }
 
@@ -104,21 +120,11 @@ public class PlayerStick : MonoBehaviour
 
     void PlayerListTouchWallAndGround()
     {
-        // if (isStickedPlayerList != null)
-        // {
-        //     foreach (var isStickPlayer in isStickedPlayerList)
-        //     {
-        //         if (isStickPlayer.GetComponent<PlayerStick>().stickDetect.isTouchWall || isStickPlayer.GetComponent<PlayerStick>().isPointAttachGround)
-        //             isStickPlayerTouchGround = true;
-        //         else
-        //             isStickPlayerTouchGround = false;
-        //     }
-        // }
         if (stickPlayerList != null)
         {
             foreach (var stickPlayer in stickPlayerList)
             {
-                if (stickPlayer.GetComponent<PlayerStick>().stickDetect.isTouchWall || stickPlayer.GetComponent<PlayerStick>().isPointAttachGround)
+                if (stickPlayer.GetComponent<PlayerStick>().isAttachWall || stickPlayer.GetComponent<PlayerStick>().isTouchGround)
                     stickPlayerTouchGround = true;
                 else
                     stickPlayerTouchGround = false;
@@ -145,26 +151,24 @@ public class PlayerStick : MonoBehaviour
 
     private void ItemToStick()
     {
-        stickItemList = jellySprite.SetItemStick(stickDetect.touchItemList);
+        stickItemList = jellySprite.SetItemStick(touchItemList);
 
         isStickRocket = jellySprite.GetIsRocketAttach();
 
         if (isStickRocket)
             RocketStick();
 
-        if (stickDetect.isTouchWall)
-            jellySprite.SetWallStick();
+        if (isAttachWall && !jellySprite.isTurn)
+            isStickWall = jellySprite.SetWallStick();
 
-        if (getIsOnFloor || isPointAttachGround)
-        {
-            jellySprite.SetFloorStick();
-        }
+        if (isTouchGround && !jellySprite.isTurn)
+            isStickGround = jellySprite.SetFloorStick();
     }
 
 
     public void ResetItemNotStick()
     {
-        stickItemList = null;
+        stickItemList.Clear();
         jellySprite.ResetItemStick();
     }
 
@@ -180,11 +184,11 @@ public class PlayerStick : MonoBehaviour
 
     private void PlayerToStick()
     {
-        if (pointAttachPlayerList != null && stickDetect.isTouchPlayer)
+        if (pointAttachPlayerList != null)
         {
             foreach (var pointAttachPlayer in pointAttachPlayerList)
             {
-                if (!stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<PlayerStick>().isPop)
+                if (!stickPlayerList.Contains(pointAttachPlayer) && !pointAttachPlayer.GetComponent<PlayerStick>().isPoped)
                 {
                     stickPlayerList.Add(pointAttachPlayer);
                 }
@@ -226,6 +230,10 @@ public class PlayerStick : MonoBehaviour
     {
         isStick = false;
 
+        isStickGround = false;
+
+        isStickWall = false;
+
         ResetItemNotStick();
 
         ResetPlayersNotStick();
@@ -233,11 +241,19 @@ public class PlayerStick : MonoBehaviour
         ResetFloorStick();
 
         ResetWallStick();
+
+        stickDetect.SetDetect(false);
+
+        stickDetect.ResetDetect();
     }
 
     public void ResetNotStick_PopWithPlayer()
     {
         isStick = false;
+
+        isStickGround = false;
+
+        isStickWall = false;
 
         ResetItemNotStick();
 
@@ -253,16 +269,14 @@ public class PlayerStick : MonoBehaviour
     {
         pointAttachPlayerList = jellySprite.GetPlayersAttach();
 
-        // isPointAttachWall = jellySprite.GetIsWallAttach();
-
-        isPointAttachGround = jellySprite.GetIsFloorAttach();
+        isAttachWall = jellySprite.GetIsWallAttach();
 
         PlayerListTouchWallAndGround();
     }
 
     void CanStick()
     {
-        if (((getIsOnFloor || isPointAttachGround) || (stickDetect.isTouchWall) || pointAttachPlayerList.Count != 0 || (stickDetect.touchItemList.Count != 0)))
+        if ((isTouchGround || isAttachWall || pointAttachPlayerList.Count != 0 || (touchItemList.Count != 0)))
         {
             canStick = true;
         }

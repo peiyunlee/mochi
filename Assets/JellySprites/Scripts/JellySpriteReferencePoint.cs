@@ -25,8 +25,8 @@ public class JellySpriteReferencePoint : MonoBehaviour
         PLAYER,
         GROUND,
         WALL,
-        ITEM, 
-        HEAVYITEM,
+        TITEM, 
+        HITEM,
         ROTATEITEM,
 
         ROCKETITEM,
@@ -118,11 +118,11 @@ public class JellySpriteReferencePoint : MonoBehaviour
                 attachItem = collision.gameObject;
                 if (collision.gameObject.tag == "TItem")
                 {
-                    isTouch = (int)TOUCHTYPE.ITEM;
+                    isTouch = (int)TOUCHTYPE.TITEM;
                 }
                 else if (collision.gameObject.tag == "HItem")
                 {
-                    isTouch = (int)TOUCHTYPE.HEAVYITEM;
+                    isTouch = (int)TOUCHTYPE.HITEM;
                 }
                 else if (collision.gameObject.tag == "RotateItem")
                 {

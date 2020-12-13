@@ -36,15 +36,15 @@ public class CircleGround : MonoBehaviour
 
         float eachDeg = 360 / childList.Count;
 
-        int index = 0;
-        foreach (var item in childList)
-        {
-            float x = r * Mathf.Cos(eachAngle * index) + h;
-            float y = r * Mathf.Sin(eachAngle * index) + k;
-            childList[index].transform.position = new Vector2(x, y);
-            childList[index].transform.Rotate(new Vector3(0, 0, eachDeg * index));
-            index++;
-        }
+        // int index = 0;
+        // foreach (var item in childList)
+        // {
+        //     float x = r * Mathf.Cos(eachAngle * index) + h;
+        //     float y = r * Mathf.Sin(eachAngle * index) + k;
+        //     childList[index].transform.position = new Vector2(x, y);
+        //     childList[index].transform.Rotate(new Vector3(0, 0, eachDeg * index));
+        //     index++;
+        // }
 
         //tile式移動
         // tilemap = GetComponent<Tilemap>();

@@ -168,7 +168,8 @@ public class LevelController : MonoBehaviour
 
     public void SetRocketStick(GameObject player, bool set, int color)
     {
-        rocket.SetPlayerStick(player, set, color);
+        if(mochiAllGet)
+            rocket.SetPlayerStick(player, set, color);
     }
 
     public void CameraRemoveTarget(Transform player){

@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class PlayerFloorDetect : MonoBehaviour
 {
+    public enum TOUCHTYPE
+    {
+        NONE = 0,
+        PLAYER,
+        GROUND,
+        WALL,
+        TITEM, 
+        HITEM,
+        ROTATEITEM,
 
-    public bool isOnFloor { get { return m_isOnFloor; } }
+        ROCKETITEM,
+    }
+
+    public int isOnFloor { get { return m_isOnFloor; } }
 
     [SerializeField]
-    private bool m_isOnFloor;
+    private int m_isOnFloor;
     public GameObject parents;
 
     void Start()
@@ -31,17 +43,20 @@ public class PlayerFloorDetect : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ground" || other.gameObject.tag == "RotateItem"){
-             m_isOnFloor = true;
+        if (other.gameObject.tag == "ground"){
+             m_isOnFloor = (int)TOUCHTYPE.GROUND;
         }
-        else if(other.gameObject.tag == "TItem"){
-            m_isOnFloor = other.gameObject.GetComponent<Item>().isOnFloor;
+        else if(other.gameObject.tag == "RotateItem"){
+             m_isOnFloor = (int)TOUCHTYPE.ROTATEITEM;
+        }
+        else if(other.gameObject.tag == "TItem" && other.gameObject.GetComponent<Item>().isOnFloor){
+            m_isOnFloor = (int)TOUCHTYPE.TITEM;
         }
         else if(other.gameObject.tag == "HItem" || other.gameObject.tag == "Rocket"){
-            m_isOnFloor = true;
+            m_isOnFloor = (int)TOUCHTYPE.HITEM;
         }
-        else if(other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.tag != parents.tag && other.gameObject.name == "stickDetect"){
-            m_isOnFloor = other.gameObject.GetComponentInParent<PlayerMovement>().playerFloorDetect.isOnFloor;
+        else if(other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.tag != parents.tag && other.gameObject.name == "stickDetect" && other.gameObject.GetComponentInParent<PlayerMovement>().playerFloorDetect.isOnFloor > 0){
+            m_isOnFloor = (int)TOUCHTYPE.PLAYER;
         }
 
 
@@ -50,16 +65,22 @@ public class PlayerFloorDetect : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "ground"){
-             m_isOnFloor = false;
+             m_isOnFloor =  (int)TOUCHTYPE.NONE;
+        }
+        else if(other.gameObject.tag == "RotateItem"){
+             m_isOnFloor =  (int)TOUCHTYPE.NONE;
         }
         else if(other.gameObject.tag == "TItem"){
-            m_isOnFloor = false;
+            m_isOnFloor =  (int)TOUCHTYPE.NONE;
         }
         else if(other.gameObject.tag == "HItem"){
-            m_isOnFloor = false;
+            m_isOnFloor =  (int)TOUCHTYPE.NONE;
+        }
+        else if(other.gameObject.tag == "Rocket"){
+            m_isOnFloor =  (int)TOUCHTYPE.NONE;
         }
         else if(other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.tag != parents.tag && other.gameObject.name == "stickDetect"){
-            m_isOnFloor = false;
+            m_isOnFloor =  (int)TOUCHTYPE.NONE;
         }
     }
 }

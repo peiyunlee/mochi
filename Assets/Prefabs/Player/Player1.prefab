@@ -194,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 35.8, y: 3.7, z: 0}
+  m_LocalPosition: {x: 7.82, y: 0.54, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4498225790585558}
@@ -351,8 +351,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008458377, y: -0.0031783574}
-  m_Size: {x: 2.4989626, y: 2.108662}
+  m_Offset: {x: 0.0014026148, y: -0.015856745}
+  m_Size: {x: 2.5241704, y: 2.083307}
   m_Direction: 1
 --- !u!82 &82780965522442374
 AudioSource:
@@ -635,8 +635,9 @@ MonoBehaviour:
   playerColor: 0
   playerFloorDetect: {fileID: 0}
   moveSpeed: 3.75
+  airPullForce: 0
   pullForce: 10
-  jumpSpeed: 325
+  jumpSpeed: 6.5
   isJump: 0
   isDead: 0
   isInvincible: 0
@@ -732,10 +733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623db415003741740bf105e7cd459d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTouchWall: 0
-  isTouchPlayer: 0
-  touchItemList: []
-  playerList: []
 --- !u!114 &114901605640600738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -752,11 +749,16 @@ MonoBehaviour:
   isStick: 0
   canStick: 0
   stickItemList: []
+  touchItemList: []
+  isTouchItem: 0
+  isTouchPlayer: 0
+  touchPlayer: {fileID: 0}
   pointAttachPlayerList: []
   stickPlayerList: []
   isStickedPlayerList: []
+  isTouchWall: 0
   isTouchGround: 0
-  isPointAttachGround: 0
+  stickPlayerTouchGround: 0
   isStickRocket: 0
   isPop: 0
 --- !u!212 &212248840422249300

@@ -1,4 +1,4 @@
-﻿// #define JOYSTICK
+﻿#define JOYSTICK
 // #define HOLDSTICK
 using System.Collections;
 using System.Collections.Generic;
@@ -189,4 +189,5 @@ public class InputSystem : MonoBehaviour
 #endif
 
     }
+
 }

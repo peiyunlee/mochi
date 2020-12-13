@@ -103,12 +103,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isDead)
             {
-
                 JumpDetect();
 
                 jellySprite.SetAnimBool("isJump", !canJump);
-
-                SetState();
             }
             else
             {
@@ -119,9 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
     void SetState()
     {
-        if (inputSystem.GetKeyHMove == 1)
+        if (inputSystem.GetKeyHMove > 0)
             walkCurState = State.Right;
-        else if (inputSystem.GetKeyHMove == -1)
+        else if (inputSystem.GetKeyHMove < 0)
             walkCurState = State.Left;
 
         if (walkCurState != walkPreState)
@@ -152,13 +149,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
-
-            if (!playerStick.isStick && !playerStick.isPop)
+            else if (!playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 Move();
-            else if (playerStick.isStick || playerStick.isPop)
+            else if (playerStick.isPoped && !jellySprite.isTurn)
+                PopedForce();
+            else if (playerStick.isStick && !jellySprite.isTurn)
                 StickForce();
-            if (jellySprite.isTurn)
+            else if (jellySprite.isTurn)
                 TurnForce();
+
+            SetState();
         }
 
     }
@@ -180,18 +180,19 @@ public class PlayerMovement : MonoBehaviour
 
     void StickForce()
     {
-        float force;
-        if (!playerStick.isPop)
-            force = pullForce;
-        else
-            force = airPullForce;
+        float force = pullForce;
+        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * force * 1.5f, 0));
+    }
 
+    void PopedForce()
+    {
+        float force = airPullForce;
         jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * force * 1.5f, 0));
     }
 
     void JumpDetect()
     {
-        canJump = playerFloorDetect.isOnFloor;
+        canJump = playerFloorDetect.isOnFloor > 0 && !playerStick.isStick;
 
         if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
             isJump = false;
@@ -203,7 +204,8 @@ public class PlayerMovement : MonoBehaviour
         audio_Jump.Play();
         canJump = false;
         isJump = true;
-        jellySprite.AddForce(new Vector2(0, jumpSpeed));
+        jellySprite.AddVelocity(new Vector2(0, jumpSpeed), false);
+        // jellySprite.AddForce(new Vector2(0, jumpSpeed));
     }
 
     public void Pop(Vector2 slop, float popForce)

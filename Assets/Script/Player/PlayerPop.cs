@@ -37,7 +37,7 @@ public class PlayerPop : MonoBehaviour
         {
             if (!playerMovement.isDead)
             {
-                canPop = playerStick.isStick && (playerStick.getIsOnFloor || stickDetect.isTouchWall);
+                canPop = playerStick.isStick && (playerStick.getIsOnFloor > 1 || playerStick.isAttachWall || playerStick.isTouchGround) && (playerStick.stickPlayerList.Count != 0 || playerStick.stickItemList.Count != 0);
             }
             else
             {
@@ -49,7 +49,7 @@ public class PlayerPop : MonoBehaviour
 
     public void PopDown()
     {
-        if (canPop)//加在inputSystem裡沒有效(可以在空中連續彈)，可能是時間差導致
+        if (canPop) //加在inputSystem裡沒有效(可以在空中連續彈)，可能是時間差導致
         {
             //讓對方轉
             canTurn = true;
@@ -78,6 +78,7 @@ public class PlayerPop : MonoBehaviour
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
+                jellySprite.isTurn = false;
                 TimesUp = false;
                 getKeyPop = false;
                 jellySprite.SetAnimBool("isPop", false);
@@ -92,6 +93,7 @@ public class PlayerPop : MonoBehaviour
         canPop = false;
 
         canTurn = false;
+        jellySprite.isTurn = false;
         jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
 
         jellySprite.SetAnimBool("isPop", false);
@@ -109,12 +111,10 @@ public class PlayerPop : MonoBehaviour
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
-                    // Debug.DrawLine(this.gameObject.transform.position, player.gameObject.transform.position, Color.blue);
                     player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                     player.GetComponent<PlayerStick>().ResetFloorStick();
                     player.GetComponent<PlayerStick>().ResetWallStick();
                 }
-                Debug.Log(this.gameObject.tag + "turn");
                 jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().enabled = false;
 
             }
@@ -206,7 +206,8 @@ public class PlayerPop : MonoBehaviour
 
     void PopPlayer(GameObject player)
     {
-        player.GetComponent<PlayerStick>().isPop = true;
+        player.GetComponent<PlayerStick>().isPoped = true;
+        player.GetComponent<PlayerPop>().InvokeResetIsPoped();
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
 
@@ -215,13 +216,25 @@ public class PlayerPop : MonoBehaviour
 
     void PopWithPlayer(GameObject player)
     {
-        playerStick.isPop = true;
-        player.GetComponent<PlayerStick>().isPop = true;
+        playerStick.isPoped = true;
+        InvokeResetIsPoped();
+        player.GetComponent<PlayerStick>().isPoped = true;
+        player.GetComponent<PlayerPop>().InvokeResetIsPoped();
 
         Vector2 slop = player.gameObject.transform.position - this.gameObject.transform.position;
         slop = slop / Mathf.Sqrt(Mathf.Pow(slop.x, 2) + Mathf.Pow(slop.y, 2));
 
         player.GetComponent<PlayerMovement>().Pop(slop, popForce * 0.9f);
         playerMovement.Pop(slop, popForce * 0.9f);
+    }
+
+    public void InvokeResetIsPoped()
+    {
+        Invoke("ResetIsPoped", 3f);
+    }
+
+    void ResetIsPoped()
+    {
+        playerStick.isPoped = false;
     }
 }

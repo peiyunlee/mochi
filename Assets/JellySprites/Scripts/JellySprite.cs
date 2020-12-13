@@ -2102,8 +2102,9 @@ public abstract class JellySprite : MonoBehaviour
         return false;
     }
 
-    public void SetWallStick()
+    public bool SetWallStick()
     {
+        bool stick = false;
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
             // == wall
@@ -2118,8 +2119,10 @@ public abstract class JellySprite : MonoBehaviour
                     referencePoint.SetKinematic(true);
                 }
                 CentralPoint.Body2D.freezeRotation = true;
+                stick = true;
             }
         }
+        return stick;
     }
 
     public void ResetWallStick()
@@ -2148,8 +2151,9 @@ public abstract class JellySprite : MonoBehaviour
         return false;
     }
 
-    public void SetFloorStick()
+    public bool SetFloorStick()
     {
+        bool stick = false;
         foreach (ReferencePoint referencePoint in m_ReferencePoints)
         {
             // == floor
@@ -2165,8 +2169,10 @@ public abstract class JellySprite : MonoBehaviour
                     referencePoint.SetKinematic(true);
                 }
                 CentralPoint.Body2D.freezeRotation = true;
+                stick = true;
             }
         }
+        return stick;
     }
 
     public void ResetFloorStick()

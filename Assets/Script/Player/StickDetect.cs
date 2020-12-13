@@ -5,13 +5,7 @@ using UnityEngine;
 public class StickDetect : MonoBehaviour
 {
     InputSystem inputSystem;
-    public bool isTouchWall;
-
-    public bool isTouchPlayer;
-    public List<GameObject> touchItemList = new List<GameObject>();  //碰到的物體
-
-    //TEST
-    public List<GameObject> playerList = new List<GameObject>();  //碰到的物體
+    PlayerStick playerStick;
 
     bool getKeyConfirm;
 
@@ -20,11 +14,14 @@ public class StickDetect : MonoBehaviour
     void Start()
     {
         inputSystem = GetComponentInParent<InputSystem>();
+        playerStick = GetComponentInParent<PlayerStick>();
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         DetectBillboard(other.gameObject);
+
+        DetectTouchGround(other.gameObject, true);
 
         DetectTouchWall(other.gameObject, true);
 
@@ -36,6 +33,8 @@ public class StickDetect : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         DetectTouchWall(other.gameObject, false);
+
+        DetectTouchGround(other.gameObject, false);
 
         DetectTouchItem(other.gameObject, false);
 
@@ -56,53 +55,44 @@ public class StickDetect : MonoBehaviour
 
     void DetectTouchPlayer(GameObject other, bool trigger)
     {
-
-        if (trigger)
+        if (other.tag != this.tag && other.layer == LayerMask.NameToLayer("player") && other.name == "stickDetect")
         {
-            if (other.tag != this.tag && other.layer == LayerMask.NameToLayer("player") && other.name == "stickDetect")
-            {
-                isTouchPlayer = true;
-            }
-        }
-        else
-        {
-            if (other.tag != this.tag && other.layer == LayerMask.NameToLayer("player") && other.name == "stickDetect")
-            {
-                isTouchPlayer = false;
-            }
+            playerStick.isTouchPlayer = trigger;
+            if (trigger)
+                playerStick.touchPlayer = other.GetComponentInParent<PlayerMovement>().gameObject;
+            else
+                playerStick.touchPlayer = null;
         }
     }
 
     void DetectTouchItem(GameObject other, bool trigger)
     {
-        if (trigger)
-        {
-            if ((other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem") && !touchItemList.Contains(other))
+        if (other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem"){
+            playerStick.isTouchItem = trigger;
+            if (trigger && !playerStick.touchItemList.Contains(other))
             {
-                touchItemList.Add(other);
+                playerStick.touchItemList.Add(other);
             }
-        }
-        else
-        {
-            if (touchItemList.Contains(other))
+            else if (!trigger && playerStick.touchItemList.Contains(other))
             {
-                touchItemList.Remove(other);
+                playerStick.touchItemList.Remove(other);
             }
         }
     }
 
     void DetectTouchWall(GameObject other, bool trigger)
     {
-        if (trigger)
+        if (other.tag == "wall")
         {
-            if (other.tag == "wall")
-            {
-                isTouchWall = true;
-            }
+            playerStick.isTouchWall = trigger;
         }
-        else
+    }
+
+    void DetectTouchGround(GameObject other, bool trigger)
+    {
+        if (other.tag == "ground")
         {
-            isTouchWall = false;
+            playerStick.isTouchGround = trigger;
         }
     }
 
@@ -111,10 +101,10 @@ public class StickDetect : MonoBehaviour
         detect = set;
     }
 
-    void ResetDetect()
+    public void ResetDetect()
     {
-        isTouchWall = false;
-        touchItemList.Clear();
-        isTouchPlayer = false;
+        playerStick.isTouchWall = false;
+        playerStick.touchItemList.Clear();
+        playerStick.isTouchPlayer = false;
     }
 }
