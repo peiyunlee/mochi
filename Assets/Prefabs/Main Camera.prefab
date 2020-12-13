@@ -464,7 +464,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667191252635194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 2, z: -10}
+  m_LocalPosition: {x: 3.9, y: 3.15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4516836256699584}
@@ -591,7 +591,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 117
+  field of view: 63.5
   orthographic: 0
   orthographic size: 5.525
   m_Depth: -1
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -3
+  speed: -2.5
   turn: {x: -5, y: -1.75}
   start: {x: 176, y: -1.75}
 --- !u!114 &114076632809938052
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -5
+  speed: -4.5
   turn: {x: -5, y: -1.75}
   start: {x: 157.5, y: -1.75}
 --- !u!114 &114194148902385338
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -2
+  speed: -1.5
   turn: {x: -100, y: -1.75}
   start: {x: 119.25, y: -1.75}
 --- !u!114 &114619546505433348
@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -2
+  speed: -1.5
   turn: {x: -55, y: -1.75}
   start: {x: 164.25, y: -1.75}
 --- !u!114 &114670458450299526
@@ -970,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -3
+  speed: -2.5
   turn: {x: -80, y: -1.75}
   start: {x: 101, y: -1.75}
 --- !u!114 &114731251730369150
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -2
+  speed: -1.5
   turn: {x: -5, y: 2.79}
   start: {x: 214.25, y: 2.79}
 --- !u!114 &114749415772458054
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3fd9e39ea22e4aa08ec76d36d410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -5
+  speed: -4.5
   turn: {x: -80, y: -1.75}
   start: {x: 82.5, y: -1.75}
 --- !u!114 &114803159432194526
@@ -1029,16 +1029,17 @@ MonoBehaviour:
   targets:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   offset: {x: 0, y: 0, z: -10}
   smoothTime: 0.5
   velocity: {x: 0, y: 0, z: 0}
-  min: {x: 2, y: 2}
-  max: {x: 41.75, y: 13}
-  maxZoom: 60
+  min: {x: 5, y: 4}
+  max: {x: 45, y: 12.5}
+  maxZoom: 65
   minZoom: 115
   zoomLimiter: 40
   zoomSpeed: 5
+  s1: 6
+  s2: -0.6
 --- !u!212 &212038265862406274
 SpriteRenderer:
   m_ObjectHideFlags: 1

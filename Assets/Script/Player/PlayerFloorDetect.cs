@@ -31,17 +31,34 @@ public class PlayerFloorDetect : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // if (other.gameObject.tag == "ground" && other.gameObject.tag != parents.tag)
-        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "wall" && other.gameObject.tag != "Billboard")
-        {
+        if (other.gameObject.tag == "ground" || other.gameObject.tag == "RotateItem"){
+             m_isOnFloor = true;
+        }
+        else if(other.gameObject.tag == "TItem"){
+            m_isOnFloor = other.gameObject.GetComponent<Item>().isOnFloor;
+        }
+        else if(other.gameObject.tag == "HItem" || other.gameObject.tag == "Rocket"){
             m_isOnFloor = true;
         }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.tag != parents.tag && other.gameObject.name == "stickDetect"){
+            m_isOnFloor = other.gameObject.GetComponentInParent<PlayerMovement>().playerFloorDetect.isOnFloor;
+        }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag != parents.tag && other.gameObject.tag != "wall")
-        {
+        if (other.gameObject.tag == "ground"){
+             m_isOnFloor = false;
+        }
+        else if(other.gameObject.tag == "TItem"){
+            m_isOnFloor = false;
+        }
+        else if(other.gameObject.tag == "HItem"){
+            m_isOnFloor = false;
+        }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.tag != parents.tag && other.gameObject.name == "stickDetect"){
             m_isOnFloor = false;
         }
     }

@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212311489258800032}
   - component: {fileID: 50706279967766172}
   - component: {fileID: 61575791528424930}
-  m_Layer: 17
+  m_Layer: 12
   m_Name: "\u9580\u64CB"
-  m_TagString: Item
+  m_TagString: HItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,9 +38,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4537159945653938}
   - component: {fileID: 50949142729456498}
-  m_Layer: 17
+  m_Layer: 12
   m_Name: joint
-  m_TagString: Item
+  m_TagString: HItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,9 +54,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4898785441068988}
   - component: {fileID: 212854027197460600}
-  m_Layer: 17
+  m_Layer: 12
   m_Name: door
-  m_TagString: Item
+  m_TagString: HItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4356318223099596}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: "\u62C9\u9580"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,9 +89,9 @@ GameObject:
   - component: {fileID: 233375696062228768}
   - component: {fileID: 70728832070277682}
   - component: {fileID: 231003545312196038}
-  m_Layer: 17
+  m_Layer: 12
   m_Name: door
-  m_TagString: Item
+  m_TagString: HItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -354,7 +354,7 @@ SpriteRenderer:
   m_Size: {x: 0.77, y: 0.99}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!212 &212854027197460600

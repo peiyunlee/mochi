@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioSource audio_Jump;
 
     //PlayerColor
 
@@ -18,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     //PlayerScript
     private UnityJellySprite jellySprite;
     PlayerStick playerStick;
-    PlayerFloorDetect playerFloorDetect;
+    public PlayerFloorDetect playerFloorDetect;
     ColorDetect colorDetect;
 
     InputSystem inputSystem;
@@ -199,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Jump()
     {
+        audio_Jump.Play();
         canJump = false;
         isJump = true;
         jellySprite.AddForce(new Vector2(0, jumpSpeed));
@@ -257,9 +259,9 @@ public class PlayerMovement : MonoBehaviour
         this.gameObject.SetActive(true);
 
         isDead = false;
+        LevelController.instance.CameraAddTarget(transform);
 
         jellySprite.SetAnimBool("isDead", false);
-        // this.gameObject.SetActive(true);
 
         Die_Invincible(); //無敵狀態
 

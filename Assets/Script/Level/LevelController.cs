@@ -7,11 +7,18 @@ using UnityEngine.UI;
 public class LevelController : MonoBehaviour
 {
     static public LevelController instance;
-    public List<GameObject> playerPrefab = new List<GameObject>(4);
 
+    public AudioSource audio_Collection;
+    public List<GameObject> playerPrefab = new List<GameObject>(2);
+
+    public MultipleTargetCamera multipleTargetCamera;
+
+    //radish
     [SerializeField]
     int radishCount;
+    public Text radishText;
 
+    //mochi
     public int mochiTotalCount;
 
     int mochiCount;
@@ -21,10 +28,10 @@ public class LevelController : MonoBehaviour
     bool mochiAllGet;
 
     public Text mochiText;
-    public Text radishText;
 
-    public GameObject option;
+    // public GameObject option;
 
+    //rocket
     public GameObject rocketObjet;
 
     Rocket rocket;
@@ -57,13 +64,9 @@ public class LevelController : MonoBehaviour
         InvokeRepeating("Count", 1, 0.01f);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ShowOption();
-        }
         if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
         {
             billboardObjet.GetComponent<Billboard>().Hide();
@@ -118,12 +121,14 @@ public class LevelController : MonoBehaviour
     {
         radishCount++;
         radishText.text = radishCount + "";
+        audio_Collection.Play();
     }
 
     public void AddMochi()
     {
         mochiCount++;
         mochiText.text = mochiCount + " / " + mochiTotalCount;
+        audio_Collection.Play();
         if (mochiCount == mochiTotalCount)
             mochiAllGet = true;
     }
@@ -149,20 +154,28 @@ public class LevelController : MonoBehaviour
         //儲存進度
     }
 
-    public void GameReturn()
-    {
-        Time.timeScale = 1;
-        option.SetActive(false);
-    }
+    // public void GameReturn()
+    // {
+    //     Time.timeScale = 1;
+    //     option.SetActive(false);
+    // }
 
-    public void ShowOption()
-    {
-        Time.timeScale = 0;
-        option.SetActive(true);
-    }
+    // public void ShowOption()
+    // {
+    //     Time.timeScale = 0;
+    //     option.SetActive(true);
+    // }
 
     public void SetRocketStick(GameObject player, bool set, int color)
     {
         rocket.SetPlayerStick(player, set, color);
+    }
+
+    public void CameraRemoveTarget(Transform player){
+        multipleTargetCamera.RemoveTarget(player);
+    }
+
+    public void CameraAddTarget(Transform player){
+        multipleTargetCamera.AddTarget(player);
     }
 }

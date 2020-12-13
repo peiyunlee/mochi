@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileButton : Btn {
+public class TileButton : MonoBehaviour
+{
 
 
     public GameObject buttonTile;
@@ -19,7 +20,15 @@ public class TileButton : Btn {
     protected float upY, downY;
 
     public float startY;
-	
+
+    public AudioSource audio_Click;
+
+    public AudioSource audio_Up;
+
+    bool audioClick;
+
+    bool audioUp;
+
 
     public void SetIsMove(bool clicked)
     {
@@ -36,6 +45,15 @@ public class TileButton : Btn {
 
         upY = 0.13f;
         downY = -0.2f;
+
+        if (isClicked)
+        {
+            audioClick = true;
+        }
+        else
+        {
+            audioUp = true;
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -50,6 +68,16 @@ public class TileButton : Btn {
     {
         if (isMove)
         {
+            if (!audioClick && audioUp)
+            {
+                audioClick = true;
+                audio_Click.Play();
+            }
+            else if (!audioUp && audioClick)
+            {
+                audioUp = true;
+                audio_Up.Play();
+            }
             Action();
         }
     }
@@ -63,6 +91,7 @@ public class TileButton : Btn {
             moveSpeed = -moveSpeed;
             isMove = false;
             isClicked = true;
+            audioUp = false;
         }
 
         else if (pos.y - startY > upY)
@@ -70,6 +99,7 @@ public class TileButton : Btn {
             moveSpeed = -moveSpeed;
             isMove = false;
             isClicked = false;
+            audioClick = false;
         }
 
         Vector2 newPos = pos + moveSpeed * Time.deltaTime;

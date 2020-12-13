@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerPop : MonoBehaviour
 {
+    public AudioSource audio_Pop;
     public float popForce;
     StickDetect stickDetect;
     PlayerStick playerStick;
@@ -81,6 +82,7 @@ public class PlayerPop : MonoBehaviour
                 getKeyPop = false;
                 jellySprite.SetAnimBool("isPop", false);
                 Pop();
+                audio_Pop.Play();
             }
         }
     }

@@ -23,6 +23,9 @@ public class ColorDetect : MonoBehaviour
                 {
                     playerMovement.Die();
                 }
+                else if(other.gameObject.tag == "WillDie"){
+                    LevelController.instance.CameraRemoveTarget(playerMovement.transform);
+                }
             }
         }
     }
