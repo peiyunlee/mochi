@@ -20,6 +20,9 @@ TagManager:
   - Rocket
   - die
   - Billboard
+  - WillDie
+  - HItem
+  - TItem
   layers:
   - Default
   - TransparentFX

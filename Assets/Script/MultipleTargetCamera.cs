@@ -142,7 +142,7 @@ public class MultipleTargetCamera : MonoBehaviour
     public void RemoveTarget(Transform TargetToRemove)
     {
 
-        if (!targets.Contains(TargetToRemove))
+        if (targets.Contains(TargetToRemove))
         {
             targets.Remove(TargetToRemove);
         }

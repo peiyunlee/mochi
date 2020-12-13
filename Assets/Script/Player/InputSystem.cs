@@ -1,4 +1,4 @@
-﻿#define JOYSTICK
+﻿// #define JOYSTICK
 // #define HOLDSTICK
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class InputSystem : MonoBehaviour
 {
+
     private int testType;
 
     //movement

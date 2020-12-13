@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour
         {
             Restart(1);
         }
+        else if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }
     }
 
     public void SetCurrentLevel(string levelName)
