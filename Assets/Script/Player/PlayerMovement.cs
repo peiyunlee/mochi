@@ -51,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
     //DEAD
 
+    public int diePoint;
+
     public bool isDead;
 
     public bool isInvincible;
@@ -90,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isDead = false;
+        diePoint = 0;
 
 #if TEST_NOT_DIE
             isInvincible = true
@@ -255,7 +258,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 newPos;
         // newPos = cam.ScreenToWorldPoint(new Vector3(camX, camY, cam.nearClipPlane));
         // jellySprite.SetPosition(DetectPoint_Ground(newPos), true);
-        newPos = new Vector2(-3.42f, -0.03f);
+        // newPos = new Vector2(-3.42f, -0.03f);
+        newPos = LevelController.instance.diePointPos[diePoint].position;
         jellySprite.SetPosition(newPos, true);
 
         this.gameObject.SetActive(true);

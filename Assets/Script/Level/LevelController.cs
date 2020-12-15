@@ -46,6 +46,10 @@ public class LevelController : MonoBehaviour
     //Billboard
     public GameObject billboardObjet;
 
+    //Die
+    public GameObject diePoint;
+    public Transform [] diePointPos;
+
 
     void Start()
     {
@@ -65,6 +69,8 @@ public class LevelController : MonoBehaviour
         timeCount = 0;
         InvokeRepeating("Count", 1, 0.01f);
 
+        diePointPos = diePoint.GetComponentsInChildren<Transform>();
+
         audio_Background.Play();
     }
 
@@ -74,6 +80,13 @@ public class LevelController : MonoBehaviour
         if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
         {
             billboardObjet.GetComponent<Billboard>().Hide();
+        }
+        
+        if(Input.GetKeyDown("q")){
+            playerPrefab[0].GetComponent<PlayerMovement>().Die();
+        }
+        else if(Input.GetKeyDown("w")){
+            playerPrefab[1].GetComponent<PlayerMovement>().Die();
         }
     }
 
