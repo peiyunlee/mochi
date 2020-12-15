@@ -63,7 +63,6 @@ public class PlayerPop : MonoBehaviour
         if (canPop)
         {
             canTurn = false;
-            jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
             getKeyPop = true;
         }
     }
@@ -78,9 +77,10 @@ public class PlayerPop : MonoBehaviour
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
-                jellySprite.isTurn = false;
+                // jellySprite.isTurn = false;
                 TimesUp = false;
                 getKeyPop = false;
+                jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
                 jellySprite.SetAnimBool("isPop", false);
                 Pop();
                 audio_Pop.Play();
@@ -104,7 +104,7 @@ public class PlayerPop : MonoBehaviour
     {
         if (canTurn)
         {
-            jellySprite.isTurn = true;
+            // jellySprite.isTurn = true;
             //按彈時unfreeze對方的rotation
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
@@ -154,6 +154,7 @@ public class PlayerPop : MonoBehaviour
             List<GameObject> stickPlayerList = playerStick.stickPlayerList;
             List<GameObject> popPlayerList = new List<GameObject>();
             List<GameObject> withPlayerList = new List<GameObject>();
+
             foreach (var player in stickPlayerList)
             {
                 bool isStick = player.GetComponent<PlayerStick>().isStick;

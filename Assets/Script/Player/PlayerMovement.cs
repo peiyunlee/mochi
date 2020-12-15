@@ -153,9 +153,9 @@ public class PlayerMovement : MonoBehaviour
                 Move();
             else if (playerStick.isPoped && !jellySprite.isTurn)
                 PopedForce();
-            else if (playerStick.isStick && !jellySprite.isTurn)
+            else if (playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 StickForce();
-            else if (jellySprite.isTurn)
+            else if (jellySprite.isTurn && !playerStick.isPoped)
                 TurnForce();
 
             SetState();
@@ -165,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
+        Debug.Log(this.tag+"move");
         if (inputSystem.GetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
@@ -175,7 +176,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void TurnForce()
     {
-        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.0f));
+        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.5f));
+        if(inputSystem.GetKeyHMove==0&&inputSystem.GetKeyVMove==0)
+            jellySprite.AddVelocity(new Vector2(0.0f, 0.0f));
     }
 
     void StickForce()
