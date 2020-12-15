@@ -9,6 +9,8 @@ public class LevelController : MonoBehaviour
     static public LevelController instance;
 
     public AudioSource audio_Collection;
+
+    public AudioSource audio_Background;
     public List<GameObject> playerPrefab = new List<GameObject>(2);
 
     public MultipleTargetCamera multipleTargetCamera;
@@ -62,6 +64,8 @@ public class LevelController : MonoBehaviour
 
         timeCount = 0;
         InvokeRepeating("Count", 1, 0.01f);
+
+        audio_Background.Play();
     }
 
 

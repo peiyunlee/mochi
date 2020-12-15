@@ -58,6 +58,8 @@ public class InputSystem : MonoBehaviour
         PopInput();
         StickInput();
         Other();
+
+        TestInput();
     }
 
     void Other()
@@ -190,4 +192,11 @@ public class InputSystem : MonoBehaviour
 
     }
 
+    void TestInput()
+    {
+        if (Mathf.Abs(GetKeyHMove) > 0.99 || Mathf.Abs(GetKeyVMove) > 0.99)
+        {
+            // Debug.Log(Mathf.Atan2(GetKeyVMove, GetKeyHMove) * Mathf.Rad2Deg);
+        }
+    }
 }

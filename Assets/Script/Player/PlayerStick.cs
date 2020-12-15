@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerStick : MonoBehaviour
 {
+    public AudioSource audio_Stick;
     PlayerMovement playerMovement;
     UnityJellySprite jellySprite;
     public StickDetect stickDetect;
@@ -135,6 +136,7 @@ public class PlayerStick : MonoBehaviour
     public void SetStick()
     {
         stickDetect.SetDetect(true);
+        audio_Stick.Play();
         isStick = true;
         jellySprite.SetAnimBool("isWalk", false);
     }

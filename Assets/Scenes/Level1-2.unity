@@ -230,11 +230,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
-        type: 2}
-      propertyPath: playerPrefab.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4534842592732400, guid: 65c29f9940962e64bbf9d8abe85837f3, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -267,6 +262,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114286977099251100, guid: 65c29f9940962e64bbf9d8abe85837f3,
+        type: 2}
+      propertyPath: m_FirstSelected
+      value: 
+      objectReference: {fileID: 1616724544}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
       propertyPath: playerPrefab.Array.data[0]
@@ -279,29 +279,19 @@ Prefab:
       objectReference: {fileID: 145582845}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
-      propertyPath: playerPrefab.Array.data[2]
+      propertyPath: multipleTargetCamera
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
-        type: 2}
-      propertyPath: playerPrefab.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
-        type: 2}
-      propertyPath: mochiText
-      value: 
-      objectReference: {fileID: 579122780}
+      objectReference: {fileID: 1301886711}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
       propertyPath: radishText
       value: 
       objectReference: {fileID: 471547620}
-    - target: {fileID: 114286977099251100, guid: 65c29f9940962e64bbf9d8abe85837f3,
+    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
-      propertyPath: m_FirstSelected
+      propertyPath: mochiText
       value: 
-      objectReference: {fileID: 1616724544}
+      objectReference: {fileID: 579122780}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
       propertyPath: rocketObjet
@@ -312,11 +302,6 @@ Prefab:
       propertyPath: timeText
       value: 
       objectReference: {fileID: 1936263721}
-    - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
-        type: 2}
-      propertyPath: multipleTargetCamera
-      value: 
-      objectReference: {fileID: 1301886711}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
       propertyPath: billboardObjet

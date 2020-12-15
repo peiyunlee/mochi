@@ -34,8 +34,6 @@ public class CircleGround : MonoBehaviour
 
         eachAngle = 2f * Mathf.PI / childList.Count;
 
-        float eachDeg = 360 / childList.Count;
-
         // int index = 0;
         // foreach (var item in childList)
         // {
