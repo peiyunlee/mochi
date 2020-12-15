@@ -2321,6 +2321,7 @@ public abstract class JellySprite : MonoBehaviour
 
             if (attachPlayer != null && stickPlayerList != null)
             {
+                attachPlayer.GetComponent<UnityJellySprite>().isTurn = true;
                 //turn
                 CentralPoint.Body2D.velocity = new Vector2(0.0f, 0.0f);
                 Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
@@ -2367,6 +2368,7 @@ public abstract class JellySprite : MonoBehaviour
 
             if (attachPlayer != null)
             {
+                attachPlayer.GetComponent<UnityJellySprite>().isTurn = false;
                 Quaternion rotation = Quaternion.Euler(0, 0, 0);
                 attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 70.0f);
                 if (CentralPoint.Body2D.rotation < 1.0f && CentralPoint.Body2D.rotation > -1.0f)
