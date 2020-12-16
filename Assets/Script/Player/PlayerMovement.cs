@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed;
     private bool canJump;
     [SerializeField]
-    private bool isJump;
+    public bool isJump;
 
     //DEAD
 
@@ -103,6 +103,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isDead)
             {
+                jellySprite.CountPointsDistance();
+
                 JumpDetect();
 
                 jellySprite.SetAnimBool("isJump", !canJump);
@@ -165,7 +167,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        Debug.Log(this.tag+"move");
         if (inputSystem.GetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
@@ -176,9 +177,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void TurnForce()
     {
-        jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.5f));
-        if(inputSystem.GetKeyHMove==0&&inputSystem.GetKeyVMove==0)
+
+        if (inputSystem.GetKeyHMove == 0 && inputSystem.GetKeyVMove == 0)
+        {
             jellySprite.AddVelocity(new Vector2(0.0f, 0.0f));
+            jellySprite.CentralPoint.Body2D.freezeRotation = true;
+        }
+
+        else
+        {
+            jellySprite.CentralPoint.Body2D.freezeRotation = false;
+            jellySprite.AddForce(new Vector2(inputSystem.GetKeyHMove * pullForce * 1.5f, inputSystem.GetKeyVMove * pullForce * 2.5f));
+        }
+
     }
 
     void StickForce()

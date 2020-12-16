@@ -207,6 +207,15 @@ public abstract class JellySprite : MonoBehaviour
     //正在轉
     public bool isTurn = false;
 
+    public bool stickUp = true;
+    public enum StickState
+    {
+        longUp,
+        longDown,
+        other
+    }
+    StickState stickState = StickState.other;
+
     #endregion
 
     #region PUBLIC_CLASSES
@@ -2002,6 +2011,15 @@ public abstract class JellySprite : MonoBehaviour
         }
     }
 
+    public void CountPointsDistance(){
+        float distance = 0.0f;
+        foreach(var point in ReferencePoints){
+            distance = Vector2.Distance( point.transform.position, CentralPoint.transform.position );
+            if(distance>1.5f)
+                gameObject.GetComponent<PlayerMovement>().Die();
+        }
+    }
+
     /// <summary>
     /// Set isTrigger to every reference point
     /// </summary>
@@ -2233,7 +2251,12 @@ public abstract class JellySprite : MonoBehaviour
 
             HingeJoint2D hingeJoint2D = centralPoint.GetComponent<HingeJoint2D>();
             hingeJoint2D.connectedBody = CentralPoint.GameObject.GetComponent<Rigidbody2D>();
-            hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
+            if (stickState==StickState.longUp)
+                hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position - new Vector3(0.0f, 0.2f, 0.0f));
+            else if(stickState==StickState.longDown)
+                hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position + new Vector3(0.0f, 0.2f, 0.0f));
+            else if(stickState==StickState.other)
+                hingeJoint2D.anchor = centralPoint.transform.InverseTransformPoint(CentralPoint.transform.position);
             // if (!player.GetComponent<UnityJellySprite>().isTurn)
             hingeJoint2D.enabled = true;
             player.GetComponent<UnityJellySprite>().m_Stiffness = 4;
@@ -2318,6 +2341,7 @@ public abstract class JellySprite : MonoBehaviour
         foreach (var attachPlayer in stickPlayerList)
         {
             GameObject attachCentral = attachPlayer.GetComponent<UnityJellySprite>().CentralPoint.GameObject;
+            HingeJoint2D hingeJoint2D = attachCentral.GetComponent<HingeJoint2D>();
 
             if (attachPlayer != null && stickPlayerList != null)
             {
@@ -2327,9 +2351,27 @@ public abstract class JellySprite : MonoBehaviour
                 Vector2 Dir = CentralPoint.transform.position - attachCentral.transform.position;
                 float angle = 0;
                 if (Dir.y <= 0)
+                {
+                    if ((Dir.x > 1 || Dir.x < -1)&&!this.gameObject.GetComponent<PlayerMovement>().isJump)
+                        stickState = StickState.longUp;
+                    else
+                        stickState = StickState.other;
+                    stickUp = true;
+                    // hingeJoint2D.anchor = attachCentral.transform.InverseTransformPoint(CentralPoint.transform.position + new Vector3(0.0f, 0.2f, 0.0f));
                     angle = Vector2.SignedAngle(Vector2.down, Dir);
+                }
                 else if (Dir.y > 0)
+                {
+                    if ((Dir.x > 1 || Dir.x < -1)&&!this.gameObject.GetComponent<PlayerMovement>().isJump)
+                        stickState = StickState.longDown;
+                    else
+                        stickState = StickState.other;
+                    stickUp = false;
+                    // hingeJoint2D.anchor = attachCentral.transform.InverseTransformPoint(CentralPoint.transform.position - new Vector3(0.0f, 0.2f, 0.0f));
                     angle = Vector2.SignedAngle(Vector2.up, Dir);
+
+                }
+
                 Quaternion rotation = Quaternion.Euler(0, 0, angle);
                 attachCentral.transform.rotation = Quaternion.RotateTowards(attachCentral.transform.rotation, rotation, 50.0f);
             }
