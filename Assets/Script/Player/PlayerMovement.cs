@@ -168,7 +168,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        Debug.Log(this.tag+"move");
         if (inputSystem.GetKeyHMove != 0 && canJump)
             jellySprite.SetAnimBool("isWalk", true);
         else
