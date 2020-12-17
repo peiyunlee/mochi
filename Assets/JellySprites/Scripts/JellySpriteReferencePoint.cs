@@ -28,7 +28,6 @@ public class JellySpriteReferencePoint : MonoBehaviour
         TITEM, 
         HITEM,
         ROTATEITEM,
-
         ROCKETITEM,
     }
 

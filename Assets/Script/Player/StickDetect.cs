@@ -67,7 +67,7 @@ public class StickDetect : MonoBehaviour
 
     void DetectTouchItem(GameObject other, bool trigger)
     {
-        if (other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem"){
+        if (other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem" || other.tag == "Rocket"){
             playerStick.isTouchItem = trigger;
             if (trigger && !playerStick.touchItemList.Contains(other))
             {

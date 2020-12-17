@@ -156,8 +156,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 Move();
-            else if (playerStick.isPoped && !jellySprite.isTurn)
-                PopedForce();
+            // else if (playerStick.isPoped && !jellySprite.isTurn)
+                // PopedForce();
             else if (playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 StickForce();
             else if (jellySprite.isTurn && !playerStick.isPoped)

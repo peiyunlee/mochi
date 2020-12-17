@@ -12,23 +12,17 @@ public class Item : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D other)
     {
-        if (isSticked)
+        if (other.gameObject.tag == "ground")
         {
-            if (other.gameObject.tag == "ground")
-            {
-                isOnFloor = true;
-            }
+            isOnFloor = true;
         }
     }
 
     void OnCollisionExit2D(Collision2D other)
     {
-        if (isSticked)
+        if (other.gameObject.tag == "ground")
         {
-            if (other.gameObject.tag == "ground")
-            {
-                isOnFloor = false;
-            }
+            isOnFloor = false;
         }
     }
 }
