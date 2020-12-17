@@ -77,7 +77,7 @@ public class PlayerPop : MonoBehaviour
             if (getKeyPop || TimesUp)
             {
                 canTurn = false;
-                // jellySprite.isTurn = false;
+                jellySprite.isTurn = false;
                 TimesUp = false;
                 getKeyPop = false;
                 jellySprite.ResetPlayerRot(playerStick.stickPlayerList);
@@ -104,14 +104,14 @@ public class PlayerPop : MonoBehaviour
     {
         if (canTurn)
         {
-            // jellySprite.isTurn = true;
+            jellySprite.isTurn = true;
             //按彈時unfreeze對方的rotation
             if (playerStick.stickPlayerList != null && playerStick.stickPlayerList.Count > 0)
             {
                 List<GameObject> stickPlayerList = playerStick.stickPlayerList;
                 foreach (var player in stickPlayerList)
                 {
-                    player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
+                    // player.GetComponent<UnityJellySprite>().CentralPoint.Body2D.freezeRotation = false;
                     player.GetComponent<PlayerStick>().ResetFloorStick();
                     player.GetComponent<PlayerStick>().ResetWallStick();
                 }

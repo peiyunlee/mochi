@@ -93,9 +93,9 @@ AnimationClip:
     script: {fileID: 0}
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 6c986011e8f41724ca386797416f4c32, type: 3}
+      value: {fileID: 21300000, guid: 0340ea56f1aa9e54aa6f6696300723d6, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: 6c986011e8f41724ca386797416f4c32, type: 3}
+      value: {fileID: 21300000, guid: 0340ea56f1aa9e54aa6f6696300723d6, type: 3}
     attribute: m_Sprite
     path: eye
     classID: 212
@@ -161,8 +161,8 @@ AnimationClip:
     - {fileID: 21300000, guid: 2dffbc8345d557f46abceae3a4bf5a39, type: 3}
     - {fileID: 21300000, guid: bff83e5403b5218499691b7c5143571f, type: 3}
     - {fileID: 21300000, guid: bff83e5403b5218499691b7c5143571f, type: 3}
-    - {fileID: 21300000, guid: 6c986011e8f41724ca386797416f4c32, type: 3}
-    - {fileID: 21300000, guid: 6c986011e8f41724ca386797416f4c32, type: 3}
+    - {fileID: 21300000, guid: 0340ea56f1aa9e54aa6f6696300723d6, type: 3}
+    - {fileID: 21300000, guid: 0340ea56f1aa9e54aa6f6696300723d6, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
