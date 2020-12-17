@@ -56,7 +56,6 @@ public class Billboard : MonoBehaviour
             draw.SetActive(false);
             isActive = false;
             GameManager.instance.StartGame();
-            LevelController.instance.billboardObjet = null;
         }
     }
 

@@ -36,7 +36,7 @@ public class Rocket : MonoBehaviour
             playerIndex.Remove(color-8);
         }
 
-        if (stickPlayer.Count == GameManager.instance.playerCount)
+        if (stickPlayer.Count == GameManager.instance.playerCount && levelController.mochiAllGet)
             RocketGo();
     }
 
@@ -52,11 +52,11 @@ public class Rocket : MonoBehaviour
             index++;
         }
         rocketAnim.SetTrigger("start");
-        Invoke("NextScene", 3);
+        Invoke("ShowScore", 3);
     }
 
-    void NextScene()
+    void ShowScore()
     {
-        levelController.GameFinish();
+        levelController.ShowScore();
     }
 }

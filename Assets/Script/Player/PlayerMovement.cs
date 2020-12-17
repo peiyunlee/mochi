@@ -279,6 +279,7 @@ public class PlayerMovement : MonoBehaviour
         this.gameObject.SetActive(true);
 
         isDead = false;
+        LevelController.instance.deadTotalCount++;
         LevelController.instance.CameraAddTarget(transform);
 
         jellySprite.SetAnimBool("isDead", false);

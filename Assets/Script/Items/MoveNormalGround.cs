@@ -42,7 +42,7 @@ public class MoveNormalGround : MoveGround
             Invoke("SetCanMove", maxStopSec);
         }
 
-        rb.MovePosition(pos + moveSpeed);
+        rb.MovePosition(pos + moveSpeed * Time.deltaTime);
 
     }
 }

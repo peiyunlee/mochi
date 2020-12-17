@@ -51,7 +51,7 @@ public class MoveTileGround : MoveGround
             }
         }
 
-        rb.MovePosition(pos + moveSpeed);
+        rb.MovePosition(pos + moveSpeed*Time.deltaTime);
 
     }
 }

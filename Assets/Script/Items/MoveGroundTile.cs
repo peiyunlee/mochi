@@ -52,7 +52,7 @@ public class MoveGroundTile : MoveTile
             }
         }
 
-        newPos = pos + moveSpeed;
+        newPos = pos + moveSpeed*Time.deltaTime;
         
         rb.MovePosition(newPos);
     }

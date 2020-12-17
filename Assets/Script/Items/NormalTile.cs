@@ -40,7 +40,7 @@ public class NormalTile : MoveTile
             Invoke("SetCanMove", maxStopSec);
         }
 
-        newPos = pos + moveSpeed;
+        newPos = pos + moveSpeed*Time.deltaTime;
         
         rb.MovePosition(newPos);
     }

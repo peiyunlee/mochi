@@ -8,10 +8,16 @@ public class LevelController : MonoBehaviour
 {
     static public LevelController instance;
 
+    //soundeffect
+
     public AudioSource audio_Collection;
 
     public AudioSource audio_Background;
+
+    //player
     public List<GameObject> playerPrefab = new List<GameObject>(2);
+
+    //camera
 
     public MultipleTargetCamera multipleTargetCamera;
 
@@ -27,7 +33,7 @@ public class LevelController : MonoBehaviour
 
     [SerializeField]
 
-    bool mochiAllGet;
+    public bool mochiAllGet;
 
     public Text mochiText;
 
@@ -48,7 +54,30 @@ public class LevelController : MonoBehaviour
 
     //Die
     public GameObject diePoint;
-    public Transform [] diePointPos;
+    public Transform[] diePointPos;
+
+    //Goal
+
+    public int radishGoalCount;
+
+    public int timeGoalCount_mms;
+
+    public int deadGoalCount;
+
+    public int deadTotalCount;
+
+    [SerializeField]
+    bool deadGoal;
+    [SerializeField]
+    bool radishGoal;
+    [SerializeField]
+    bool timeGoal;
+
+    bool showScore;
+
+    public GameObject score;
+
+    public Text [] scoreText;
 
 
     void Start()
@@ -71,6 +100,8 @@ public class LevelController : MonoBehaviour
 
         diePointPos = diePoint.GetComponentsInChildren<Transform>();
 
+        scoreText = score.GetComponentsInChildren<Text>();
+
         audio_Background.Play();
     }
 
@@ -80,23 +111,33 @@ public class LevelController : MonoBehaviour
         if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
         {
             billboardObjet.GetComponent<Billboard>().Hide();
+            billboardObjet = null;
         }
-        
-        if(Input.GetKeyDown("q")){
+        else if (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2") && showScore){
+            GameFinish();
+        }
+
+        if (Input.GetKeyDown("q"))
+        {
             playerPrefab[0].GetComponent<PlayerMovement>().Die();
         }
-        else if(Input.GetKeyDown("w")){
+        else if (Input.GetKeyDown("w"))
+        {
             playerPrefab[1].GetComponent<PlayerMovement>().Die();
+        }
+        else if (Input.GetKeyDown("a") && billboardObjet != null && GameManager.instance.isPause)
+        {
+            billboardObjet.GetComponent<Billboard>().Hide();
         }
     }
 
     void Count()
     {
         timeCount++;
-        ShowText();
+        ShowTimeText();
     }
 
-    void ShowText()
+    void ShowTimeText()
     {
         int s = timeCount % 100;
         int second = timeCount / 100 % 60;
@@ -155,14 +196,11 @@ public class LevelController : MonoBehaviour
         CancelInvoke("Count");
     }
 
-    public void GameFinish()
+    void GameFinish()
     {
-        if (mochiAllGet)
-        {
-            int next = SceneManager.GetActiveScene().buildIndex + 1;
-            GameManager.instance.time = timeCount;
-            SceneController.instance.LoadNextScene(next);
-        }
+        int next = SceneManager.GetActiveScene().buildIndex + 1;
+        GameManager.instance.time = timeCount;
+        SceneController.instance.LoadNextScene(next);
     }
 
     public void ReturnToMenu()
@@ -185,15 +223,43 @@ public class LevelController : MonoBehaviour
 
     public void SetRocketStick(GameObject player, bool set, int color)
     {
-        if(mochiAllGet)
+        if (mochiAllGet)
             rocket.SetPlayerStick(player, set, color);
     }
 
-    public void CameraRemoveTarget(Transform player){
+    public void CameraRemoveTarget(Transform player)
+    {
         multipleTargetCamera.RemoveTarget(player);
     }
 
-    public void CameraAddTarget(Transform player){
+    public void CameraAddTarget(Transform player)
+    {
         multipleTargetCamera.AddTarget(player);
+    }
+
+    public void Goal()
+    {
+        if (radishCount >= radishGoalCount)
+            radishGoal = true;
+
+        if (timeCount <= timeGoalCount_mms)
+            timeGoal = true;
+
+        if (deadTotalCount <= deadGoalCount)
+            deadGoal = true;
+    }
+
+    public void ShowScore()
+    {
+        Goal();     //判斷分數
+
+         //給UI數值
+        scoreText[0].text = GameManager.instance.currentLevel;
+        scoreText[1].text = timeText.text;
+        scoreText[2].text = radishText.text;
+
+        //SHOWSCORE
+        score.SetActive(true);
+        showScore = true;
     }
 }
