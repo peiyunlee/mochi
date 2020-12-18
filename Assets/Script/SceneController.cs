@@ -38,8 +38,4 @@ public class SceneController : MonoBehaviour {
 	public void LoadNextScene(int nextScene){
 		SceneManager.LoadScene(nextScene);
 	}
-
-	public void ExitGame(){
-		Application.Quit();
-	}
 }

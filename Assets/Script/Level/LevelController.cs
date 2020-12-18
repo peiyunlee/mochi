@@ -77,7 +77,13 @@ public class LevelController : MonoBehaviour
 
     public GameObject score;
 
-    public Text [] scoreText;
+    public Text[] scoreText;
+
+    Animator scoreAnim;
+
+    public Transform coinGroup;
+
+    public List<GameObject> coins;
 
 
     void Start()
@@ -101,6 +107,12 @@ public class LevelController : MonoBehaviour
         diePointPos = diePoint.GetComponentsInChildren<Transform>();
 
         scoreText = score.GetComponentsInChildren<Text>();
+        scoreAnim = score.GetComponent<Animator>();
+        showScore = false;
+        for (int i = 0; i < coinGroup.childCount; i++)
+        {
+            coins.Add(coinGroup.GetChild(i).gameObject);
+        }
 
         audio_Background.Play();
     }
@@ -113,7 +125,8 @@ public class LevelController : MonoBehaviour
             billboardObjet.GetComponent<Billboard>().Hide();
             billboardObjet = null;
         }
-        else if (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2") && showScore){
+        else if ((Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")) && showScore)
+        {
             GameFinish();
         }
 
@@ -253,13 +266,22 @@ public class LevelController : MonoBehaviour
     {
         Goal();     //判斷分數
 
-         //給UI數值
+        //給UI數值
         scoreText[0].text = GameManager.instance.currentLevel;
         scoreText[1].text = timeText.text;
         scoreText[2].text = radishText.text;
+        scoreText[3].text = "" + deadTotalCount;
 
         //SHOWSCORE
         score.SetActive(true);
+        if (radishGoal)
+            coins[0].SetActive(true);
+        if (timeGoal)
+            coins[1].SetActive(true);
+        if (deadGoal)
+            coins[2].SetActive(true);
+
+        scoreAnim.SetTrigger("show");
         showScore = true;
     }
 }

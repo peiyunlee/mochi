@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     //move or pull
     public float moveSpeed;
-    private bool canMove;
     public float airPullForce;
     public float pullForce;
 
