@@ -16,11 +16,13 @@ public class Rocket : MonoBehaviour
     [SerializeField]
     public List<GameObject> playerSprite;
     public Animator rocketAnim;
+    public AudioSource rocketSound;
 
 
     void Start()
     {
         levelController = GameObject.Find("EventSystem").GetComponent<LevelController>();
+        rocketSound = GetComponent<AudioSource>();
     }
 
     public void SetPlayerStick(GameObject player, bool set, int color)
@@ -52,6 +54,7 @@ public class Rocket : MonoBehaviour
             index++;
         }
         rocketAnim.SetTrigger("start");
+        rocketSound.Play();
         Invoke("ShowScore", 3);
     }
 
