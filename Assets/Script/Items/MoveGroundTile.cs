@@ -35,6 +35,7 @@ public class MoveGroundTile : MoveTile
 
         if (trans.position.x < minVec.x || trans.position.y < minVec.y)
         {
+            rb.MovePosition(minVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             isMax = false;
@@ -43,6 +44,7 @@ public class MoveGroundTile : MoveTile
 
         else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
         {
+            rb.MovePosition(maxVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             isMax = true;
@@ -52,7 +54,7 @@ public class MoveGroundTile : MoveTile
             }
         }
 
-        newPos = pos + moveSpeed*Time.deltaTime;
+        newPos = pos + moveSpeed;
         
         rb.MovePosition(newPos);
     }

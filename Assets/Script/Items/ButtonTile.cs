@@ -50,7 +50,7 @@ public class ButtonTile : MoveTile
             btnScript[1].SetIsMove(false);
         }
 
-        newPos = pos + moveSpeed*Time.deltaTime;
+        newPos = pos + moveSpeed;
 
         rb.MovePosition(newPos);
     }

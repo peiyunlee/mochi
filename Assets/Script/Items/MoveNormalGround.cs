@@ -16,7 +16,7 @@ public class MoveNormalGround : MoveGround
         trans = this.gameObject.GetComponent<Transform>();
 
     }
-	
+
     void FixedUpdate()
     {
         if (canMove)
@@ -31,18 +31,20 @@ public class MoveNormalGround : MoveGround
 
         if (trans.position.x < minVec.x || trans.position.y < minVec.y)
         {
+            rb.MovePosition(minVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             Invoke("SetCanMove", minStopSec);
         }
         else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
         {
+            rb.MovePosition(maxVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             Invoke("SetCanMove", maxStopSec);
         }
 
-        rb.MovePosition(pos + moveSpeed * Time.deltaTime);
+        rb.MovePosition(pos + moveSpeed);
 
     }
 }

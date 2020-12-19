@@ -37,12 +37,15 @@ public class MoveTileGround : MoveGround
 
         if (trans.position.x < minVec.x || trans.position.y < minVec.y)
         {
+            rb.MovePosition(minVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             Invoke("SetCanMove", minStopSec);
         }
         else if (trans.position.x > maxVec.x || trans.position.y > maxVec.y)
         {
+            
+            rb.MovePosition(maxVec);
             moveSpeed = -moveSpeed;
             canMove = false;
             if (tile != null)
@@ -51,7 +54,7 @@ public class MoveTileGround : MoveGround
             }
         }
 
-        rb.MovePosition(pos + moveSpeed*Time.deltaTime);
+        rb.MovePosition(pos + moveSpeed);
 
     }
 }

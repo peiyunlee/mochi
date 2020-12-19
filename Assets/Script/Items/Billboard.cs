@@ -43,8 +43,8 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(true);
             draw.SetActive(true);
-            Invoke("SetActive", 0.05f);
             LevelController.instance.billboardObjet = this.gameObject;
+            Invoke("SetActive", 0.05f);
         }
     }
 
@@ -54,8 +54,8 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(false);
             draw.SetActive(false);
-            isActive = false;
             GameManager.instance.StartGame();
+            isActive = false;
         }
     }
 
