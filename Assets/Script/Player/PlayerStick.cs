@@ -63,9 +63,6 @@ public class PlayerStick : MonoBehaviour
     [SerializeField]
     bool isStickGround;
 
-    [SerializeField]
-    private bool stickPlayerTouchGround;  //黏住的玩家有碰到地板
-
 
     //rocket
 
@@ -94,7 +91,7 @@ public class PlayerStick : MonoBehaviour
             {
                 AttachDetect();
 
-                if (isAttachWall || isTouchGround || stickPlayerTouchGround)
+                if (isAttachWall || isTouchGround)
                 {
                     if (isPoped)
                     {
@@ -115,20 +112,6 @@ public class PlayerStick : MonoBehaviour
             else
             {
                 DieReset();
-            }
-        }
-    }
-
-    void PlayerListTouchWallAndGround()
-    {
-        if (stickPlayerList != null)
-        {
-            foreach (var stickPlayer in stickPlayerList)
-            {
-                if (stickPlayer.GetComponent<PlayerStick>().isAttachWall || stickPlayer.GetComponent<PlayerStick>().isTouchGround)
-                    stickPlayerTouchGround = true;
-                else
-                    stickPlayerTouchGround = false;
             }
         }
     }
@@ -272,8 +255,6 @@ public class PlayerStick : MonoBehaviour
         pointAttachPlayerList = jellySprite.GetPlayersAttach();
 
         isAttachWall = jellySprite.GetIsWallAttach();
-
-        PlayerListTouchWallAndGround();
     }
 
     void CanStick()
@@ -286,5 +267,9 @@ public class PlayerStick : MonoBehaviour
         {
             canStick = false;
         }
+    }
+
+    public void DieResetDetect(){
+        stickDetect.DieResetDetect();
     }
 }

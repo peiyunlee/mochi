@@ -39,6 +39,13 @@ public class PlayerFloorDetect : MonoBehaviour
     {
         Quaternion rotation = Quaternion.Euler(0, 0, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 50.0f);
+        float central=parents.GetComponent<UnityJellySprite>().CentralPoint.Body2D.rotation;
+        if ((central < -45 && central > -150) || (central < 150 && central > 45))
+        {
+            GetComponent<BoxCollider2D>().offset = new Vector2(0, -1.2f);
+        }
+        else
+            GetComponent<BoxCollider2D>().offset = new Vector2(0, -1);
     }
 
     private void OnTriggerStay2D(Collider2D other)

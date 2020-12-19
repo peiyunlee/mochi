@@ -155,8 +155,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 Move();
-            // else if (playerStick.isPoped && !jellySprite.isTurn)
-                // PopedForce();
+            else if (playerStick.isPoped && !jellySprite.isTurn)
+                PopedForce();
             else if (playerStick.isStick && !playerStick.isPoped && !jellySprite.isTurn)
                 StickForce();
             else if (jellySprite.isTurn && !playerStick.isPoped)
@@ -179,7 +179,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void TurnForce()
     {
-
         if (inputSystem.GetKeyHMove == 0 && inputSystem.GetKeyVMove == 0)
         {
             jellySprite.AddVelocity(new Vector2(0.0f, 0.0f));
@@ -208,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
     void JumpDetect()
     {
+
         canJump = playerFloorDetect.isOnFloor > 0 && !playerStick.isStick;
 
         if (canJump && isJump && jellySprite.CentralPoint.Body2D.velocity.y < 0.0f)
@@ -307,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         jellySprite.ResetPoint();
+        playerStick.DieResetDetect();
         jellySprite.CentralPoint.GameObject.GetComponent<HingeJoint2D>().connectedBody = null;
         jellySprite.ResetSelfRot();
     }

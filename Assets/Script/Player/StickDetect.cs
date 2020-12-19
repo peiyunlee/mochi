@@ -107,4 +107,11 @@ public class StickDetect : MonoBehaviour
         playerStick.touchItemList.Clear();
         playerStick.isTouchPlayer = false;
     }
+
+    public void DieResetDetect(){
+        playerStick.isTouchWall = false;
+        playerStick.touchItemList.Clear();
+        playerStick.isTouchPlayer = false;
+        playerStick.isTouchGround=false;
+    }
 }
