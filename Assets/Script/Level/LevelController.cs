@@ -14,6 +14,8 @@ public class LevelController : MonoBehaviour
 
     public AudioSource audio_Background;
 
+    public AudioSource audio_Finish;
+
     //player
     public List<GameObject> playerPrefab = new List<GameObject>(2);
 
@@ -282,6 +284,8 @@ public class LevelController : MonoBehaviour
             coins[2].SetActive(true);
 
         scoreAnim.SetTrigger("show");
+        audio_Background.Pause();
+        audio_Finish.Play(3);
         showScore = true;
     }
 }
