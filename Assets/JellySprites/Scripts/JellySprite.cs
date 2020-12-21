@@ -2015,7 +2015,7 @@ public abstract class JellySprite : MonoBehaviour
         float distance = 0.0f;
         foreach(var point in ReferencePoints){
             distance = Vector2.Distance( point.transform.position, CentralPoint.transform.position );
-            if(distance>1.5f)
+            if(distance>2.0f)
                 gameObject.GetComponent<PlayerMovement>().Die();
         }
     }
