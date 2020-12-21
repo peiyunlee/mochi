@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public AudioSource audio_Jump;
+    public AudioSource audio_Death;
 
     //PlayerColor
 
@@ -254,6 +255,8 @@ public class PlayerMovement : MonoBehaviour
             jellySprite.AddVelocity(new Vector2(0, 0));
 
             jellySprite.SetAnimBool("isDead", true);
+
+            audio_Death.Play();
 
             Invoke("Die_Invincible", 0.05f);
 

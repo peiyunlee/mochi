@@ -214,7 +214,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012037039, y: 2.530343}
+  m_Offset: {x: -0.13385916, y: 2.530343}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -225,7 +225,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7533584, y: 7.2191067}
+  m_Size: {x: 2.5097141, y: 7.2191067}
   m_EdgeRadius: 0
 --- !u!1001 &125306796
 Prefab:
@@ -286,11 +286,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4701205694068404, guid: 6794cdc30cccfd04d900f794df9a3cc8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.88
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 4701205694068404, guid: 6794cdc30cccfd04d900f794df9a3cc8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.27
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4701205694068404, guid: 6794cdc30cccfd04d900f794df9a3cc8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -316,11 +316,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 82570660796516296, guid: 6794cdc30cccfd04d900f794df9a3cc8,
-        type: 2}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 0e68a43fd2c0d8846985c2e79efb6c5f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6794cdc30cccfd04d900f794df9a3cc8, type: 2}
   m_IsPrefabAsset: 0
@@ -35850,7 +35845,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4858509126148142, guid: 6aa4ee011853b514b923934f8cedaef9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -9.5
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 61016531912001158, guid: 6aa4ee011853b514b923934f8cedaef9,
         type: 2}
@@ -52142,6 +52137,213 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!213 &1275672491
+Sprite:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 4
+    height: 4
+  m_Offset: {x: 0, y: 0}
+  m_Border: {x: 0, y: 0, z: 0, w: 0}
+  m_PixelsToUnits: 4
+  m_Pivot: {x: 0.5, y: 0.5}
+  m_Extrude: 0
+  m_IsPolygon: 0
+  m_AtlasName: 
+  m_PackingTag: 
+  m_RenderDataKey:
+    00000000000000000000000000000000: 0
+  m_AtlasTags: []
+  m_SpriteAtlas: {fileID: 0}
+  m_RD:
+    serializedVersion: 3
+    texture: {fileID: 0}
+    alphaTexture: {fileID: 0}
+    m_SubMeshes:
+    - serializedVersion: 2
+      firstByte: 0
+      indexCount: 6
+      topology: 0
+      baseVertex: 0
+      firstVertex: 0
+      vertexCount: 4
+      localAABB:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    m_IndexBuffer: 000001000200020001000300
+    m_VertexData:
+      serializedVersion: 2
+      m_VertexCount: 4
+      m_Channels:
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 3
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 1
+        offset: 0
+        format: 0
+        dimension: 2
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      m_DataSize: 80
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
+    m_Bindpose: []
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 4
+      height: 4
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: -1, y: -1}
+    settingsRaw: 64
+    uvTransform: {x: 4, y: 2, z: 4, w: 2}
+    downscaleMultiplier: 1
+  m_AtlasRD:
+    serializedVersion: 3
+    texture: {fileID: 0}
+    alphaTexture: {fileID: 0}
+    m_SubMeshes:
+    - serializedVersion: 2
+      firstByte: 0
+      indexCount: 6
+      topology: 0
+      baseVertex: 0
+      firstVertex: 0
+      vertexCount: 4
+      localAABB:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    m_IndexBuffer: 000001000200020001000300
+    m_VertexData:
+      serializedVersion: 2
+      m_VertexCount: 4
+      m_Channels:
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 3
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 1
+        offset: 0
+        format: 0
+        dimension: 2
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      m_DataSize: 80
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Bindpose: []
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 4
+      height: 4
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: -1, y: -1}
+    settingsRaw: 64
+    uvTransform: {x: 4, y: 2, z: 4, w: 2}
+    downscaleMultiplier: 1
+  m_PhysicsShape: []
+  m_Bones: []
+  m_SpriteID: 
 --- !u!1 &1303531953
 GameObject:
   m_ObjectHideFlags: 0
@@ -52196,7 +52398,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.55446386, y: 2.1493375}
+  m_Offset: {x: -0.14601135, y: 2.1493375}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -52207,7 +52409,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.9755812, y: 7.813001}
+  m_Size: {x: 1.5746307, y: 7.813001}
   m_EdgeRadius: 0
 --- !u!1 &1345750898
 GameObject:
@@ -52518,7 +52720,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3493755, y: 0.5620506}
+  m_Offset: {x: -0.16663933, y: 0.5620506}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -52529,7 +52731,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.6018395, y: 3.3602877}
+  m_Size: {x: 1.28722, y: 3.3602877}
   m_EdgeRadius: 0
 --- !u!1 &1387841446 stripped
 GameObject:
@@ -52782,7 +52984,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1135869, y: 1.8263865}
+  m_Offset: {x: 0.14404249, y: 0.5175779}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -52793,7 +52995,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.9890776, y: 5.8111935}
+  m_Size: {x: 6.0499887, y: 3.1935763}
   m_EdgeRadius: 0
 --- !u!1 &1498275661
 GameObject:
@@ -52819,7 +53021,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1498275661}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.16, y: 4.23, z: 0}
+  m_LocalPosition: {x: 30.9, y: 4.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 500591498}
@@ -52849,7 +53051,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.8443103}
+  m_Offset: {x: 0.10306835, y: 1.8443103}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -52860,7 +53062,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4373207, y: 7.1961746}
+  m_Size: {x: 1.7410297, y: 7.1961746}
   m_EdgeRadius: 0
 --- !u!1001 &1499012948
 Prefab:
@@ -53087,11 +53289,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4752230016464386, guid: 1acf620c878ddaf4e830db02a5b765e9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.5699978
+      value: 40.6
       objectReference: {fileID: 0}
     - target: {fileID: 4752230016464386, guid: 1acf620c878ddaf4e830db02a5b765e9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.2699995
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 4752230016464386, guid: 1acf620c878ddaf4e830db02a5b765e9, type: 2}
       propertyPath: m_LocalPosition.z
@@ -53117,11 +53319,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 82911433273235110, guid: 1acf620c878ddaf4e830db02a5b765e9,
-        type: 2}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 0e68a43fd2c0d8846985c2e79efb6c5f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1acf620c878ddaf4e830db02a5b765e9, type: 2}
   m_IsPrefabAsset: 0
@@ -54275,7 +54472,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2090977419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.17, y: 5.95, z: 0}
+  m_LocalPosition: {x: 12.17, y: 6.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 500591498}
@@ -54372,7 +54569,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.12497234, y: 2.8431563}
+  m_Offset: {x: -0.43776512, y: 2.8431563}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -54383,7 +54580,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.3344536, y: 8.398646}
+  m_Size: {x: 2.735733, y: 8.398646}
   m_EdgeRadius: 0
 --- !u!1001 &2123076008
 Prefab:

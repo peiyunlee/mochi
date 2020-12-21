@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1979534757646786}
   m_IsPrefabAsset: 1
+--- !u!1 &1168668718317828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4653161082934670}
+  - component: {fileID: 82588254421812154}
+  m_Layer: 16
+  m_Name: Audio_Stick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1353741198979198
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,7 +69,7 @@ GameObject:
   - component: {fileID: 4938689714703722}
   - component: {fileID: 82911433273235110}
   m_Layer: 16
-  m_Name: Audio_Stick
+  m_Name: Audio_Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,6 +206,19 @@ Transform:
   m_Father: {fileID: 4752230016464386}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4653161082934670
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168668718317828}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4752230016464386}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4676016816693460
 Transform:
   m_ObjectHideFlags: 1
@@ -210,7 +239,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979534757646786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 51.8, y: 1.1, z: 0}
+  m_LocalPosition: {x: 27, y: 13.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4498225790585558}
@@ -219,6 +248,7 @@ Transform:
   - {fileID: 4876908589825510}
   - {fileID: 4676016816693460}
   - {fileID: 4174059053726298}
+  - {fileID: 4653161082934670}
   - {fileID: 4938689714703722}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -260,7 +290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4752230016464386}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23384836404255530
 MeshRenderer:
@@ -384,6 +414,101 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0014026148, y: -0.015856745}
   m_Size: {x: 2.5241704, y: 2.083307}
   m_Direction: 1
+--- !u!82 &82588254421812154
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168668718317828}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0e68a43fd2c0d8846985c2e79efb6c5f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
+  m_Pitch: 1.2
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!82 &82780965522442374
 AudioSource:
   m_ObjectHideFlags: 1
@@ -583,10 +708,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e188717900d957145bc4d3471fed0f0d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6a0d5a18ba50afe48a8e3f328abc6432, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
-  m_Pitch: 1.2
+  m_Volume: 1
+  m_Pitch: 0.75
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -756,6 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audio_Jump: {fileID: 82795020475666070}
+  audio_Death: {fileID: 82911433273235110}
   playerType: red
   playerColor: 0
   playerFloorDetect: {fileID: 0}
@@ -764,6 +890,7 @@ MonoBehaviour:
   pullForce: 10
   jumpSpeed: 6.5
   isJump: 0
+  diePoint: 0
   isDead: 0
   isInvincible: 0
 --- !u!114 &114819239757075786
@@ -845,6 +972,7 @@ MonoBehaviour:
   playAnim: {fileID: 0}
   notFreeze: 0
   isTurn: 0
+  stickUp: 1
   m_Sprite: {fileID: 21300000, guid: 350848c42d95606428f0da56cb2fb665, type: 3}
   m_Sprite_Pre: {fileID: 0}
 --- !u!114 &114841889511573990
@@ -869,7 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd35b26919e6efd4bbd93e1a0c019f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio_Stick: {fileID: 82911433273235110}
+  audio_Stick: {fileID: 82588254421812154}
   stickDetect: {fileID: 114841889511573990}
   getIsOnFloor: 0
   isStick: 0
@@ -887,7 +1015,6 @@ MonoBehaviour:
   isStickWall: 0
   isTouchGround: 0
   isStickGround: 0
-  stickPlayerTouchGround: 0
   isStickRocket: 0
   isPoped: 0
 --- !u!212 &212248840422249300
