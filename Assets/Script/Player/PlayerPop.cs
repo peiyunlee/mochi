@@ -60,7 +60,7 @@ public class PlayerPop : MonoBehaviour
 
     public void PopUp()
     {
-        if (canPop)
+        if (canPop&&canTurn)
         {
             canTurn = false;
             getKeyPop = true;
