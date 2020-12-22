@@ -3644,6 +3644,25 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 38.549988
       objectReference: {fileID: 0}
+    - target: {fileID: 114285395089803528, guid: 182d2b9664ae37d42a36ace1820fe805,
+        type: 2}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 51cccee7945dec140a26e07c59164f2e, type: 3}
+    - target: {fileID: 114285395089803528, guid: 182d2b9664ae37d42a36ace1820fe805,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114753868721095536, guid: 182d2b9664ae37d42a36ace1820fe805,
+        type: 2}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 34150ce2e15f76847a2a257262158f6d, type: 3}
+    - target: {fileID: 1814657947011228, guid: 182d2b9664ae37d42a36ace1820fe805, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 182d2b9664ae37d42a36ace1820fe805, type: 2}
   m_IsPrefabAsset: 0
