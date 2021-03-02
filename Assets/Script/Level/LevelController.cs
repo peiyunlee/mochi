@@ -136,10 +136,10 @@ public class LevelController : MonoBehaviour
         {
             playerPrefab[0].GetComponent<PlayerMovement>().Die();
         }
-        else if (Input.GetKeyDown("w"))
-        {
-            playerPrefab[1].GetComponent<PlayerMovement>().Die();
-        }
+        // else if (Input.GetKeyDown("w"))
+        // {
+        //     playerPrefab[1].GetComponent<PlayerMovement>().Die();
+        // }
         else if (Input.GetKeyDown("a") && billboardObjet != null && GameManager.instance.isPause)
         {
             billboardObjet.GetComponent<Billboard>().Hide();
