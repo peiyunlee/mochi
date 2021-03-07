@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#define COLORUNSET
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class ColorDetect : MonoBehaviour
         playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
     }
 
+#if COLORUNSET
+#else
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!playerMovement.isDead && !playerMovement.isInvincible)
@@ -29,4 +32,5 @@ public class ColorDetect : MonoBehaviour
             }
         }
     }
+#endif
 }
