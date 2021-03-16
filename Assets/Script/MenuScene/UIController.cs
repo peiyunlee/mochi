@@ -1,158 +1,107 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
 
-    public GameObject bigLevelUI;
-    Transform bigLevelTrans;
-    // public List<Transform> bigLevelUIList;
-    public GameObject smallLevelUI;
-    public GameObject cam;
-    Animator camAnim;
+    [SerializeField]
+    private int selectBigLevel;
 
+    public GameObject bigLevelGroup;
 
-    public List<GameObject> arrow;
+    private Transform blg_trans;
 
-    float currentCamSpeed;
-
-    public float camSpeed;
+    public Vector2 bl_distance;
 
     [SerializeField]
-    int currentLevel;
-
-    int maxLevel;
-
-    bool isBigMenu;
+    private Vector2 blg_pos;
 
     [SerializeField]
-    int inputtimer;
+    private Animator[] blList_anim;
 
-    int horizontalAxisRaw;
+    [SerializeField]
+    private int bigLevelCount;
 
-    // Use this for initialization
+    //biglevelui
+
+    public Text bigLevel_text;
+    public GameObject[] bigLevel_btn;
+
+    [SerializeField]
+    private int selectSmallLevel;
+
+
+
+    public bool rightInput;
+    public bool leftInput;
+
+    [SerializeField]
+    private bool blg_move;
+
+
     void Start()
     {
-        camAnim = cam.GetComponent<Animator>();
-        bigLevelTrans = bigLevelUI.GetComponent<Transform>();
-        // for(int i = 0 ; i < maxLevel ; i++){
-        //     bigLevelUIList.Add(bigLevelUI.transform.GetChild(i));
-        // }
+        selectBigLevel = 1;
+        selectSmallLevel = 1;
 
-        currentLevel = 1;
-        maxLevel = 4;
-        camSpeed = 340.0f / 1.0f;
-        currentCamSpeed = camSpeed;
-        isBigMenu = true;
-        inputtimer = 0;
+        rightInput = false;
+        leftInput = false;
+
+        blList_anim = bigLevelGroup.GetComponentsInChildren<Animator>();
+        bigLevelCount = blList_anim.Length;
+
+        blg_trans = bigLevelGroup.GetComponent<Transform>();
+        blg_move = false;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw("Horizontal_player1") == 1)
+        if (rightInput)
         {
-            if(inputtimer == 0)
-                StartCoroutine("InputTimer");
-            if (inputtimer % 2 == 0)
-                horizontalAxisRaw = 1;
-        }
-        else if (Input.GetAxisRaw("Horizontal_player1") == 0)
-        {
-            inputtimer = 0;
-            horizontalAxisRaw = 0;
-        }
-        else if (Input.GetAxisRaw("Horizontal_player1") == -1)
-        {
-            InvokeRepeating("InputTimer", 0f, 1f);
-            if (inputtimer % 2 == 0)
-                horizontalAxisRaw = -1;
-        }
-        if ((horizontalAxisRaw == 1 || Input.GetKeyDown("right")) && currentLevel < maxLevel && isBigMenu)
-        {
-            currentLevel++;
-            currentCamSpeed = camSpeed;
-            camAnim.enabled = false;
-            if (currentLevel == maxLevel)
+            if (selectBigLevel < bigLevelCount)
             {
-                arrow[1].SetActive(false);
+                blList_anim[selectBigLevel - 1].SetTrigger("unselected");
+                blList_anim[selectBigLevel].SetTrigger("selected");
+                selectBigLevel++;
+                blg_pos -= bl_distance;
+                blg_trans.position = blg_pos;
+                bigLevel_text.text = "LEVLE " + selectBigLevel;
+                if (selectBigLevel == bigLevelCount)
+                {
+                    bigLevel_btn[0].SetActive(false);
+                }
+                else if (selectBigLevel == 2)
+                {
+                    bigLevel_btn[1].SetActive(true);
+                }
             }
-            else if (currentLevel == maxLevel - 1)
-            {
-                arrow[1].SetActive(true);
-            }
-            else if (currentLevel == 2)
-            {
-                arrow[0].SetActive(true);
-            }
+
+            rightInput = false;
         }
-        else if ((horizontalAxisRaw == -1 || Input.GetKeyDown("left")) && currentLevel > 1 && isBigMenu)
+
+        if (leftInput)
         {
-            currentLevel--;
-            currentCamSpeed = -camSpeed;
-            camAnim.enabled = false;
-            if (currentLevel == 1)
+            if (selectBigLevel > 0)
             {
-                arrow[0].SetActive(false);
+                blList_anim[selectBigLevel - 2].SetTrigger("selected");
+                blList_anim[selectBigLevel - 1].SetTrigger("unselected");
+                selectBigLevel--;
+                blg_pos += bl_distance;
+                blg_trans.position = blg_pos;
+                bigLevel_text.text = "LEVLE " + selectBigLevel;
+                if (selectBigLevel == 1)
+                {
+                    bigLevel_btn[1].SetActive(false);
+                }
+                else if (selectBigLevel == bigLevelCount - 1)
+                {
+                    bigLevel_btn[0].SetActive(true);
+                }
             }
-            else if (currentLevel == 2)
-            {
-                arrow[0].SetActive(true);
-            }
-            else if (currentLevel == maxLevel - 1)
-            {
-                arrow[1].SetActive(true);
-            }
+
+            leftInput = false;
         }
 
-        if (Input.GetKeyDown("a") && !isBigMenu)
-        {
-            BackLevelMenu();
-        }
-
-        // Zoom();
     }
-    void FixedUpdate()
-    {
-        CamMove();
-    }
-
-    void CamMove()
-    {
-        float newPosX;
-        if (currentCamSpeed > 0 && bigLevelTrans.position.x > -340.0f * (currentLevel - 1))
-        {
-            newPosX = bigLevelTrans.position.x - currentCamSpeed * Time.deltaTime;
-            bigLevelTrans.position = new Vector3(newPosX, bigLevelTrans.position.y, bigLevelTrans.position.z);
-        }
-        else if (currentCamSpeed < 0 && bigLevelTrans.position.x < -340.0f * (currentLevel - 1))
-        {
-            newPosX = bigLevelTrans.position.x - currentCamSpeed * Time.deltaTime;
-            bigLevelTrans.position = new Vector3(newPosX, bigLevelTrans.position.y, bigLevelTrans.position.z);
-        }
-    }
-
-    void Zoom()
-    {
-    }
-
-    public void BigLevelBtnClick(int num)
-    {
-        isBigMenu = false;
-        camAnim.enabled = true;
-        camAnim.SetTrigger("up");
-    }
-
-    public void BackLevelMenu()
-    {
-        isBigMenu = true;
-        camAnim.SetTrigger("down");
-    }
-
-    void InputTimer()
-    {
-        inputtimer++;
-    }
-
 }
