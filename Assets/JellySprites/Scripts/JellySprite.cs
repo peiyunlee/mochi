@@ -465,6 +465,7 @@ public abstract class JellySprite : MonoBehaviour
 
             m_ReferencePointParent = new GameObject();
             m_ReferencePointParent.name = this.name + " Reference Points";
+            // m_ReferencePointParent.transform.parent =  m_Transform;
             m_ReferencePointParent.transform.position = m_Transform.TransformPoint(m_CentralBodyOffset);
 
             m_ReferencePoints = new List<ReferencePoint>();
