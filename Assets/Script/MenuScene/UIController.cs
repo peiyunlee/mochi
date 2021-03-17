@@ -9,33 +9,60 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private int selectBigLevel;
 
-    public GameObject bigLevelGroup;
-
-    private Transform blg_trans;
-
-    public Vector2 bl_distance;
-
-    [SerializeField]
-    private Vector2 blg_pos;
-
-    [SerializeField]
-    private Animator[] blList_anim;
-
     [SerializeField]
     private int bigLevelCount;
-
-    //biglevelui
-
-    public Text bigLevel_text;
-    public GameObject[] bigLevel_btn;
 
     [SerializeField]
     private int selectSmallLevel;
 
+    private bool isBig;
+
+    //biglevelgroup
+
+    public GameObject bigLevelGroup;
+
+    private Transform blg_trans;
+
+    [SerializeField]
+    private Vector2 blg_pos;
+
+    //bllist
+
+    [SerializeField]
+    private Animator[] blList_anim;
+
+    public Vector2 bl_distance;
+
+    //biglevelui
+
+    public GameObject bigLevelUI;
+
+    private Animator blu_anim;
+
+    public Text bigLevel_text;
+    public GameObject[] bigLevel_btn;
+
+    //smalllevelgroup
+    public GameObject smallLevelGroup;
+
+    [SerializeField]
+
+    private List<GameObject> slList;
+
+    //smalllevelUI
+
+    public GameObject smallLevelUI;
+
+    private Animator slg_anim;
+
+    //smalllevelui
+
+    public Text sl_text;
+
+    public Transform selectBorder_pos;
 
 
-    public bool rightInput;
-    public bool leftInput;
+
 
     [SerializeField]
     private bool blg_move;
@@ -46,62 +73,151 @@ public class UIController : MonoBehaviour
         selectBigLevel = 1;
         selectSmallLevel = 1;
 
-        rightInput = false;
-        leftInput = false;
+        isBig = true;
 
         blList_anim = bigLevelGroup.GetComponentsInChildren<Animator>();
         bigLevelCount = blList_anim.Length;
 
+        blu_anim = bigLevelUI.GetComponent<Animator>();
+        blu_anim.SetTrigger("selected");
+
         blg_trans = bigLevelGroup.GetComponent<Transform>();
         blg_move = false;
+
+        for (int i = 0; i < smallLevelGroup.transform.childCount; i++)
+            slList.Add(smallLevelGroup.transform.GetChild(i).gameObject);
+        slg_anim = smallLevelUI.GetComponent<Animator>();
     }
     void Update()
     {
-        if (rightInput)
+        if (Input.GetKeyDown("right"))
         {
-            if (selectBigLevel < bigLevelCount)
-            {
-                blList_anim[selectBigLevel - 1].SetTrigger("unselected");
-                blList_anim[selectBigLevel].SetTrigger("selected");
-                selectBigLevel++;
-                blg_pos -= bl_distance;
-                blg_trans.position = blg_pos;
-                bigLevel_text.text = "LEVLE " + selectBigLevel;
-                if (selectBigLevel == bigLevelCount)
-                {
-                    bigLevel_btn[0].SetActive(false);
-                }
-                else if (selectBigLevel == 2)
-                {
-                    bigLevel_btn[1].SetActive(true);
-                }
-            }
-
-            rightInput = false;
+            if (isBig)
+                SelectRight_Big();
+            else
+                SelectRight_Small();
+        }
+        else if (Input.GetKeyDown("left"))
+        {
+            if (isBig)
+                SelectLeft_Big();
+            else
+                SelectLeft_Small();
+        }
+        else if (Input.GetKeyDown("a") && isBig)
+        {
+            isBig = false;
+            ShowSmallUI();
+        }
+        else if (Input.GetKeyDown("b") && !isBig)
+        {
+            isBig = true;
+            HideSmallUI();
         }
 
-        if (leftInput)
-        {
-            if (selectBigLevel > 0)
-            {
-                blList_anim[selectBigLevel - 2].SetTrigger("selected");
-                blList_anim[selectBigLevel - 1].SetTrigger("unselected");
-                selectBigLevel--;
-                blg_pos += bl_distance;
-                blg_trans.position = blg_pos;
-                bigLevel_text.text = "LEVLE " + selectBigLevel;
-                if (selectBigLevel == 1)
-                {
-                    bigLevel_btn[1].SetActive(false);
-                }
-                else if (selectBigLevel == bigLevelCount - 1)
-                {
-                    bigLevel_btn[0].SetActive(true);
-                }
-            }
+    }
 
-            leftInput = false;
+    void SelectRight_Big()
+    {
+        if (selectBigLevel < bigLevelCount)
+        {
+            blList_anim[selectBigLevel - 1].SetTrigger("unselected");
+            blList_anim[selectBigLevel].SetTrigger("selected");
+            selectBigLevel++;
+            blg_pos -= bl_distance;
+            blg_trans.position = blg_pos;
+            bigLevel_text.text = "LEVLE " + selectBigLevel;
+            if (selectBigLevel == bigLevelCount)
+            {
+                bigLevel_btn[0].SetActive(false);
+            }
+            else if (selectBigLevel == 2)
+            {
+                bigLevel_btn[1].SetActive(true);
+            }
+        }
+    }
+
+    void SelectLeft_Big()
+    {
+        if (selectBigLevel > 1)
+        {
+            blList_anim[selectBigLevel - 2].SetTrigger("selected");
+            blList_anim[selectBigLevel - 1].SetTrigger("unselected");
+            selectBigLevel--;
+            blg_pos += bl_distance;
+            blg_trans.position = blg_pos;
+            bigLevel_text.text = "LEVLE " + selectBigLevel;
+            if (selectBigLevel == 1)
+            {
+                bigLevel_btn[1].SetActive(false);
+            }
+            else if (selectBigLevel == bigLevelCount - 1)
+            {
+                bigLevel_btn[0].SetActive(true);
+            }
+        }
+    }
+
+    void SelectRight_Small()
+    {
+        if (selectSmallLevel < 4)
+        {
+            selectSmallLevel++;
+            SelectBorderMove();
+        }
+    }
+
+    void SelectLeft_Small()
+    {
+        if (selectSmallLevel > 1)
+        {
+            selectSmallLevel--;
+            SelectBorderMove();
         }
 
+    }
+
+    void SelectBorderMove()
+    {
+        Vector3 border_pos = Vector3.zero;
+        switch (selectSmallLevel % 3)
+        {
+            case 1:
+                border_pos.x = -170.5f;
+                break;
+            case 0:
+                border_pos.x = 170.5f;
+                break;
+            default:
+                border_pos.x = 0f;
+                break;
+
+        }
+        border_pos.y = 70f + (selectSmallLevel - 1) / 3 * (-158f);
+        selectBorder_pos.position = border_pos;
+    }
+
+    void ShowSmallUI()
+    {
+        blu_anim.SetTrigger("unselected");
+
+        sl_text.text = "LEVEL " + selectBigLevel;
+        selectSmallLevel = 1;
+
+        slList[selectBigLevel - 1].SetActive(true);
+        smallLevelUI.SetActive(true);
+        slg_anim.SetTrigger("selected");
+
+    }
+
+    void HideSmallUI()
+    {
+        smallLevelUI.SetActive(false);
+        slList[selectBigLevel - 1].SetActive(false);
+        slg_anim.SetTrigger("unselected");
+
+        bigLevelUI.SetActive(true);
+        blu_anim.SetTrigger("selected");
     }
 }
