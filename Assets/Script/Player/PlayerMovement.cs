@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerFloorDetect playerFloorDetect;
     ColorDetect colorDetect;
 
+    MultipleTargetCamera cam;
+
     InputSystem inputSystem;
 
     //anim
@@ -64,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         inputSystem = GetComponent<InputSystem>();
         playerFloorDetect = gameObject.GetComponentInChildren<PlayerFloorDetect>();
         colorDetect = gameObject.GetComponentInChildren<ColorDetect>();
+        cam = GameObject.Find("Main Camera").GetComponent<MultipleTargetCamera>();
         walkPreState = State.Left;
         walkCurState = State.Left;
 
@@ -90,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
                 playerColor = 0;
                 break;
         }
-
         isDead = false;
         diePoint = 0;
 
@@ -111,12 +113,23 @@ public class PlayerMovement : MonoBehaviour
                 JumpDetect();
 
                 jellySprite.SetAnimBool("isJump", !canJump);
+
+                playerRange();
             }
             else
             {
                 DieReset();
             }
         }
+    }
+
+    void playerRange()
+    {
+        if (jellySprite.CentralPoint.transform.position.x < cam.min.x + 0.5f) jellySprite.SetPosition(new Vector2(cam.min.x + 0.5f, jellySprite.CentralPoint.Body2D.position.y), false);
+        else if (jellySprite.CentralPoint.transform.position.x > cam.max.x - 0.5f) jellySprite.SetPosition(new Vector2(cam.max.x - 0.5f, jellySprite.CentralPoint.Body2D.position.y), false);
+
+        // if (jellySprite.CentralPoint.transform.position.y < cam.min.y) jellySprite.SetPosition(new Vector2(jellySprite.CentralPoint.Body2D.position.x, cam.min.y), false);
+        // else if (jellySprite.CentralPoint.transform.position.y > cam.max.y - 0.2f) jellySprite.SetPosition(new Vector2(jellySprite.CentralPoint.Body2D.position.x, cam.max.y - 0.2f), false);
     }
 
     void SetState()
@@ -176,8 +189,8 @@ public class PlayerMovement : MonoBehaviour
             jellySprite.SetAnimBool("isWalk", false);
 
         jellySprite.AddVelocity(new Vector2(inputSystem.GetKeyHMove * moveSpeed, 0.0f));
-
     }
+
     void TurnForce()
     {
         if (inputSystem.GetKeyHMove == 0 && inputSystem.GetKeyVMove == 0)

@@ -5,6 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MultipleTargetCamera : MonoBehaviour
 {
+    public struct ClipPlanePoints
+    {
+        public Vector3 upper;
+        public Vector3 lower;
+        public Vector3 left;
+        public Vector3 right;
+    }
 
     public List<Transform> targets;
     public Vector3 offset;
@@ -23,7 +30,9 @@ public class MultipleTargetCamera : MonoBehaviour
 
     public static MultipleTargetCamera Instance { get; private set; }
 
-    public float s1,s2;
+    public float centralPoint;
+
+    public ClipPlanePoints clipPlanePoints = new ClipPlanePoints();
 
     private void Awake()
     {
@@ -49,45 +58,70 @@ public class MultipleTargetCamera : MonoBehaviour
             return;
 
         GetGreatestDistance();
-        Move();
+
         Zoom();
+
+        Move();
+
     }
 
     void Move()
     {
         Vector3 centerPoint = GetCenterPoint();
 
-        Vector2 cPos = cam.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
-        
-        if (centerPoint.x < min.x)
+        float greatestDistance = m_bounds.size.x > m_bounds.size.y ? m_bounds.size.x : m_bounds.size.y;
+
+
+        float distance = cam.nearClipPlane;
+
+        float halfFOV = (cam.fieldOfView * 0.5f) * Mathf.Deg2Rad;
+        float aspect = cam.aspect;
+
+        //screen height and screen width
+        float height = Mathf.Tan(halfFOV) * distance;
+        float width = height * aspect;
+
+        //upper
+        clipPlanePoints.upper = centerPoint + transform.forward * distance;
+        clipPlanePoints.upper += transform.up * height;
+
+        //lower
+        clipPlanePoints.lower = centerPoint + transform.forward * distance;
+        clipPlanePoints.lower -= transform.up * height;
+
+        //right
+        clipPlanePoints.right = centerPoint + transform.forward * distance;
+        clipPlanePoints.right += transform.right * width;
+
+        //left
+        clipPlanePoints.left = centerPoint + transform.forward * distance;
+        clipPlanePoints.left -= transform.right * width;
+
+        if (clipPlanePoints.right.x > max.x)
         {
-            centerPoint.x = min.x;
+            centerPoint.x = max.x - (transform.right * width).x;
+            clipPlanePoints.right.x = max.x;
         }
-        else if (centerPoint.x > max.x){
-            centerPoint.x = max.x;
-        }
-        
-        if (centerPoint.y < min.y)
+        else if (clipPlanePoints.left.x < min.x)
         {
-            centerPoint.y = min.y;
-        }
-        else if (centerPoint.y > max.y){
-            centerPoint.y = max.y;
+            centerPoint.x = min.x + (transform.right * width).x;
+            clipPlanePoints.left.x = min.x;
         }
 
-        float s = s1;
-
-        if(centerPoint.y > max.y - 5.0f){
-            s = s1;
+        if (clipPlanePoints.lower.y < min.y)
+        {
+            centerPoint.y = min.y + (transform.up * height).y;
+            // clipPlanePoints.lower.y=min.y;
+            if (centerPoint.y > centralPoint) centerPoint.y = centralPoint;
         }
-        else if(centerPoint.y < min.y + 5.0f){
-            s = s2;
+        else if (clipPlanePoints.upper.y > max.y)
+        {
+            centerPoint.y = max.y - (transform.up * height).y;
+            // clipPlanePoints.upper.y=max.y;
+            if (centerPoint.y < centralPoint) centerPoint.y = centralPoint;
         }
-
-        offset.y = Mathf.Lerp(s, 0, m_bounds.size.y / 10.0f);
 
         Vector3 newPostion = centerPoint + offset;
-
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothTime);
     }
 
@@ -108,7 +142,9 @@ public class MultipleTargetCamera : MonoBehaviour
         {
             for (int i = 0; i < targets.Count; i++)
             {
-                m_bounds.Encapsulate(targets[i].position);
+                // m_bounds.Encapsulate(targets[i].position);
+                m_bounds.Encapsulate(new Vector3(targets[i].position.x - 1.0f, targets[i].position.y + 1.0f, targets[i].position.z));//左上
+                m_bounds.Encapsulate(new Vector3(targets[i].position.x + 1.0f, targets[i].position.y -1.0f, targets[i].position.z));//右下
             }
         }
     }
@@ -124,7 +160,9 @@ public class MultipleTargetCamera : MonoBehaviour
 
         for (int i = 0; i < targets.Count; i++)
         {
-            bounds.Encapsulate(targets[i].position);
+            // bounds.Encapsulate(targets[i].position);
+            bounds.Encapsulate(new Vector3(targets[i].position.x - 1.0f, targets[i].position.y + 1.0f, targets[i].position.z));//左上
+            bounds.Encapsulate(new Vector3(targets[i].position.x + 1.0f, targets[i].position.y - 1.0f, targets[i].position.z));//右下
         }
 
         return bounds.center;
@@ -147,5 +185,10 @@ public class MultipleTargetCamera : MonoBehaviour
             targets.Remove(TargetToRemove);
         }
 
+    }
+    public bool PlayerIsTarget(Transform playerTarget)
+    {
+        Debug.Log(targets.Contains(playerTarget));
+        return targets.Contains(playerTarget);
     }
 }
