@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public bool isPause;
 
     public int time;
+
+    public DataManager dataManager;
     void Awake()
     {
         //轉換場景不會被刪除
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         time = 0;
+        dataManager = GetComponent<DataManager>();
     }
     void Update()
     {

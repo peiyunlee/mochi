@@ -31,6 +31,9 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private Animator[] blList_anim;
 
+    [SerializeField]
+    private Image[] blList_img;
+
     public Vector2 bl_distance;
 
     //biglevelui
@@ -42,12 +45,18 @@ public class UIController : MonoBehaviour
     public Text bigLevel_text;
     public GameObject[] bigLevel_btn;
 
+    public Animator bluLine_anim;
+
     //smalllevelgroup
     public GameObject smallLevelGroup;
 
     [SerializeField]
 
     private List<GameObject> slList;
+
+    [SerializeField]
+
+    private Image[] slList_img;
 
     //smalllevelUI
 
@@ -78,8 +87,13 @@ public class UIController : MonoBehaviour
         blList_anim = bigLevelGroup.GetComponentsInChildren<Animator>();
         bigLevelCount = blList_anim.Length;
 
+        blList_img = bigLevelGroup.GetComponentsInChildren<Image>();
+        slList_img = smallLevelGroup.GetComponentsInChildren<Image>();
+        UpdateUI();
+
         blu_anim = bigLevelUI.GetComponent<Animator>();
         blu_anim.SetTrigger("selected");
+        bluLine_anim.SetTrigger("start");
 
         blg_trans = bigLevelGroup.GetComponent<Transform>();
         blg_move = false;
@@ -194,7 +208,7 @@ public class UIController : MonoBehaviour
                 break;
 
         }
-        border_pos.y = 70f + (selectSmallLevel - 1) / 3 * (-158f);
+        border_pos.y = 85f + (selectSmallLevel - 1) / 3 * (-158f);
         selectBorder_pos.position = border_pos;
     }
 
@@ -220,4 +234,57 @@ public class UIController : MonoBehaviour
         bigLevelUI.SetActive(true);
         blu_anim.SetTrigger("selected");
     }
+
+    void UpdateUI()
+    {
+        PlayerData pd = GameManager.instance.dataManager.getPlayerData;
+        int[] levelCount = GameManager.instance.dataManager.getLevelCountInfo;
+        Color cHide = new Color(0f, 0f, 0f, 0f);
+        Color cDark = new Color(0.5f, 0.5f, 0.5f);
+        Color cShow = new Color(1f, 1f, 1f, 1f);
+        int l = 0;
+        //bigui
+        for (int i = 0; i < levelCount.Length; i++)
+        {
+            if (i > pd.lastBigIndex)
+            {
+                blList_img[i * 2].color = cDark;
+                blList_img[i * 2 + 1].color = cShow;
+            }
+            else
+            {
+                blList_img[i * 2].color = cShow;
+                blList_img[i * 2 + 1].color = cHide;
+
+                //smallui
+                for (int j = 0; j < levelCount[i]; j++)
+                {
+                    if (j >= pd.lastSmallIndex && i == pd.lastBigIndex)
+                    {
+                        slList_img[j * 6 + l].color = cDark;
+                        slList_img[j * 6 + l + 1].color = cShow;
+                        for (int k = 2; k < 6; k++)
+                        {
+                            slList_img[j * 6 + l + k].color = cHide;
+                        }
+                    }
+                    else
+                    {
+                        slList_img[j * 6 + l].color = cShow;
+                        slList_img[j * 6 + l + 1].color = cHide;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            if (pd.gradeData[j + l].goal[k])
+                                slList_img[j * 6 + l + k + 3].color = cShow;
+                            else
+                                slList_img[j * 6 + l + k + 3].color = cDark;
+                        }
+                    }
+                }
+            }
+            l += levelCount[i];
+        }
+
+    }
+
 }
