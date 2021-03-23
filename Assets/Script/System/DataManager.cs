@@ -87,8 +87,6 @@ public class DataManager : MonoBehaviour
         {
             if (g[i] == false)
             {
-                Debug.Log(levelIndex);
-                Debug.Log(gradeData.goal[i]);
                 g[i] = gradeData.goal[i];
             }
 
@@ -124,6 +122,5 @@ public struct GradeData
         goal[0] = g1;
         goal[1] = g2;
         goal[2] = g3;
-        Debug.Log(goal[0]);
     }
 }

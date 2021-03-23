@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class MenuUIController : MonoBehaviour
 {
 
     [SerializeField]
@@ -40,6 +40,8 @@ public class UIController : MonoBehaviour
 
     public GameObject bigLevelUI;
 
+    public MenuUI blu_menuUI;
+
     private Animator blu_anim;
 
     public Text bigLevel_text;
@@ -58,9 +60,15 @@ public class UIController : MonoBehaviour
 
     private Image[] slList_img;
 
+    [SerializeField]
+
+    private Text[] slList_text;
+
     //smalllevelUI
 
     public GameObject smallLevelUI;
+
+    public MenuUI slu_menuUI;
 
     private Animator slg_anim;
 
@@ -70,11 +78,12 @@ public class UIController : MonoBehaviour
 
     public Transform selectBorder_pos;
 
-
+    [SerializeField]
+    private bool blg_move;
 
 
     [SerializeField]
-    private bool blg_move;
+    PlayerData pd;
 
 
     void Start()
@@ -89,11 +98,16 @@ public class UIController : MonoBehaviour
 
         blList_img = bigLevelGroup.GetComponentsInChildren<Image>();
         slList_img = smallLevelGroup.GetComponentsInChildren<Image>();
+        slList_text = smallLevelGroup.GetComponentsInChildren<Text>();
+        pd = GameManager.instance.dataManager.getPlayerData;
         UpdateUI();
 
         blu_anim = bigLevelUI.GetComponent<Animator>();
         blu_anim.SetTrigger("selected");
         bluLine_anim.SetTrigger("start");
+
+        blu_menuUI = bigLevelUI.GetComponent<MenuUI>();
+        slu_menuUI = smallLevelUI.GetComponent<MenuUI>();
 
         blg_trans = bigLevelGroup.GetComponent<Transform>();
         blg_move = false;
@@ -104,29 +118,42 @@ public class UIController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown("right"))
+        pd = GameManager.instance.dataManager.getPlayerData;
+        bool isAnimating = blu_menuUI.isAnimating || slu_menuUI.isAnimating;
+
+        if (!isAnimating)
         {
-            if (isBig)
-                SelectRight_Big();
-            else
-                SelectRight_Small();
-        }
-        else if (Input.GetKeyDown("left"))
-        {
-            if (isBig)
-                SelectLeft_Big();
-            else
-                SelectLeft_Small();
-        }
-        else if (Input.GetKeyDown("a") && isBig)
-        {
-            isBig = false;
-            ShowSmallUI();
-        }
-        else if (Input.GetKeyDown("b") && !isBig)
-        {
-            isBig = true;
-            HideSmallUI();
+            if (Input.GetKeyDown("right"))
+            {
+                if (isBig)
+                    SelectRight_Big();
+                else
+                    SelectRight_Small();
+            }
+            else if (Input.GetKeyDown("left"))
+            {
+                if (isBig)
+                    SelectLeft_Big();
+                else
+                    SelectLeft_Small();
+            }
+            else if (Input.GetKeyDown("a") && isBig)
+            {
+                if (selectBigLevel <= pd.lastBigIndex + 1)
+                {
+                    isBig = false;
+                    ShowSmallUI();
+                }
+            }
+            else if (Input.GetKeyDown("a") && !isBig)
+            {
+                CheckLevel();
+            }
+            else if (Input.GetKeyDown("b") && !isBig)
+            {
+                isBig = true;
+                HideSmallUI();
+            }
         }
 
     }
@@ -175,7 +202,9 @@ public class UIController : MonoBehaviour
 
     void SelectRight_Small()
     {
-        if (selectSmallLevel < 4)
+        int[] levelCount = GameManager.instance.dataManager.getLevelCountInfo;
+        // if ((pd.lastBigIndex + 1 == selectBigLevel && selectSmallLevel < pd.lastSmallIndex) || (pd.lastBigIndex + 1 != selectBigLevel && selectSmallLevel < levelCount[selectBigLevel - 1]))
+        if (selectSmallLevel < levelCount[selectBigLevel - 1])
         {
             selectSmallLevel++;
             SelectBorderMove();
@@ -218,11 +247,11 @@ public class UIController : MonoBehaviour
 
         sl_text.text = "LEVEL " + selectBigLevel;
         selectSmallLevel = 1;
+        SelectBorderMove();
 
         slList[selectBigLevel - 1].SetActive(true);
         smallLevelUI.SetActive(true);
         slg_anim.SetTrigger("selected");
-
     }
 
     void HideSmallUI()
@@ -230,6 +259,7 @@ public class UIController : MonoBehaviour
         smallLevelUI.SetActive(false);
         slList[selectBigLevel - 1].SetActive(false);
         slg_anim.SetTrigger("unselected");
+        selectSmallLevel = 0;
 
         bigLevelUI.SetActive(true);
         blu_anim.SetTrigger("selected");
@@ -237,7 +267,6 @@ public class UIController : MonoBehaviour
 
     void UpdateUI()
     {
-        PlayerData pd = GameManager.instance.dataManager.getPlayerData;
         int[] levelCount = GameManager.instance.dataManager.getLevelCountInfo;
         Color cHide = new Color(0f, 0f, 0f, 0f);
         Color cDark = new Color(0.5f, 0.5f, 0.5f);
@@ -261,19 +290,24 @@ public class UIController : MonoBehaviour
                 {
                     if (j >= pd.lastSmallIndex && i == pd.lastBigIndex)
                     {
-                        slList_img[j * 6 + l].color = cDark;
-                        slList_img[j * 6 + l + 1].color = cShow;
+                        //hide
+                        slList_text[j * 2 + l + 1].text = "";
+                        slList_img[j * 6 + l].color = cDark;    //small - 圖
+                        slList_img[j * 6 + l + 1].color = cShow;    //small - lock
                         for (int k = 2; k < 6; k++)
                         {
-                            slList_img[j * 6 + l + k].color = cHide;
+                            slList_img[j * 6 + l + k].color = cHide;    //small - radish、goal*3
                         }
                     }
                     else
                     {
-                        slList_img[j * 6 + l].color = cShow;
-                        slList_img[j * 6 + l + 1].color = cHide;
+                        //show
+                        slList_text[j * 2 + l + 1].text = "" + pd.gradeData[j + l].radishCount;
+                        slList_img[j * 6 + l].color = cShow;   //small - 圖
+                        slList_img[j * 6 + l + 1].color = cHide;    //small - lock
+                        slList_img[j * 6 + l + 2].color = cShow;    //small - radish
                         for (int k = 0; k < 3; k++)
-                        {
+                        {    //small - goal*3
                             if (pd.gradeData[j + l].goal[k])
                                 slList_img[j * 6 + l + k + 3].color = cShow;
                             else
@@ -287,4 +321,16 @@ public class UIController : MonoBehaviour
 
     }
 
+    void CheckLevel()
+    {
+        int[] levelCount = GameManager.instance.dataManager.getLevelCountInfo;
+        if ((pd.lastBigIndex + 1 == selectBigLevel && selectSmallLevel < pd.lastSmallIndex + 1) || (pd.lastBigIndex + 1 != selectBigLevel && selectSmallLevel < levelCount[selectBigLevel - 1]))
+        {
+            Debug.Log("GO " + selectBigLevel + "-" + selectSmallLevel);
+        }
+        else
+        {
+            Debug.Log("LOCK");
+        }
+    }
 }
