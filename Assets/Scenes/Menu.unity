@@ -1491,33 +1491,6 @@ Transform:
   m_Father: {fileID: 1136465971}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &363075728 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1093085978623678, guid: 1be5c0e3d61e41b42bbdf7e8fb9ffbd8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1490653146}
---- !u!114 &363075732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 363075728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8a44dc5df92a0a478bf8205fce9a998, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelCountInfo: 0400000002000000
-  playerData:
-    lastBigIndex: 0
-    lastSmallIndex: 0
-    gradeData: []
-  testFinishLevel: 0
-  testGradeData:
-    bigIndex: 0
-    smallIndex: 0
-    radishCount: 0
-    goal: 
 --- !u!1 &385417085
 GameObject:
   m_ObjectHideFlags: 0
@@ -6688,10 +6661,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4940310561931108, guid: 1be5c0e3d61e41b42bbdf7e8fb9ffbd8, type: 2}
       propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093085978623678, guid: 1be5c0e3d61e41b42bbdf7e8fb9ffbd8, type: 2}
-      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

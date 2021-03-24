@@ -327,6 +327,7 @@ public class MenuUIController : MonoBehaviour
         if ((pd.lastBigIndex + 1 == selectBigLevel && selectSmallLevel < pd.lastSmallIndex + 1) || (pd.lastBigIndex + 1 != selectBigLevel && selectSmallLevel < levelCount[selectBigLevel - 1]))
         {
             Debug.Log("GO " + selectBigLevel + "-" + selectSmallLevel);
+            SceneController.instance.LoadNextScene("Level" + selectBigLevel + "-" + selectSmallLevel);
         }
         else
         {

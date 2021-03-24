@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
     static public LevelController instance;
+
+    //Billboard
+    public BillboardController billboardController;
+
+    //UI
+    public LevelUIController levelUIController;
+
+    public int[] levelIndex = new int[2];
 
     //soundeffect
 
@@ -26,7 +33,6 @@ public class LevelController : MonoBehaviour
     //radish
     [SerializeField]
     int radishCount;
-    public Text radishText;
 
     //mochi
     public int mochiTotalCount;
@@ -37,10 +43,6 @@ public class LevelController : MonoBehaviour
 
     public bool mochiAllGet;
 
-    public Text mochiText;
-
-    // public GameObject option;
-
     //rocket
     public GameObject rocketObjet;
 
@@ -48,11 +50,6 @@ public class LevelController : MonoBehaviour
 
     //timer
     int timeCount;
-
-    public Text timeText;
-
-    //Billboard
-    public GameObject billboardObjet;
 
     //Die
     public GameObject diePoint;
@@ -69,67 +66,46 @@ public class LevelController : MonoBehaviour
     public int deadTotalCount;
 
     [SerializeField]
-    bool deadGoal;
-    [SerializeField]
-    bool radishGoal;
-    [SerializeField]
-    bool timeGoal;
+    bool[] goal = new bool[3];
 
     bool showScore;
 
-    public GameObject score;
-
-    public Text[] scoreText;
-
-    Animator scoreAnim;
-
-    public Transform coinGroup;
-
-    public List<GameObject> coins;
-
+    bool showStartUI;
 
     void Start()
     {
         instance = this;
+
+        levelUIController = gameObject.GetComponent<LevelUIController>();
+        billboardController = gameObject.GetComponent<BillboardController>();
+
+        rocket = rocketObjet.GetComponent<Rocket>();
+
+        diePointPos = diePoint.GetComponentsInChildren<Transform>();
+
         for (int i = 0; i < GameManager.instance.playerCount; i++)
             playerPrefab[i].SetActive(true);
 
         radishCount = 0;
         mochiCount = 0;
         mochiAllGet = false;
+        levelUIController.mochiTotalCount = mochiTotalCount;
+        levelUIController.levelIndex = levelIndex;
 
-        mochiText.text = mochiCount + " / " + mochiTotalCount;
-        radishText.text = radishCount + "";
-
-        rocket = rocketObjet.GetComponent<Rocket>();
-
-        timeCount = 0;
-        InvokeRepeating("Count", 1, 0.01f);
-
-        diePointPos = diePoint.GetComponentsInChildren<Transform>();
-
-        scoreText = score.GetComponentsInChildren<Text>();
-        scoreAnim = score.GetComponent<Animator>();
         showScore = false;
-        for (int i = 0; i < coinGroup.childCount; i++)
-        {
-            coins.Add(coinGroup.GetChild(i).gameObject);
-        }
-
-        audio_Background.Play();
+        levelUIController.ShowStartUI();
+        showStartUI = true;
     }
 
 
     void Update()
     {
-        if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
+        if ((Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")) || Input.GetKeyDown("a"))
         {
-            billboardObjet.GetComponent<Billboard>().Hide();
-            billboardObjet = null;
-        }
-        else if ((Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")) && showScore)
-        {
-            GameFinish();
+            if (showScore)
+                GameFinish();
+            else if (showStartUI)
+                GameStart();
         }
 
         if (Input.GetKeyDown("q"))
@@ -140,70 +116,22 @@ public class LevelController : MonoBehaviour
         // {
         //     playerPrefab[1].GetComponent<PlayerMovement>().Die();
         // }
-        else if (Input.GetKeyDown("a") && billboardObjet != null && GameManager.instance.isPause)
-        {
-            billboardObjet.GetComponent<Billboard>().Hide();
-        }
+    }
+
+    void GameStart()
+    {
+        levelUIController.HideStartUI();
+        showStartUI = false;
+        timeCount = 0;
+        InvokeRepeating("Count", 1, 0.01f);
+
+        audio_Background.Play();
     }
 
     void Count()
     {
         timeCount++;
-        ShowTimeText();
-    }
-
-    void ShowTimeText()
-    {
-        int s = timeCount % 100;
-        int second = timeCount / 100 % 60;
-        int minute = timeCount / 6000 % 60;
-        string ss = "";
-        if (s < 10)
-        {
-            ss = "0" + s;
-        }
-        else
-        {
-            ss = "" + s;
-        }
-
-        string ssecond = "";
-        if (second < 10)
-        {
-            ssecond = "0" + second;
-        }
-        else
-        {
-            ssecond = "" + second;
-        }
-
-        string sminute = "";
-        if (minute < 10)
-        {
-            sminute = "0" + minute;
-        }
-        else
-        {
-            sminute = "" + minute;
-        }
-
-        timeText.text = sminute + " : " + ssecond + " : " + ss;
-    }
-
-    public void AddRadish()
-    {
-        radishCount++;
-        radishText.text = radishCount + "";
-        audio_Collection.Play();
-    }
-
-    public void AddMochi()
-    {
-        mochiCount++;
-        mochiText.text = mochiCount + " / " + mochiTotalCount;
-        audio_Collection.Play();
-        if (mochiCount == mochiTotalCount)
-            mochiAllGet = true;
+        levelUIController.ShowTimeText(timeCount);
     }
 
     public void PauseTimer()
@@ -211,10 +139,49 @@ public class LevelController : MonoBehaviour
         CancelInvoke("Count");
     }
 
+    public void AddMochi()
+    {
+        mochiCount++;
+        levelUIController.UpdateMochi(mochiCount);
+        audio_Collection.Play();
+        if (mochiCount == mochiTotalCount)
+            mochiAllGet = true;
+    }
+
+    public void AddRadish()
+    {
+        radishCount++;
+        levelUIController.UpdateRadish(radishCount);
+        audio_Collection.Play();
+    }
+    public void SetGoal()
+    {
+        if (radishCount >= radishGoalCount)
+            goal[0] = true;
+
+        if (timeCount <= timeGoalCount_mms)
+            goal[1] = true;
+
+        if (deadTotalCount <= deadGoalCount)
+            goal[2] = true;
+    }
+
+    public void ShowScore()
+    {
+        levelUIController.ShowScore(goal, deadTotalCount);
+
+        audio_Background.Pause();
+        audio_Finish.Play(3);
+        showScore = true;
+    }
+
     void GameFinish()
     {
+        GradeData gd = new GradeData();
+        gd.Set(levelIndex[0], levelIndex[1], radishCount, goal[0], goal[1], goal[2]);
         int next = SceneManager.GetActiveScene().buildIndex + 1;
         GameManager.instance.time = timeCount;
+        GameManager.instance.dataManager.Save(gd);
         SceneController.instance.LoadNextScene(next);
     }
 
@@ -250,42 +217,5 @@ public class LevelController : MonoBehaviour
     public void CameraAddTarget(Transform player)
     {
         multipleTargetCamera.AddTarget(player);
-    }
-
-    public void Goal()
-    {
-        if (radishCount >= radishGoalCount)
-            radishGoal = true;
-
-        if (timeCount <= timeGoalCount_mms)
-            timeGoal = true;
-
-        if (deadTotalCount <= deadGoalCount)
-            deadGoal = true;
-    }
-
-    public void ShowScore()
-    {
-        Goal();     //判斷分數
-
-        //給UI數值
-        scoreText[0].text = GameManager.instance.currentLevel;
-        scoreText[1].text = timeText.text;
-        scoreText[2].text = radishText.text;
-        scoreText[3].text = "" + deadTotalCount;
-
-        //SHOWSCORE
-        score.SetActive(true);
-        if (radishGoal)
-            coins[0].SetActive(true);
-        if (timeGoal)
-            coins[1].SetActive(true);
-        if (deadGoal)
-            coins[2].SetActive(true);
-
-        scoreAnim.SetTrigger("show");
-        audio_Background.Pause();
-        audio_Finish.Play(3);
-        showScore = true;
     }
 }
