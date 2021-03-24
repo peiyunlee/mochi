@@ -23,7 +23,7 @@ public class CircleGround : MonoBehaviour
 
     float angle;
 
-    public float m;
+    public float m;//57.7
 
     Vector2 pre, next;
 
@@ -33,6 +33,16 @@ public class CircleGround : MonoBehaviour
         rotateAngle = (Mathf.PI / 180) * rotateDeg;
 
         eachAngle = 2f * Mathf.PI / childList.Count;
+
+        // for (int i = 0; i < childList.Count; i++)
+        // {
+        //     float sA = Vector2.SignedAngle(rbList[i].position - new Vector2(transform.position.x, transform.position.y), transform.position);
+
+        //     Quaternion rotation = Quaternion.Euler(0, 0, sA);
+        //     rbList[i].transform.rotation = Quaternion.RotateTowards(rbList[i].transform.rotation, rotation, 50.0f);
+        // }
+
+
 
         // int index = 0;
         // foreach (var item in childList)
@@ -79,7 +89,13 @@ public class CircleGround : MonoBehaviour
 
         rbList[index].MovePosition(pre);
 
-        rbList[index].MoveRotation(angle * m);
+        //rbList[index].MoveRotation(angle * m);
+        Vector2 Dir = transform.position - rbList[index].transform.position;
+        float turnAngle = Vector2.SignedAngle(Vector2.down, Dir);
+
+        rbList[index].MoveRotation(turnAngle);
+
+        if (rbList[index].rotation <= -360) rbList[index].rotation += 360;
 
         angle -= rotateAngle * Time.deltaTime;
     }

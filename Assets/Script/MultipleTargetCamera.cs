@@ -1,4 +1,4 @@
-﻿// using System.Collections;
+// using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -144,9 +144,10 @@ public class MultipleTargetCamera : MonoBehaviour
             {
                 // m_bounds.Encapsulate(targets[i].position);
                 m_bounds.Encapsulate(new Vector3(targets[i].position.x - 1.0f, targets[i].position.y + 1.0f, targets[i].position.z));//左上
-                m_bounds.Encapsulate(new Vector3(targets[i].position.x + 1.0f, targets[i].position.y -1.0f, targets[i].position.z));//右下
+                m_bounds.Encapsulate(new Vector3(targets[i].position.x + 1.0f, targets[i].position.y - 1.0f, targets[i].position.z));//右下
             }
         }
+
     }
 
     Vector3 GetCenterPoint()

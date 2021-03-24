@@ -249,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
         if (!jellySprite.notFreeze)
             jellySprite.FreezePlayerRot();
 
-        if (jellySprite.CentralPoint.transform.rotation.z != 0)
+        if (jellySprite.CentralPoint.transform.rotation.z != 0 && !jellySprite.notFreeze)
         {
             if (isJump && jellySprite.CentralPoint.Body2D.velocity.y > 0.0f)
             {

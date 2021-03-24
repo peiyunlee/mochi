@@ -334,11 +334,11 @@ Prefab:
       objectReference: {fileID: 1608400534}
     - target: {fileID: 4618607117877946, guid: 65c29f9940962e64bbf9d8abe85837f3, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4183181849341326, guid: 65c29f9940962e64bbf9d8abe85837f3, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114252190980810450, guid: 65c29f9940962e64bbf9d8abe85837f3,
         type: 2}
@@ -71813,7 +71813,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4426213721089146, guid: 35496418eec4759448d604d18c2f7725, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.9
+      value: 5.46
       objectReference: {fileID: 0}
     - target: {fileID: 4426213721089146, guid: 35496418eec4759448d604d18c2f7725, type: 2}
       propertyPath: m_LocalPosition.y
@@ -71866,7 +71866,7 @@ Prefab:
     - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
         type: 2}
       propertyPath: offset.y
-      value: -0.441
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
         type: 2}
@@ -71881,7 +71881,7 @@ Prefab:
     - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
         type: 2}
       propertyPath: max.y
-      value: 16
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
         type: 2}
@@ -71903,6 +71903,41 @@ Prefab:
     - target: {fileID: 4359472708736806, guid: 35496418eec4759448d604d18c2f7725, type: 2}
       propertyPath: m_LocalScale.x
       value: 23.491407
+      objectReference: {fileID: 0}
+    - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: min.x
+      value: -5.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: max.x
+      value: 58
+      objectReference: {fileID: 0}
+    - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: centralPoint
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 20354728167273512, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: near clip plane
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: min.y
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 20354728167273512, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: field of view
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 114803159432194526, guid: 35496418eec4759448d604d18c2f7725,
+        type: 2}
+      propertyPath: zoomLimiter
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35496418eec4759448d604d18c2f7725, type: 2}
