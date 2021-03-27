@@ -54,14 +54,7 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(false);
             draw.SetActive(false);
-            GameManager.instance.StartGame();
             isActive = false;
         }
-    }
-
-    void SetActive()
-    {
-        isActive = true;
-        GameManager.instance.PauseGame();
     }
 }

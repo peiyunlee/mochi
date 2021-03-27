@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!isDead)
+        if (!isDead && !GameManager.instance.isPause)
         {
             //**
             ResetRotation();

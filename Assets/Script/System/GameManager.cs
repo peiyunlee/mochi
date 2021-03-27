@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         isPause = true;
     }
 
     public void StartGame()
     {
-        Time.timeScale = 1;
+        // Time.timeScale = 1;
         isPause = false;
     }
 

@@ -95,6 +95,7 @@ public class LevelController : MonoBehaviour
         showScore = false;
         levelUIController.ShowStartUI();
         showStartUI = true;
+        GameManager.instance.PauseGame();
     }
 
 
@@ -120,6 +121,7 @@ public class LevelController : MonoBehaviour
 
     void GameStart()
     {
+        GameManager.instance.StartGame();
         levelUIController.HideStartUI();
         showStartUI = false;
         timeCount = 0;
@@ -168,6 +170,7 @@ public class LevelController : MonoBehaviour
 
     public void ShowScore()
     {
+        SetGoal();
         levelUIController.ShowScore(goal, deadTotalCount);
 
         audio_Background.Pause();
@@ -182,10 +185,15 @@ public class LevelController : MonoBehaviour
         int next = SceneManager.GetActiveScene().buildIndex + 1;
         GameManager.instance.time = timeCount;
         GameManager.instance.dataManager.Save(gd);
-        SceneController.instance.LoadNextScene(next);
+        Debug.Log(GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]]);
+        Debug.Log(levelIndex[1] + 1);
+        if (GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]] == levelIndex[1] + 1)
+            ReturnToMenu();
+        else
+            SceneController.instance.LoadNextScene(next);
     }
 
-    public void ReturnToMenu()
+    void ReturnToMenu()
     {
         SceneController.instance.LoadNextScene("Menu");
         //儲存進度
