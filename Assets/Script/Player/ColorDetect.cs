@@ -1,4 +1,4 @@
-﻿// #define COLORUNSET
+﻿#define COLORUNSET
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
