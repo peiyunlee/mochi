@@ -24,6 +24,10 @@ public class NormalTile : MoveTile
 
         Vector3 pos = trans.position;
 
+        newPos = pos + moveSpeed;
+
+        rb.MovePosition(newPos);
+
         if (trans.position.x < minVec.x || trans.position.y < minVec.y)
         {
             rb.MovePosition(minVec);
@@ -41,9 +45,5 @@ public class NormalTile : MoveTile
             isMax = true;
             Invoke("SetCanMove", maxStopSec);
         }
-
-        newPos = pos + moveSpeed;
-
-        rb.MovePosition(newPos);
     }
 }

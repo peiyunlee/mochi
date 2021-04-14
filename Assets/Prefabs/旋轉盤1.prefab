@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4426138915698022}
   - component: {fileID: 114777369707556748}
   - component: {fileID: 50225617911016152}
+  - component: {fileID: 58661086444091204}
   m_Layer: 0
   m_Name: "\u65CB\u8F49\u76E41"
   m_TagString: Untagged
@@ -182,7 +183,7 @@ GameObject:
   - component: {fileID: 4341626559025500}
   - component: {fileID: 212942779551875420}
   m_Layer: 0
-  m_Name: sprite
+  m_Name: sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,9 +386,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1336192568862554}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0}
+  m_LocalScale: {x: 0.0255, y: 0.0255, z: 0}
   m_Children: []
   m_Father: {fileID: 4426138915698022}
   m_RootOrder: 15
@@ -412,7 +413,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1044690862789498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41, y: 5.5, z: 0}
+  m_LocalPosition: {x: 35.75, y: 14.5, z: 0}
   m_LocalScale: {x: 25, y: 25, z: 1}
   m_Children:
   - {fileID: 4446234071160672}
@@ -658,13 +659,13 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1044690862789498}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1000
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1036,6 +1037,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!58 &58661086444091204
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044690862789498}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.085
 --- !u!58 &58708274135143494
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -1108,9 +1124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateDeg: -45
-  r: 0.43
-  h: 41
-  k: 5.5
+  r: 0.4
+  h: 35.75
+  k: 14.5
   childList:
   - {fileID: 1777400523469588}
   - {fileID: 1324770675941668}
@@ -1870,7 +1886,7 @@ SpriteRenderer:
   m_SortingLayerID: -1041066461
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c97ae507280fddb46b98ac61c9cb2f9f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ea5ff473f94b2c49b1b6ff4eb97fcb2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
