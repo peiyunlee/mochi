@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ColorTileButton : MonoBehaviour
 {
-
-
     public GameObject[] blueTile;
+    [SerializeField]
+    public GameObject[] redTile;
 
     bool redSwitch;
 
@@ -54,6 +54,7 @@ public class ColorTileButton : MonoBehaviour
         {
             audioUp = true;
         }
+
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -99,6 +100,10 @@ public class ColorTileButton : MonoBehaviour
             foreach (GameObject item in blueTile)
             {
                 item.SetActive(redSwitch);
+            }
+            foreach (GameObject item in redTile)
+            {
+                item.SetActive(!redSwitch);
             }
         }
 

@@ -262,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead)
         {
-#if !TEST_NOT_DIE
+// #if !TEST_NOT_DIE
             isDead = true;
 
             jellySprite.AddVelocity(new Vector2(0, 0));
@@ -274,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke("Die_Invincible", 0.05f);
 
             Invoke("Rebirth", 2);
-#endif
+// #endif
         }
     }
 
