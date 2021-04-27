@@ -10,10 +10,13 @@ public class WoodenCollider : MonoBehaviour
     public float colliderMove;
     public List<float> breakAngle;
 
+    public WoodenCollider otherCollider;
+
     float upAngle = 0;
     float downAngle = 0;
     public int breakCount = 0;
     bool breakWooden = false;
+    bool canUse=true;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +26,10 @@ public class WoodenCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (otherCollider.breakCount > 0)
+        {
+            canUse = false;
+        }
     }
 
     void BreakWooden()
@@ -32,11 +38,11 @@ public class WoodenCollider : MonoBehaviour
 
         Quaternion rotation;
 
-        upAngle -= breakAngle[breakCount-1];
+        upAngle -= breakAngle[breakCount - 1];
         rotation = Quaternion.Euler(0, 0, upAngle);
         upwooden.gameObject.transform.rotation = rotation;
 
-        downAngle += breakAngle[breakCount-1];
+        downAngle += breakAngle[breakCount - 1];
         rotation = Quaternion.Euler(0, 0, downAngle);
         downwooden.gameObject.transform.rotation = rotation;
 
@@ -45,20 +51,23 @@ public class WoodenCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+        if (canUse)
         {
-            if (other.gameObject.name == "stickDetect")
+            if (other.gameObject.layer == LayerMask.NameToLayer("player"))
             {
-                if (other.gameObject.GetComponentInParent<PlayerStick>() != null)
+                if (other.gameObject.name == "stickDetect")
                 {
-                    if (other.gameObject.GetComponentInParent<PlayerStick>().isPoped)
+                    if (other.gameObject.GetComponentInParent<PlayerStick>() != null)
                     {
-                        if (!breakWooden)
+                        if (other.gameObject.GetComponentInParent<PlayerStick>().isPoped)
                         {
-                            Debug.Log(other);
-                            BreakWooden();
-                        }
+                            if (!breakWooden)
+                            {
 
+                                BreakWooden();
+                            }
+
+                        }
                     }
                 }
             }
@@ -66,14 +75,17 @@ public class WoodenCollider : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("player"))
+        if (canUse)
         {
-            if (other.gameObject.name == "stickDetect")
+            if (other.gameObject.layer == LayerMask.NameToLayer("player"))
             {
-                if (breakWooden)
+                if (other.gameObject.name == "stickDetect")
                 {
-                    transform.position = new Vector3((movePosition.position).x, transform.position.y, transform.position.z);
-                    breakWooden = false;
+                    if (breakWooden)
+                    {
+                        transform.position = new Vector3((movePosition.position).x, transform.position.y, transform.position.z);
+                        breakWooden = false;
+                    }
                 }
             }
         }
