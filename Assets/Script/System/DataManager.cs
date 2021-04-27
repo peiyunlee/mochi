@@ -6,7 +6,7 @@ public class DataManager : MonoBehaviour
 {
 
     [SerializeField]
-    private int[] levelCountInfo = new int[] { 2, 1 };  //第一大關4個小關、第二大關2個小關
+    private int[] levelCountInfo = new int[] { 3, 1 };  //第一大關4個小關、第二大關2個小關
 
     public int levelTotalCount;
     public int[] getLevelCountInfo { get { return levelCountInfo; } }
@@ -38,12 +38,9 @@ public class DataManager : MonoBehaviour
             levelTotalCount += levelCountInfo[i];
         }
 
-        // //test
-        // GradeData gd_test = new GradeData();
-        // playerData.lastBigIndex = 0;    // 設定現在到第二關開啟
-        // playerData.lastSmallIndex = 1;    // 設定現在到2-1開啟
-        // gd_test.Set(0, 1, 2, true, false, false);
-        // Save(gd_test);
+        //test
+        playerData.lastBigIndex = 0;    // 設定現在到第二關開啟
+        playerData.lastSmallIndex = 4;    // 設定現在到2-1開啟
     }
 
     // Update is called once per frame

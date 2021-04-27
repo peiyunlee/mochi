@@ -1925,6 +1925,11 @@ Prefab:
       propertyPath: diePoint
       value: 
       objectReference: {fileID: 500591497}
+    - target: {fileID: 114328120820726948, guid: 0ac6f2127bf58c341aa3447e5f78fafe,
+        type: 2}
+      propertyPath: mochiTotalCount
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ac6f2127bf58c341aa3447e5f78fafe, type: 2}
   m_IsPrefabAsset: 0
