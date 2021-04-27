@@ -70,6 +70,7 @@ public class PullRing : MonoBehaviour
             middleRb.isKinematic = true;
             plateRb.velocity = new Vector2(0.0f, 0.0f);
             isStop = true;
+            
         }
 
     }
