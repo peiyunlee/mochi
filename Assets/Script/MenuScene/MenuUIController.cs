@@ -85,6 +85,8 @@ public class MenuUIController : MonoBehaviour
     [SerializeField]
     PlayerData pd;
 
+    int canInput;
+
 
     void Start()
     {
@@ -115,6 +117,8 @@ public class MenuUIController : MonoBehaviour
         for (int i = 0; i < smallLevelGroup.transform.childCount; i++)
             slList.Add(smallLevelGroup.transform.GetChild(i).gameObject);
         slg_anim = smallLevelUI.GetComponent<Animator>();
+
+        canInput = 0;
     }
     void Update()
     {
@@ -123,21 +127,25 @@ public class MenuUIController : MonoBehaviour
 
         if (!isAnimating)
         {
-            if (Input.GetKeyDown("right"))
+            if (Input.GetKeyDown("right") || Input.GetAxis("Horizontal_player1") == 1 && canInput >= 0)
             {
+                canInput = -1;
+                Invoke("SetCanInput",0.5f);
                 if (isBig)
                     SelectRight_Big();
                 else
                     SelectRight_Small();
             }
-            else if (Input.GetKeyDown("left"))
+            else if (Input.GetKeyDown("left") || Input.GetAxis("Horizontal_player1") == -1 && canInput <= 0)
             {
+                canInput = 1;
+                Invoke("SetCanInput",0.5f);
                 if (isBig)
                     SelectLeft_Big();
                 else
                     SelectLeft_Small();
             }
-            else if (Input.GetKeyDown("a") && isBig)
+            else if ((Input.GetKeyDown("a") || Input.GetButtonDown("AButton_player1")) && isBig)
             {
                 if (selectBigLevel <= pd.lastBigIndex + 1)
                 {
@@ -145,17 +153,21 @@ public class MenuUIController : MonoBehaviour
                     ShowSmallUI();
                 }
             }
-            else if (Input.GetKeyDown("a") && !isBig)
+            else if ((Input.GetKeyDown("a") || Input.GetButtonDown("AButton_player1")) && !isBig)
             {
                 CheckLevel();
             }
-            else if (Input.GetKeyDown("b") && !isBig)
+            else if ((Input.GetKeyDown("b") || Input.GetButtonDown("BButton_player1")) && !isBig)
             {
                 isBig = true;
                 HideSmallUI();
             }
         }
 
+    }
+
+    void SetCanInput(){
+        canInput = 0;
     }
 
     void SelectRight_Big()
