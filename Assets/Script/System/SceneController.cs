@@ -4,38 +4,53 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class SceneController : MonoBehaviour {
+public class SceneController : MonoBehaviour
+{
 
-	public static SceneController instance;
+    public static SceneController instance;
 
-	private string activeScene;
+    private Loading loading;
 
-	
-	// Use this for initialization
-	void Awake () {
-		if(instance == null){
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		else{
-			Destroy(gameObject);
-		}
-	}
+    private string activeScene;
 
-	void Start(){
-		activeScene = "Start";
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	public void LoadNextScene(string nextScene){
-		SceneManager.LoadScene(nextScene);
-	}
+    // Use this for initialization
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-	public void LoadNextScene(int nextScene){
-		SceneManager.LoadScene(nextScene);
-	}
+    void Start()
+    {
+        activeScene = "Start";
+        loading = gameObject.GetComponent<Loading>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void LoadNextScene(string nextScene)
+    {
+        //Loading.instance.LoadingScene(nextScene);
+        loading.LoadingScene(nextScene);
+        //SceneManager.LoadScene(nextScene);
+    }
+
+    public void LoadNextScene(int nextScene)
+    {
+        loading.LoadingScene(nextScene);
+        //Loading.instance.LoadingScene(nextScene);
+        //SceneManager.LoadScene(nextScene);
+    }
 }

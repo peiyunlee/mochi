@@ -23,6 +23,7 @@ TagManager:
   - WillDie
   - HItem
   - TItem
+  - Load
   layers:
   - Default
   - TransparentFX
