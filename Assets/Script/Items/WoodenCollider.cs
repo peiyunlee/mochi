@@ -16,7 +16,7 @@ public class WoodenCollider : MonoBehaviour
     float downAngle = 0;
     public int breakCount = 0;
     bool breakWooden = false;
-    bool canUse=true;
+    bool canUse = true;
     // Use this for initialization
     void Start()
     {
