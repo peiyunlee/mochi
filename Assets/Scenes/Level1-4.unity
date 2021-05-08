@@ -48638,7 +48638,7 @@ Prefab:
     - target: {fileID: 114609246839174138, guid: fc0dd8f1e5283514481ef363022187c3,
         type: 2}
       propertyPath: levelCountInfo.Array.data[0]
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114609246839174138, guid: fc0dd8f1e5283514481ef363022187c3,
         type: 2}
@@ -48905,7 +48905,7 @@ Prefab:
     - target: {fileID: 114150993561111450, guid: 0ac6f2127bf58c341aa3447e5f78fafe,
         type: 2}
       propertyPath: levelIndex.Array.data[1]
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114150993561111450, guid: 0ac6f2127bf58c341aa3447e5f78fafe,
         type: 2}

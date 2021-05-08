@@ -38,7 +38,7 @@ public class LevelUIController : MonoBehaviour
         radishCount = 0;
         mochiCount = 0;
 
-        mochiText.text = mochiCount + " / " + mochiTotalCount;
+        // mochiText.text = mochiCount + " / " + mochiTotalCount;
         radishText.text = radishCount + "";
 
         suiLevel_Text = scoreUI.GetComponentsInChildren<Text>();

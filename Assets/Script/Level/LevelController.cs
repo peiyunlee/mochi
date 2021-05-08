@@ -185,9 +185,8 @@ public class LevelController : MonoBehaviour
         int next = SceneManager.GetActiveScene().buildIndex + 1;
         GameManager.instance.time = timeCount;
         GameManager.instance.dataManager.Save(gd);
-        Debug.Log(GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]]);
-        Debug.Log(levelIndex[1] + 1);
-        if (GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]] == levelIndex[1] + 1)
+
+        if (GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]] >= levelIndex[1])
             ReturnToMenu();
         else
             SceneController.instance.LoadNextScene(next);
