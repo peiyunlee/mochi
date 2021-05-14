@@ -101,7 +101,7 @@ public class LevelController : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")) || Input.GetKeyDown("a"))
+        if (Input.GetButtonDown("AButton_player1") || Input.GetKeyDown("a"))
         {
             if (showScore)
                 GameFinish();
@@ -186,7 +186,7 @@ public class LevelController : MonoBehaviour
         GameManager.instance.time = timeCount;
         GameManager.instance.dataManager.Save(gd);
 
-        if (GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]] >= levelIndex[1])
+        if (GameManager.instance.dataManager.getLevelCountInfo[levelIndex[0]] <= levelIndex[1])
             ReturnToMenu();
         else
             SceneController.instance.LoadNextScene(next);

@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardController : MonoBehaviour {
+public class BillboardController : MonoBehaviour
+{
 
 
     //Billboard
-    public GameObject billboardObjet;
+    public int inNumber;
+    public GameObject billboardGroup;
+
+    [SerializeField]
+    Billboard[] billboards;
 
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause && billboardObjet != null && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2")))
+    // Use this for initialization
+    void Start()
+    {
+        billboards = billboardGroup.GetComponentsInChildren<Billboard>();
+    }
+    void Update()
+    {
+        if (GameManager.instance.isPause && inNumber != 0 && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2") || Input.GetKeyDown("a")))
         {
-            billboardObjet.GetComponent<Billboard>().Hide();
-            billboardObjet = null;
+            billboards[inNumber-1].GetComponent<Billboard>().Hide();
         }
-        else if (Input.GetKeyDown("a") && billboardObjet != null && GameManager.instance.isPause)
-        {
-			//test
-            billboardObjet.GetComponent<Billboard>().Hide();
-        }
-	}
+    }
 }

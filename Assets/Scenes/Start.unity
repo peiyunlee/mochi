@@ -867,6 +867,11 @@ Prefab:
       propertyPath: loading
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114117343885039192, guid: 1be5c0e3d61e41b42bbdf7e8fb9ffbd8,
+        type: 2}
+      propertyPath: currentLevel
+      value: Start
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1be5c0e3d61e41b42bbdf7e8fb9ffbd8, type: 2}
   m_IsPrefabAsset: 0
@@ -1256,7 +1261,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Menu
+          m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,

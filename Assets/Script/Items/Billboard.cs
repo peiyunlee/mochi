@@ -8,8 +8,8 @@ public class Billboard : MonoBehaviour
 {
 
     public GameObject btn;
+    public int inNumber;
 
-    [SerializeField]
     int inCount;
 
     public GameObject billboard;
@@ -25,6 +25,7 @@ public class Billboard : MonoBehaviour
             inCount++;
             if (inCount == 1)
                 btn.SetActive(true);
+            LevelController.instance.billboardController.inNumber = inNumber;
         }
     }
     void OnTriggerExit2D(Collider2D other)
@@ -34,6 +35,7 @@ public class Billboard : MonoBehaviour
             inCount--;
             if (inCount == 0)
                 btn.SetActive(false);
+            LevelController.instance.billboardController.inNumber = 0;
         }
     }
 
@@ -43,8 +45,8 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(true);
             draw.SetActive(true);
-            LevelController.instance.billboardController.billboardObjet = this.gameObject;
-            Invoke("SetActive", 0.05f);
+            isActive = true;
+            GameManager.instance.PauseGame();
         }
     }
 
@@ -54,7 +56,12 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(false);
             draw.SetActive(false);
-            isActive = false;
+            Invoke("SetIsActive",0.1f);
+            GameManager.instance.StartGame();
         }
+    }
+
+    void SetIsActive(){
+        isActive = false;
     }
 }
