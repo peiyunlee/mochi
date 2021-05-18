@@ -9,10 +9,10 @@ public class StoryUI : MonoBehaviour
     public GameObject storyImgGroup;
     public Text storyText;
 
-	[SerializeField]
+    [SerializeField]
     List<string> story;
 
-	[SerializeField]
+    [SerializeField]
     RawImage[] storyImgs;
 
     Color show;
@@ -20,9 +20,13 @@ public class StoryUI : MonoBehaviour
 
     int current;
 
+    bool load;
+
     // Use this for initialization
     void Start()
     {
+        load = false;
+
         storyImgs = storyImgGroup.GetComponentsInChildren<RawImage>();
 
         show = new Color(1, 1, 1, 1);
@@ -30,7 +34,7 @@ public class StoryUI : MonoBehaviour
 
         current = 0;
 
-		story = new List<string>();
+        story = new List<string>();
         story.Add("一年一度的中秋節快到了，為了趕在中秋前做好麻糬，月兔們忙碌的開始了搗麻糬的工作。");
         story.Add("由於前一天熬夜搗麻糬搗了整個晚上，一隻月兔不慎放錯了材料，結果…");
         story.Add("發生了大爆炸！！！");
@@ -39,7 +43,7 @@ public class StoryUI : MonoBehaviour
         story.Add("於是這些麻糬們，被月兔賦予重要的使命，出發去收集四散在各地的小麻糬，讓搗麻糬作業可以回到正軌。");
 
         storyText.text = story[current];
-		storyImgs[current].color = show;
+        storyImgs[current].color = show;
     }
 
     // Update is called once per frame
@@ -47,16 +51,20 @@ public class StoryUI : MonoBehaviour
     {
         if (Input.GetKeyDown("a") || Input.GetButtonDown("AButton_player1"))
         {
-            if (current == story.Count - 1)
+            if (!load)
             {
-                SceneController.instance.LoadNextScene("Menu");
-            }
-            else
-            {
-                storyImgs[current].color = hide;
-                current++;
-                storyImgs[current].color = show;
-                storyText.text = story[current];
+                if (current == story.Count - 1)
+                {
+                    load = true;
+                    SceneController.instance.LoadNextScene("Menu");
+                }
+                else
+                {
+                    storyImgs[current].color = hide;
+                    current++;
+                    storyImgs[current].color = show;
+                    storyText.text = story[current];
+                }
             }
         }
     }

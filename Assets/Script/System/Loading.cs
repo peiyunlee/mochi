@@ -29,16 +29,6 @@ public class Loading : MonoBehaviour
 
     }
 
-    void OnLevelWasLoaded(int sceneName)
-    {
-        GetRef();
-    }
-
-    void OnLevelWasLoaded(string sceneName)
-    {
-        GetRef();
-    }
-
     void GetRef()
     {
         //if (GameObject.FindGameObjectWithTag("Load") != null)
@@ -49,6 +39,7 @@ public class Loading : MonoBehaviour
             loadingText = GameObject.FindGameObjectWithTag("loadText").GetComponent<Text>();
         if (loading != null)
         {
+            Debug.Log("loading");
             loading.SetActive(false);
         }
     }
