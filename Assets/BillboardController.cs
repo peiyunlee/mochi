@@ -17,7 +17,8 @@ public class BillboardController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        billboards = billboardGroup.GetComponentsInChildren<Billboard>();
+        if(billboardGroup!=null)
+            billboards = billboardGroup.GetComponentsInChildren<Billboard>();
     }
     void Update()
     {
