@@ -1,4 +1,4 @@
-﻿//#define JOYSTICK
+﻿#define JOYSTICK
 // #define HOLDSTICK
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +50,8 @@ public class InputSystem : MonoBehaviour
         {
             InputDetect();
         }
+
+        Other();
     }
 
     void InputDetect()
@@ -57,7 +59,6 @@ public class InputSystem : MonoBehaviour
         MovementInput();
         PopInput();
         StickInput();
-        Other();
 
         TestInput();
     }

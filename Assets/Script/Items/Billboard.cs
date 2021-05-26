@@ -11,6 +11,7 @@ public class Billboard : MonoBehaviour
     public int inNumber;
 
     int inCount;
+    bool inBool = false;
 
     public GameObject billboard;
 
@@ -18,24 +19,33 @@ public class Billboard : MonoBehaviour
 
     public bool isActive;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
         {
-            inCount++;
-            if (inCount == 1)
+            //inCount++;
+            if (!inBool)
+            {
                 btn.SetActive(true);
+                inBool = true;
+            }
             LevelController.instance.billboardController.inNumber = inNumber;
+            LevelController.instance.billboardController.inPlayer = other.gameObject.tag;
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("player") && other.gameObject.name == "stickDetect")
         {
-            inCount--;
-            if (inCount == 0)
+            //inCount--;
+            if (inBool)
+            {
                 btn.SetActive(false);
+                inBool = false;
+            }
+
             LevelController.instance.billboardController.inNumber = 0;
+            LevelController.instance.billboardController.inPlayer = null;
         }
     }
 
@@ -56,12 +66,14 @@ public class Billboard : MonoBehaviour
         {
             billboard.SetActive(false);
             draw.SetActive(false);
-            Invoke("SetIsActive",0.1f);
+            isActive = false;
+            //Invoke("SetIsActive",0.1f);
             GameManager.instance.StartGame();
         }
     }
 
-    void SetIsActive(){
+    void SetIsActive()
+    {
         isActive = false;
     }
 }

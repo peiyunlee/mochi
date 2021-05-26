@@ -13,18 +13,35 @@ public class BillboardController : MonoBehaviour
     [SerializeField]
     Billboard[] billboards;
 
-
+    bool getKeyConfirm = false;
+    public string inPlayer = "player1";
     // Use this for initialization
     void Start()
     {
-        if(billboardGroup!=null)
+        if (billboardGroup != null)
             billboards = billboardGroup.GetComponentsInChildren<Billboard>();
     }
     void Update()
     {
-        if (GameManager.instance.isPause && inNumber != 0 && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2") || Input.GetKeyDown("a")))
+        if (inNumber != 0)
         {
-            billboards[inNumber-1].GetComponent<Billboard>().Hide();
+            if (Input.GetButtonDown("AButton_" + inPlayer) || Input.GetKeyDown("a"))
+            {
+                getKeyConfirm = !getKeyConfirm;
+            }
+
+            if (getKeyConfirm)
+            {
+                billboards[inNumber - 1].GetComponent<Billboard>().Show();
+            }
+            else if (!getKeyConfirm)
+            {
+                billboards[inNumber - 1].GetComponent<Billboard>().Hide();
+            }
         }
+        // if (GameManager.instance.isPause && inNumber != 0 && (Input.GetButtonDown("AButton_player1") || Input.GetButtonDown("AButton_player2") || Input.GetKeyDown("a")))
+        // {
+        //     billboards[inNumber-1].GetComponent<Billboard>().Hide();
+        // }
     }
 }

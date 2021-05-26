@@ -6,8 +6,8 @@ public class StickDetect : MonoBehaviour
 {
     InputSystem inputSystem;
     PlayerStick playerStick;
-
-    bool getKeyConfirm;
+    [SerializeField]
+    bool getKeyConfirm = false;
 
     bool detect;
 
@@ -19,7 +19,7 @@ public class StickDetect : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        DetectBillboard(other.gameObject);
+        //DetectBillboard(other.gameObject);
 
         DetectTouchGround(other.gameObject, true);
 
@@ -45,10 +45,18 @@ public class StickDetect : MonoBehaviour
     {
         if (other.tag == "Billboard")
         {
-            if (inputSystem.getKeyConfirm && !other.GetComponent<Billboard>().isActive)
+            if (inputSystem.getKeyConfirm)
+            {
+                getKeyConfirm = !getKeyConfirm;
+            }
+
+            if (getKeyConfirm)
             {
                 other.GetComponent<Billboard>().Show();
-                getKeyConfirm = false;
+            }
+            else if (!getKeyConfirm)
+            {
+                other.GetComponent<Billboard>().Hide();
             }
         }
     }
@@ -67,7 +75,8 @@ public class StickDetect : MonoBehaviour
 
     void DetectTouchItem(GameObject other, bool trigger)
     {
-        if (other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem" || other.tag == "Rocket"){
+        if (other.tag == "TItem" || other.tag == "HItem" || other.tag == "RotateItem" || other.tag == "Rocket")
+        {
             playerStick.isTouchItem = trigger;
             if (trigger && !playerStick.touchItemList.Contains(other))
             {
@@ -108,10 +117,11 @@ public class StickDetect : MonoBehaviour
         playerStick.isTouchPlayer = false;
     }
 
-    public void DieResetDetect(){
+    public void DieResetDetect()
+    {
         playerStick.isTouchWall = false;
         playerStick.touchItemList.Clear();
         playerStick.isTouchPlayer = false;
-        playerStick.isTouchGround=false;
+        playerStick.isTouchGround = false;
     }
 }
